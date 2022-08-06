@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
+import 'package:tech_shop/ui/pages/login_page.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
 class CustomDrawer extends StatefulWidget {
@@ -104,6 +105,12 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     title: const Text('Sair'),
                     onTap: () {
                       Navigator.pop(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: ((context) => const LoginPage()),
+                          ),
+                          (route) => false);
                     },
                   ),
                 ],

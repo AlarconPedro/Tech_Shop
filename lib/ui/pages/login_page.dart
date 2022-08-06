@@ -7,6 +7,7 @@ import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/botao.dart';
 import 'package:tech_shop/ui/widgets/input_text.dart';
+import 'package:tech_shop/ui/widgets/login_text.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -21,64 +22,82 @@ class _LoginPageState extends State<LoginPage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaClaro : Cores.cinzaEscuro,
-      body: Row(
+          currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.computer_outlined,
-                    size: 60,
-                    color: currentTheme.isDarkTheme()
-                        ? Cores.pretoOpaco
-                        : Cores.branco,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                    child: InputText(),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                    child: InputText(),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Cores.azul,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fixedSize: Size(120, 45),
-                    ),
-                    child: Text('Entrar'),
-                    onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MenuPage(),
+          SingleChildScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.computer_outlined,
+                          size: 60,
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.branco
+                              : Cores.pretoOpaco,
                         ),
-                        (route) => false,
-                      );
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Cores.vermelho,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                        Text(
+                          'Tech Shop',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.preto,
+                          ),
                         ),
-                        fixedSize: Size(120, 45),
-                      ),
-                      child: Text('Registrar'),
-                      onPressed: () {},
+                        const Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                          child: LoginText(),
+                        ),
+                        const Padding(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                          child: SenhaText(),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: currentTheme.isDarkTheme()
+                                ? Cores.vermelho
+                                : Cores.azul,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            fixedSize: Size(120, 45),
+                          ),
+                          child: Text('Entrar'),
+                          onPressed: () {
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MenuPage(),
+                              ),
+                              (route) => false,
+                            );
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: GestureDetector(
+                            child: Text(
+                              "Não tem conta? Cadastre-se",
+                              style: TextStyle(color: Cores.branco),
+                            ),
+                            onTap: () {},
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],
