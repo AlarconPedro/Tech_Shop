@@ -51,6 +51,7 @@ class _MenuPageState extends State<MenuPage>
       backgroundColor:
           currentTheme.isDarkTheme() ? Cores.pretoOpaco : Cores.branco,
       appBar: AppBar(
+        shadowColor: currentTheme.isDarkTheme() ? Cores.verde : Cores.preto,
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.azul,
         actions: [
@@ -95,6 +96,14 @@ class _MenuPageState extends State<MenuPage>
             topRight: Radius.circular(25),
           ),
           color: currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.azul,
+          boxShadow: [
+            BoxShadow(
+              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.preto,
+              spreadRadius: 2,
+              blurRadius: 3,
+              // offset: Offset(1.5, 1.5),
+            ),
+          ],
         ),
         child: TabBar(
           controller: tabController,
@@ -112,7 +121,7 @@ class _MenuPageState extends State<MenuPage>
           ),
           indicator: UnderlineTabIndicator(
             borderSide: BorderSide(
-              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.preto,
               width: 3,
             ),
             insets: EdgeInsets.zero,

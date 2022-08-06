@@ -19,13 +19,23 @@ class _CustomDrawerState extends State<CustomDrawer> {
       return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
               currentTheme.isDarkTheme() ? Cores.pretoOpaco : Cores.branco,
               currentTheme.isDarkTheme() ? Cores.cinza : Cores.branco,
             ],
           ),
+          boxShadow: [
+            BoxShadow(
+              color:
+                  currentTheme.isDarkTheme() ? Cores.verde : Cores.pretoOpaco,
+              blurRadius: 3,
+              spreadRadius: 1,
+              blurStyle: BlurStyle.normal,
+              offset: const Offset(1.5, 1.5),
+            ),
+          ],
         ),
         //   color: currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
         // ),
@@ -57,6 +67,17 @@ class _CustomDrawerState extends State<CustomDrawer> {
                       width: 70,
                       height: 70,
                       decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.verde
+                                : Cores.pretoOpaco,
+                            blurRadius: 2,
+                            spreadRadius: 3,
+                            blurStyle: BlurStyle.normal,
+                            // offset: const Offset(1.5, 1.5),
+                          ),
+                        ],
                         borderRadius: const BorderRadius.all(
                           Radius.circular(50),
                         ),
@@ -115,8 +136,10 @@ class _CustomDrawerState extends State<CustomDrawer> {
                   ),
                 ],
               ),
-              Expanded(
-                child: Container(),
+              Divider(
+                color: currentTheme.isDarkTheme()
+                    ? Cores.branco
+                    : Cores.pretoClaro,
               ),
               Row(
                 children: [

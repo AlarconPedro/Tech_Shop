@@ -16,7 +16,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaClaro : Cores.cinzaClaro,
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.cinzaClaro,
       appBar: AppBar(
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
@@ -26,28 +26,51 @@ class _CategoriaPageState extends State<CategoriaPage> {
         ),
         centerTitle: true,
       ),
-      body: GridView.count(
-        crossAxisCount: 1,
-        padding: EdgeInsets.all(10),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 5),
         children: List.generate(10, (index) {
-          return ListTile(
-            tileColor: currentTheme.isDarkTheme() ? Cores.branco : Cores.cinza,
-            title: Text(
-              'Categoria $index',
-              style: TextStyle(
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: 60,
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
                 color: currentTheme.isDarkTheme()
-                    ? Cores.pretoOpaco
-                    : Cores.branco,
+                    ? Cores.cinzaEscuro
+                    : Cores.cinza,
+                boxShadow: [
+                  BoxShadow(
+                    color: currentTheme.isDarkTheme()
+                        ? Cores.verde
+                        : Cores.pretoOpaco,
+                    blurRadius: 3,
+                    spreadRadius: 1,
+                    blurStyle: BlurStyle.inner,
+                    // offset: const Offset(1.5, 1.5),
+                  ),
+                ],
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(10),
+                ),
+                border: Border.all(
+                  color: currentTheme.isDarkTheme()
+                      ? Cores.verde
+                      : Cores.pretoOpaco,
+                  width: 2,
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Categoria $index',
+                  style: TextStyle(
+                    color: currentTheme.isDarkTheme()
+                        ? Cores.branco
+                        : Cores.pretoOpaco,
+                  ),
+                ),
               ),
             ),
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => ProdutosPage(),
-              //   ),
-              // );
-            },
           );
         }),
       ),

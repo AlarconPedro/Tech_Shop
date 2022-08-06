@@ -18,17 +18,36 @@ class _HomePageState extends State<HomePage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaClaro : Cores.cinzaEscuro,
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.cinzaClaro,
       body: GridView.count(
         // Cria um grid com duas colunas
         crossAxisCount: 2,
         // Gera 100 Widgets que exibem o seu índice
         children: List.generate(10, (index) {
-          return Card(
-            borderOnForeground: true,
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+          return Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color:
+                  currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
+              boxShadow: [
+                BoxShadow(
+                  color: currentTheme.isDarkTheme()
+                      ? Cores.verde
+                      : Cores.pretoOpaco,
+                  blurRadius: 3,
+                  spreadRadius: 1,
+                  blurStyle: BlurStyle.inner,
+                  // offset: const Offset(1.5, 1.5),
+                ),
+              ],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              border: Border.all(
+                color:
+                    currentTheme.isDarkTheme() ? Cores.verde : Cores.pretoOpaco,
+                width: 2,
+              ),
             ),
             margin: const EdgeInsets.symmetric(
               horizontal: 8,
@@ -37,18 +56,20 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(8),
+                Padding(
+                  padding: const EdgeInsets.all(8),
                   child: Icon(
                     CupertinoIcons.hourglass,
                     size: 40,
+                    color: Cores.branco,
                   ),
                 ),
                 Text(
                   'Item $index',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
+                    color: Cores.branco,
                   ),
                 ),
               ],
