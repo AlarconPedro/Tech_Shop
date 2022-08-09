@@ -45,7 +45,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
                         : Cores.pretoOpaco,
                     blurRadius: 3,
                     spreadRadius: 1,
-                    blurStyle: BlurStyle.inner,
+                    blurStyle: BlurStyle.normal,
                     // offset: const Offset(1.5, 1.5),
                   ),
                 ],
