@@ -110,127 +110,151 @@ class _ContaPageState extends State<ContaPage> {
                                 : Cores.pretoOpaco,
                             thickness: 2,
                           ),
-                          SingleChildScrollView(
-                            child: Expanded(
-                              child: Column(
+                          Expanded(
+                            child: Container(
+                              child: ListView(
                                 children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
+                                      ),
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.cinzaMedio
+                                          : Cores.cinza,
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                      horizontal: 8,
+                                    ),
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      style: ListTileStyle.list,
+                                      trailing: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.pretoOpaco,
+                                      ),
+                                      title: Text(
+                                        'Endereços',
+                                        style: TextStyle(
+                                          color: Cores.branco,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                      leading: Icon(
+                                        Icons.location_pin,
+                                        size: 28,
+                                        color: Cores.branco,
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => LoginPage(),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
                                   Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                      horizontal: 8,
+                                    ),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        shape: BoxShape.rectangle,
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.cinzaMedio
-                                            : Cores.cinza,
                                         borderRadius: const BorderRadius.all(
                                           Radius.circular(15),
                                         ),
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.cinzaMedio
+                                            : Cores.cinza,
                                       ),
-                                      child: Column(
-                                        children: [
-                                          ListTile(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                            style: ListTileStyle.list,
-                                            trailing: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: currentTheme.isDarkTheme()
-                                                  ? Cores.branco
-                                                  : Cores.pretoOpaco,
-                                            ),
-                                            title: Text(
-                                              'Endereços',
-                                              style: TextStyle(
-                                                color: Cores.branco,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            leading: Icon(
-                                              Icons.location_pin,
-                                              size: 28,
-                                              color: Cores.branco,
-                                            ),
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginPage(),
-                                                ),
-                                              );
-                                            },
+                                      child: ListTile(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        style: ListTileStyle.list,
+                                        trailing: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: currentTheme.isDarkTheme()
+                                              ? Cores.branco
+                                              : Cores.pretoOpaco,
+                                        ),
+                                        title: Text(
+                                          'Endereços',
+                                          style: TextStyle(
+                                            color: Cores.branco,
+                                            fontSize: 20,
                                           ),
-                                          ListTile(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
+                                        ),
+                                        leading: Icon(
+                                          Icons.location_pin,
+                                          size: 28,
+                                          color: Cores.branco,
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => LoginPage(),
                                             ),
-                                            style: ListTileStyle.list,
-                                            trailing: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: currentTheme.isDarkTheme()
-                                                  ? Cores.branco
-                                                  : Cores.pretoOpaco,
-                                            ),
-                                            title: Text(
-                                              'Endereços',
-                                              style: TextStyle(
-                                                color: Cores.branco,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            leading: Icon(
-                                              Icons.location_pin,
-                                              size: 28,
-                                              color: Cores.branco,
-                                            ),
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginPage(),
-                                                ),
-                                              );
-                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                      horizontal: 8,
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(15),
+                                        ),
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.cinzaMedio
+                                            : Cores.cinza,
+                                      ),
+                                      child: ListTile(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        style: ListTileStyle.list,
+                                        trailing: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: currentTheme.isDarkTheme()
+                                              ? Cores.branco
+                                              : Cores.pretoOpaco,
+                                        ),
+                                        title: Text(
+                                          'Endereços',
+                                          style: TextStyle(
+                                            color: Cores.branco,
+                                            fontSize: 20,
                                           ),
-                                          ListTile(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
+                                        ),
+                                        leading: Icon(
+                                          Icons.location_pin,
+                                          size: 28,
+                                          color: Cores.branco,
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => LoginPage(),
                                             ),
-                                            style: ListTileStyle.list,
-                                            trailing: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color: currentTheme.isDarkTheme()
-                                                  ? Cores.branco
-                                                  : Cores.pretoOpaco,
-                                            ),
-                                            title: Text(
-                                              'Endereços',
-                                              style: TextStyle(
-                                                color: Cores.branco,
-                                                fontSize: 20,
-                                              ),
-                                            ),
-                                            leading: Icon(
-                                              Icons.location_pin,
-                                              size: 28,
-                                              color: Cores.branco,
-                                            ),
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginPage(),
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ],
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
