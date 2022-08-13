@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.cinzaClaro,
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       body: GridView.count(
         // Cria um grid com duas colunas
         crossAxisCount: 2,
@@ -28,12 +28,10 @@ class _HomePageState extends State<HomePage> {
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color:
-                  currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
+                  currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
               boxShadow: [
                 BoxShadow(
-                  color: currentTheme.isDarkTheme()
-                      ? Cores.verde
-                      : Cores.pretoOpaco,
+                  color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
                   blurRadius: 3,
                   spreadRadius: 1,
                   blurStyle: BlurStyle.normal,
@@ -44,9 +42,8 @@ class _HomePageState extends State<HomePage> {
                 Radius.circular(10),
               ),
               border: Border.all(
-                color:
-                    currentTheme.isDarkTheme() ? Cores.verde : Cores.pretoOpaco,
-                width: 2,
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                width: 1,
               ),
             ),
             margin: const EdgeInsets.symmetric(
@@ -54,23 +51,56 @@ class _HomePageState extends State<HomePage> {
               vertical: 8,
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Icon(
-                    CupertinoIcons.hourglass,
-                    size: 40,
-                    color: Cores.branco,
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 100,
+                    child: Container(
+                      color: Colors.amber,
+                      child: Icon(
+                        Icons.home,
+                        color: currentTheme.isDarkTheme()
+                            ? Cores.branco
+                            : Cores.preto,
+                        size: 40,
+                      ),
+                    ),
                   ),
                 ),
-                Text(
-                  'Item $index',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Cores.branco,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        children: [
+                          Text(
+                            "R\$ ${index * 100},00",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Cores.verde,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            "R\$ ${index * 100},00",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Cores.vermelho,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child:
+                          Icon(Icons.favorite, color: Cores.branco, size: 30),
+                    ),
+                  ],
                 ),
               ],
             ),

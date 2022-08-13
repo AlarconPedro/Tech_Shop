@@ -28,8 +28,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           boxShadow: [
             BoxShadow(
-              color:
-                  currentTheme.isDarkTheme() ? Cores.verde : Cores.pretoOpaco,
+              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
               blurRadius: 3,
               spreadRadius: 1,
               blurStyle: BlurStyle.normal,
@@ -71,7 +70,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                           BoxShadow(
                             color: currentTheme.isDarkTheme()
                                 ? Cores.verde
-                                : Cores.pretoOpaco,
+                                : Cores.azul,
                             blurRadius: 2,
                             spreadRadius: 3,
                             blurStyle: BlurStyle.normal,
@@ -137,9 +136,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 ],
               ),
               Divider(
-                color: currentTheme.isDarkTheme()
-                    ? Cores.branco
-                    : Cores.pretoClaro,
+                thickness: 2,
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
               ),
               Row(
                 children: [

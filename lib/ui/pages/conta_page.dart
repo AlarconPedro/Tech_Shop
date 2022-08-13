@@ -17,11 +17,15 @@ class _ContaPageState extends State<ContaPage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.cinzaClaro,
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
-        title: const Text('Conta'),
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+        title: Text(
+          'Conta',
+          style: TextStyle(
+              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -33,9 +37,8 @@ class _ContaPageState extends State<ContaPage> {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: currentTheme.isDarkTheme()
-                          ? Cores.verde
-                          : Cores.pretoOpaco,
+                      color:
+                          currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
                       blurRadius: 3,
                       spreadRadius: 1,
                       blurStyle: BlurStyle.normal,
@@ -45,9 +48,14 @@ class _ContaPageState extends State<ContaPage> {
                   shape: BoxShape.rectangle,
                   color: currentTheme.isDarkTheme()
                       ? Cores.cinzaEscuro
-                      : Cores.cinza,
+                      : Cores.branco,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(15),
+                  ),
+                  border: Border.all(
+                    color:
+                        currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                    width: 1,
                   ),
                 ),
                 child: Column(
@@ -64,7 +72,7 @@ class _ContaPageState extends State<ContaPage> {
                                 BoxShadow(
                                   color: currentTheme.isDarkTheme()
                                       ? Cores.verde
-                                      : Cores.pretoOpaco,
+                                      : Cores.azul,
                                   blurRadius: 3,
                                   spreadRadius: 1,
                                   blurStyle: BlurStyle.normal,
@@ -73,7 +81,7 @@ class _ContaPageState extends State<ContaPage> {
                               ],
                               color: currentTheme.isDarkTheme()
                                   ? Cores.branco
-                                  : Cores.pretoOpaco,
+                                  : Cores.cinzaClaro,
                             ),
                             child: const Padding(
                               padding: EdgeInsets.all(18.0),
@@ -89,7 +97,9 @@ class _ContaPageState extends State<ContaPage> {
                                     child: Text(
                                       'Nome completo do usuário',
                                       style: TextStyle(
-                                        color: Cores.branco,
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.preto,
                                         fontSize: 20,
                                       ),
                                     ),
@@ -107,7 +117,7 @@ class _ContaPageState extends State<ContaPage> {
                           Divider(
                             color: currentTheme.isDarkTheme()
                                 ? Cores.verde
-                                : Cores.pretoOpaco,
+                                : Cores.azul,
                             thickness: 2,
                           ),
                           Expanded(
@@ -121,7 +131,7 @@ class _ContaPageState extends State<ContaPage> {
                                       ),
                                       color: currentTheme.isDarkTheme()
                                           ? Cores.cinzaMedio
-                                          : Cores.cinza,
+                                          : Cores.cinzaClaro,
                                     ),
                                     margin: const EdgeInsets.symmetric(
                                       vertical: 4,
@@ -141,14 +151,18 @@ class _ContaPageState extends State<ContaPage> {
                                       title: Text(
                                         'Endereços',
                                         style: TextStyle(
-                                          color: Cores.branco,
+                                          color: currentTheme.isDarkTheme()
+                                              ? Cores.branco
+                                              : Cores.preto,
                                           fontSize: 20,
                                         ),
                                       ),
                                       leading: Icon(
                                         Icons.location_pin,
                                         size: 28,
-                                        color: Cores.branco,
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.preto,
                                       ),
                                       onTap: () {
                                         Navigator.push(
@@ -172,7 +186,7 @@ class _ContaPageState extends State<ContaPage> {
                                         ),
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.cinzaMedio
-                                            : Cores.cinza,
+                                            : Cores.cinzaClaro,
                                       ),
                                       child: ListTile(
                                         shape: RoundedRectangleBorder(
@@ -187,16 +201,20 @@ class _ContaPageState extends State<ContaPage> {
                                               : Cores.pretoOpaco,
                                         ),
                                         title: Text(
-                                          'Endereços',
+                                          'Favoritos',
                                           style: TextStyle(
-                                            color: Cores.branco,
+                                            color: currentTheme.isDarkTheme()
+                                                ? Cores.branco
+                                                : Cores.preto,
                                             fontSize: 20,
                                           ),
                                         ),
                                         leading: Icon(
-                                          Icons.location_pin,
+                                          Icons.favorite,
                                           size: 28,
-                                          color: Cores.branco,
+                                          color: currentTheme.isDarkTheme()
+                                              ? Cores.branco
+                                              : Cores.preto,
                                         ),
                                         onTap: () {
                                           Navigator.push(
@@ -221,7 +239,7 @@ class _ContaPageState extends State<ContaPage> {
                                         ),
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.cinzaMedio
-                                            : Cores.cinza,
+                                            : Cores.cinzaClaro,
                                       ),
                                       child: ListTile(
                                         shape: RoundedRectangleBorder(
@@ -236,16 +254,85 @@ class _ContaPageState extends State<ContaPage> {
                                               : Cores.pretoOpaco,
                                         ),
                                         title: Text(
-                                          'Endereços',
+                                          'Carrinho',
                                           style: TextStyle(
-                                            color: Cores.branco,
+                                            color: currentTheme.isDarkTheme()
+                                                ? Cores.branco
+                                                : Cores.preto,
                                             fontSize: 20,
                                           ),
                                         ),
                                         leading: Icon(
-                                          Icons.location_pin,
+                                          Icons.shopping_cart_rounded,
                                           size: 28,
-                                          color: Cores.branco,
+                                          color: currentTheme.isDarkTheme()
+                                              ? Cores.branco
+                                              : Cores.preto,
+                                        ),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => LoginPage(),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                      horizontal: 20,
+                                    ),
+                                    child: Divider(
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.verde
+                                          : Cores.azul,
+                                      thickness: 2,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 4,
+                                      horizontal: 8,
+                                    ),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(15),
+                                        ),
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.cinzaMedio
+                                            : Cores.cinzaClaro,
+                                      ),
+                                      child: ListTile(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        ),
+                                        style: ListTileStyle.list,
+                                        trailing: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: currentTheme.isDarkTheme()
+                                              ? Cores.branco
+                                              : Cores.pretoOpaco,
+                                        ),
+                                        title: Text(
+                                          'Contato',
+                                          style: TextStyle(
+                                            color: currentTheme.isDarkTheme()
+                                                ? Cores.branco
+                                                : Cores.preto,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                        leading: Icon(
+                                          Icons.headphones,
+                                          size: 28,
+                                          color: currentTheme.isDarkTheme()
+                                              ? Cores.branco
+                                              : Cores.preto,
                                         ),
                                         onTap: () {
                                           Navigator.push(
@@ -265,7 +352,7 @@ class _ContaPageState extends State<ContaPage> {
                           Divider(
                             color: currentTheme.isDarkTheme()
                                 ? Cores.verde
-                                : Cores.pretoOpaco,
+                                : Cores.azul,
                             thickness: 2,
                           ),
                           Row(

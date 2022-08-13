@@ -16,11 +16,15 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.cinzaClaro,
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
-        title: const Text('Carrinho'),
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+        title: Text(
+          'Carrinho',
+          style: TextStyle(
+              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto),
+        ),
         centerTitle: true,
       ),
       body: Column(
@@ -32,9 +36,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                      color: currentTheme.isDarkTheme()
-                          ? Cores.verde
-                          : Cores.pretoOpaco,
+                      color:
+                          currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
                       blurRadius: 3,
                       spreadRadius: 1,
                       blurStyle: BlurStyle.normal,
@@ -44,9 +47,14 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                   shape: BoxShape.rectangle,
                   color: currentTheme.isDarkTheme()
                       ? Cores.cinzaEscuro
-                      : Cores.cinza,
+                      : Cores.branco,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(15),
+                  ),
+                  border: Border.all(
+                    color:
+                        currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                    width: 1,
                   ),
                 ),
                 child: Column(
@@ -75,7 +83,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                           child: Text(
                             'Produto',
                             style: TextStyle(
-                              color: Cores.branco,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.pretoOpaco,
                               fontSize: 20,
                             ),
                           ),
@@ -91,7 +101,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                           child: Text(
                             'Qtde.',
                             style: TextStyle(
-                              color: Cores.branco,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.pretoOpaco,
                               fontSize: 20,
                             ),
                           ),
@@ -105,7 +117,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                           child: Text(
                             'Preço',
                             style: TextStyle(
-                              color: Cores.branco,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.pretoOpaco,
                               fontSize: 20,
                             ),
                           ),
@@ -113,7 +127,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                       ],
                     ),
                     Divider(
-                      color: Cores.verde,
+                      color:
+                          currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
                       thickness: 2,
                     ),
                     Expanded(
@@ -124,7 +139,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                       ),
                     ),
                     Divider(
-                      color: Cores.verde,
+                      color:
+                          currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
                       thickness: 2,
                     ),
                     Padding(
@@ -139,7 +155,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Cores.branco,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.pretoOpaco,
                             ),
                           ),
                           Expanded(
@@ -150,7 +168,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
-                              color: Cores.branco,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.pretoOpaco,
                             ),
                           ),
                         ],

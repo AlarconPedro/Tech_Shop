@@ -16,13 +16,14 @@ class _CategoriaPageState extends State<CategoriaPage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.cinzaClaro,
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
         title: Text(
           'Categorias',
-          style: TextStyle(color: Cores.branco),
+          style: TextStyle(
+              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto),
         ),
         centerTitle: true,
       ),
@@ -37,12 +38,11 @@ class _CategoriaPageState extends State<CategoriaPage> {
                 shape: BoxShape.rectangle,
                 color: currentTheme.isDarkTheme()
                     ? Cores.cinzaEscuro
-                    : Cores.cinza,
+                    : Cores.branco,
                 boxShadow: [
                   BoxShadow(
-                    color: currentTheme.isDarkTheme()
-                        ? Cores.verde
-                        : Cores.pretoOpaco,
+                    color:
+                        currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
                     blurRadius: 3,
                     spreadRadius: 1,
                     blurStyle: BlurStyle.normal,
@@ -53,10 +53,8 @@ class _CategoriaPageState extends State<CategoriaPage> {
                   Radius.circular(10),
                 ),
                 border: Border.all(
-                  color: currentTheme.isDarkTheme()
-                      ? Cores.verde
-                      : Cores.pretoOpaco,
-                  width: 2,
+                  color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                  width: 1,
                 ),
               ),
               child: Padding(

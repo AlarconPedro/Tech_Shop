@@ -51,9 +51,9 @@ class _MenuPageState extends State<MenuPage>
       backgroundColor:
           currentTheme.isDarkTheme() ? Cores.pretoOpaco : Cores.branco,
       appBar: AppBar(
-        shadowColor: currentTheme.isDarkTheme() ? Cores.verde : Cores.preto,
+        shadowColor: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.azul,
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
         actions: [
           const SizedBox(
             width: 60,
@@ -70,7 +70,7 @@ class _MenuPageState extends State<MenuPage>
               onTap: () {},
               child: Icon(
                 Icons.search,
-                color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+                color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
               ),
             ),
           ),
@@ -95,10 +95,10 @@ class _MenuPageState extends State<MenuPage>
             topLeft: Radius.circular(25),
             topRight: Radius.circular(25),
           ),
-          color: currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.azul,
+          color: currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
           boxShadow: [
             BoxShadow(
-              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.preto,
+              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
               spreadRadius: 2,
               blurRadius: 3,
               // offset: Offset(1.5, 1.5),
@@ -121,7 +121,7 @@ class _MenuPageState extends State<MenuPage>
           ),
           indicator: UnderlineTabIndicator(
             borderSide: BorderSide(
-              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.preto,
+              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
               width: 3,
             ),
             insets: EdgeInsets.zero,

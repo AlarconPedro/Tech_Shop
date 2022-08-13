@@ -25,7 +25,7 @@ class _LoginTextState extends State<LoginText> {
         fillColor: Colors.transparent,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
             style: BorderStyle.solid,
             width: 2,
           ),
@@ -33,7 +33,7 @@ class _LoginTextState extends State<LoginText> {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
             style: BorderStyle.solid,
             width: 2,
           ),
@@ -41,7 +41,7 @@ class _LoginTextState extends State<LoginText> {
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
             style: BorderStyle.solid,
             width: 2,
           ),
@@ -57,6 +57,7 @@ class _LoginTextState extends State<LoginText> {
         ),
         hintText: 'Digite seu Login:',
         hintStyle: TextStyle(
+          decoration: TextDecoration.none,
           color: currentTheme.isDarkTheme() ? Cores.branco : Cores.cinzaEscuro,
         ),
       ),
@@ -85,7 +86,7 @@ class _SenhaTextState extends State<SenhaText> {
         fillColor: Colors.transparent,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
             style: BorderStyle.solid,
             width: 2,
           ),
@@ -93,7 +94,7 @@ class _SenhaTextState extends State<SenhaText> {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
             style: BorderStyle.solid,
             width: 2,
           ),
@@ -101,7 +102,7 @@ class _SenhaTextState extends State<SenhaText> {
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
             style: BorderStyle.solid,
             width: 2,
           ),

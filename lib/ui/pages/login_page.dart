@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+          currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -70,14 +70,14 @@ class _LoginPageState extends State<LoginPage> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            fixedSize: Size(120, 45),
+                            fixedSize: const Size(120, 45),
                           ),
-                          child: Text('Entrar'),
+                          child: const Text('Entrar'),
                           onPressed: () {
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => MenuPage(),
+                                builder: (context) => const MenuPage(),
                               ),
                               (route) => false,
                             );
@@ -88,7 +88,11 @@ class _LoginPageState extends State<LoginPage> {
                           child: GestureDetector(
                             child: Text(
                               "Não tem conta? Cadastre-se",
-                              style: TextStyle(color: Cores.branco),
+                              style: TextStyle(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                              ),
                             ),
                             onTap: () {},
                           ),

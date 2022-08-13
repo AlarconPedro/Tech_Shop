@@ -55,7 +55,8 @@ class _InputTextState extends State<InputText> {
           borderRadius: BorderRadius.circular(30),
         ),
         hintStyle: TextStyle(
-          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.cinzaEscuro,
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
+          decoration: TextDecoration.none,
         ),
         // fillColor: Colors.transparent,
       ),
