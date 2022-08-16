@@ -5,3 +5,5 @@ export 'carrinho_page.dart';
 export 'categorias_page.dart';
 export 'conta_page.dart';
 export 'menu_page.dart';
+export 'listar_categorias_page.dart';
+export 'forma_pagamento.dart';

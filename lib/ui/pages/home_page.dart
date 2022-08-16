@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
           return GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return ProdutoPage();
+                return const ProdutoPage();
               }));
             },
             child: Container(
@@ -54,16 +54,16 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               margin: const EdgeInsets.symmetric(
-                horizontal: 8,
-                vertical: 8,
+                horizontal: 6.5,
+                vertical: 6,
               ),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: SizedBox(
                       width: double.infinity,
-                      height: 100,
+                      height: 110,
                       child: Container(
                         decoration: const BoxDecoration(
                           color: Colors.amber,

@@ -26,6 +26,9 @@ class _LoginPageState extends State<LoginPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Expanded(
+            child: Container(),
+          ),
           SingleChildScrollView(
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
             child: Row(
@@ -83,25 +86,27 @@ class _LoginPageState extends State<LoginPage> {
                             );
                           },
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: GestureDetector(
-                            child: Text(
-                              "Não tem conta? Cadastre-se",
-                              style: TextStyle(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                              ),
-                            ),
-                            onTap: () {},
-                          ),
-                        ),
                       ],
                     ),
                   ),
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: GestureDetector(
+              child: Text(
+                "Não tem conta? Cadastre-se",
+                style: TextStyle(
+                  color:
+                      currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+                ),
+              ),
+              onTap: () {},
             ),
           ),
         ],

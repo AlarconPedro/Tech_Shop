@@ -74,57 +74,71 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     //   color: Cores.verde,
                     //   thickness: 2,
                     // ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          child: Text(
-                            'Produto',
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.pretoOpaco,
-                              fontSize: 20,
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 10),
+                            child: Text(
+                              'Produto',
+                              style: TextStyle(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.pretoOpaco,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                        Expanded(
-                          child: Container(),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 5,
-                            horizontal: 10,
+                          Expanded(
+                            child: Container(),
                           ),
-                          child: Text(
-                            'Qtde.',
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.pretoOpaco,
-                              fontSize: 20,
+                          VerticalDivider(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.verde
+                                : Cores.azul,
+                            thickness: 2,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 5,
+                              horizontal: 10,
+                            ),
+                            child: Text(
+                              'Qtde.',
+                              style: TextStyle(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.pretoOpaco,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 5,
-                            right: 20,
-                            left: 5,
+                          VerticalDivider(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.verde
+                                : Cores.azul,
+                            thickness: 2,
                           ),
-                          child: Text(
-                            'Preço',
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.pretoOpaco,
-                              fontSize: 20,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              top: 5,
+                              right: 20,
+                              left: 5,
+                            ),
+                            child: Text(
+                              'Preço',
+                              style: TextStyle(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.pretoOpaco,
+                                fontSize: 20,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     Divider(
                       color:
@@ -133,8 +147,16 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     ),
                     Expanded(
                       child: Container(
-                        child: Column(
-                          children: [],
+                        child: Row(
+                          children: [
+                            Column(
+                              children: [
+                                Row(
+                                  children: [],
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),

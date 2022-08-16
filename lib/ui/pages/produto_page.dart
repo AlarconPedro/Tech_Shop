@@ -21,7 +21,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
         title: const Text('Produto'),
         centerTitle: true,
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
       ),
       body: Column(
         children: [
@@ -60,9 +60,9 @@ class _ProdutoPageState extends State<ProdutoPage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.amber,
-                        borderRadius: const BorderRadius.all(
+                        borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
                       ),
@@ -101,7 +101,10 @@ class _ProdutoPageState extends State<ProdutoPage> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Icon(Icons.favorite,
-                              color: Cores.branco, size: 30),
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.pretoOpaco,
+                              size: 30),
                         ),
                       ],
                     ),
