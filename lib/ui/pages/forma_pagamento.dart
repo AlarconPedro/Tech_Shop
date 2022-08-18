@@ -157,7 +157,7 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                         ),
                                       ),
                                       leading: Icon(
-                                        Icons.location_pin,
+                                        Icons.pix_rounded,
                                         size: 28,
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.branco
@@ -210,7 +210,7 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                           ),
                                         ),
                                         leading: Icon(
-                                          Icons.favorite,
+                                          Icons.credit_card_rounded,
                                           size: 28,
                                           color: currentTheme.isDarkTheme()
                                               ? Cores.branco
