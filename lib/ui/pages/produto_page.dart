@@ -27,7 +27,8 @@ class _ProdutoPageState extends State<ProdutoPage> {
         children: [
           Expanded(
             child: Container(
-              child: ListView(
+              child: Column(
+                // scrollDirection: Axis.vertical,
                 children: [
                   Container(
                     decoration: BoxDecoration(

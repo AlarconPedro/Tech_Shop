@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/models/models.dart';
+import 'package:tech_shop/enumerators/enum_Icons.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/listar_categorias_page.dart';
+import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/circulo_espera.dart';
 
@@ -75,7 +78,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ListarCategoria(),
+                    builder: (context) => const ProdutoPage(),
                   ));
             },
             child: Container(
@@ -106,17 +109,32 @@ class _CategoriaPageState extends State<CategoriaPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      listaDados[index].nome,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: currentTheme.isDarkTheme()
-                            ? Cores.branco
-                            : Cores.pretoOpaco,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          listaDados[index].nome,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.pretoOpaco,
+                          ),
+                        ),
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          iconCategorias(IconesCategoria.computadores),
+                          // Icons.category,
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.branco
+                              : Cores.preto,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

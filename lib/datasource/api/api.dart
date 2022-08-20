@@ -14,4 +14,13 @@ class API {
   List<CategoriaModel> _populateCategorias(List<dynamic> json) {
     return json.map((e) => CategoriaModel.fromJson(e)).toList();
   }
+
+  Future<List<ProdutoModel>> getProdutos() async {
+    var response = await request.getJson(url: Globais.urlProdutos);
+    return _populateProdutos(response);
+  }
+
+  List<ProdutoModel> _populateProdutos(List<dynamic> json) {
+    return json.map((e) => ProdutoModel.fromJson(e)).toList();
+  }
 }
