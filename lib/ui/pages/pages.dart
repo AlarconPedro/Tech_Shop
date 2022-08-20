@@ -7,3 +7,4 @@ export 'conta_page.dart';
 export 'menu_page.dart';
 export 'listar_categorias_page.dart';
 export 'forma_pagamento.dart';
+export 'listar_produos.dart';

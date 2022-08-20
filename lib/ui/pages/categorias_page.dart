@@ -78,7 +78,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ProdutoPage(),
+                    builder: (context) => ListarProdutos(),
                   ));
             },
             child: Container(

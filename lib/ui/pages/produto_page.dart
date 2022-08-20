@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
 class ProdutoPage extends StatefulWidget {
-  const ProdutoPage({Key? key}) : super(key: key);
+  final ProdutoModel produto;
+  const ProdutoPage({Key? key, required this.produto}) : super(key: key);
 
   @override
   State<ProdutoPage> createState() => _ProdutoPageState();
@@ -26,9 +28,9 @@ class _ProdutoPageState extends State<ProdutoPage> {
       body: Column(
         children: [
           Expanded(
-            child: Container(
-              child: Column(
-                // scrollDirection: Axis.vertical,
+            child: SizedBox(
+              child: ListView(
+                scrollDirection: Axis.vertical,
                 children: [
                   Container(
                     decoration: BoxDecoration(
@@ -112,15 +114,15 @@ class _ProdutoPageState extends State<ProdutoPage> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      "R\$ 100,00",
+                                      "R\$ ${widget.produto.precoPromocional},00",
                                       style: TextStyle(
-                                        fontSize: 18,
+                                        fontSize: 25,
                                         color: Cores.verde,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
-                                      "R\$ 100,00",
+                                      "R\$ ${widget.produto.preco},00",
                                       style: TextStyle(
                                         fontSize: 18,
                                         color: Cores.vermelho,
@@ -142,15 +144,15 @@ class _ProdutoPageState extends State<ProdutoPage> {
                             ],
                           ),
                         ),
-                        // Expanded(
-                        // child:
+                        //       // Expanded(
+                        //       // child:
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
                               Center(
                                 child: Text(
-                                  'Descrição do produto',
+                                  widget.produto.nome,
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -166,7 +168,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
-                            "Mussum Ipsum, cacilds vidis litro abertis. Paisis, filhis, espiritis santis.Admodum accumsan disputationi eu sit. Vide electram sadipscing et per.Praesent vel viverra nisi. Mauris aliquet nunc non turpis scelerisque, eget.Copo furadis é disculpa de bebadis, arcu quam euismod magna.",
+                            widget.produto.descricao,
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
                               fontSize: 18,
@@ -182,8 +184,8 @@ class _ProdutoPageState extends State<ProdutoPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: Container(
-                          height: double.infinity,
+                        child: SizedBox(
+                          height: 220,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: [
@@ -664,7 +666,7 @@ class _ProdutoPageState extends State<ProdutoPage> {
                             ],
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],

@@ -11,8 +11,8 @@ class ProdutoModel {
   String imagem3;
   String imagem4;
   String imagem5;
-  double preco;
-  double precoPromocional;
+  int preco;
+  int precoPromocional;
 
   ProdutoModel({
     required this.id,

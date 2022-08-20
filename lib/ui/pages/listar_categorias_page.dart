@@ -34,7 +34,7 @@ class _ListarCategoriaState extends State<ListarCategoria> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const ProdutoPage(),
+                      builder: (context) => ListarProdutos(),
                     ));
               },
               child: Container(

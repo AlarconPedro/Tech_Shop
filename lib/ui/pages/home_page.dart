@@ -26,7 +26,8 @@ class _HomePageState extends State<HomePage> {
           return GestureDetector(
             onTap: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return const ProdutoPage();
+                // return ProdutoPage();
+                return Container();
               }));
             },
             child: Container(
