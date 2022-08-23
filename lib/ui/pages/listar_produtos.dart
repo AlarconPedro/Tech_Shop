@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
@@ -8,7 +9,8 @@ import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/circulo_espera.dart';
 
 class ListarProdutos extends StatefulWidget {
-  const ListarProdutos({Key? key}) : super(key: key);
+  final CategoriaModel? model;
+  const ListarProdutos({Key? key, required this.model}) : super(key: key);
 
   @override
   State<ListarProdutos> createState() => _ListarProdutosState();
@@ -22,13 +24,13 @@ class _ListarProdutosState extends State<ListarProdutos> {
       backgroundColor:
           currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
-        title: const Text('Produtos'),
+        title: Text(widget.model!.nome),
         centerTitle: true,
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
       ),
       body: FutureBuilder(
-        future: API().getProdutos(),
+        future: API().getProdutos(widget.model!.id),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -58,6 +60,7 @@ class _ListarProdutosState extends State<ListarProdutos> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ProdutoPage(
                     produto: produtos[index],
+                    categoria: widget.model![index],
                   );
                 }));
               },
@@ -99,19 +102,15 @@ class _ListarProdutosState extends State<ListarProdutos> {
                           width: double.infinity,
                           height: 180,
                           child: Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
+                            decoration: BoxDecoration(
+                              color: Cores.branco,
                               shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.all(
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(10),
                               ),
                             ),
-                            child: Icon(
-                              Icons.home,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              size: 40,
+                            child: Image.network(
+                              Globais.urlImage + produtos[index].imagem1,
                             ),
                           ),
                         ),
@@ -124,11 +123,13 @@ class _ListarProdutosState extends State<ListarProdutos> {
                               padding: const EdgeInsets.all(10),
                               child: Text(
                                 produtos[index].nome,
+                                maxLines: 2,
                                 style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
                                   color: currentTheme.isDarkTheme()
                                       ? Cores.branco
                                       : Cores.preto,
-                                  fontSize: 17,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -141,17 +142,9 @@ class _ListarProdutosState extends State<ListarProdutos> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
+                                horizontal: 15, vertical: 15),
                             child: Column(
                               children: [
-                                Text(
-                                  "R\$ ${produtos[index].precoPromocional},00",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    color: Cores.verde,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
                                 Text(
                                   "R\$ ${produtos[index].preco},00",
                                   style: TextStyle(
@@ -163,13 +156,24 @@ class _ListarProdutosState extends State<ListarProdutos> {
                                     decorationThickness: 2.5,
                                   ),
                                 ),
+                                Text(
+                                  "R\$ ${produtos[index].precoPromocional},00",
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    color: Cores.verde,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Icon(Icons.favorite,
-                                color: Cores.branco, size: 30),
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.pretoOpaco,
+                                size: 30),
                           ),
                         ],
                       ),

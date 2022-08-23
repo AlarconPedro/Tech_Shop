@@ -58,7 +58,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 70,
           ),
         ],
@@ -76,10 +76,13 @@ class _CategoriaPageState extends State<CategoriaPage> {
           child: GestureDetector(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ListarProdutos(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ListarProdutos(
+                    model: listaDados[index],
+                  ),
+                ),
+              );
             },
             child: Container(
               height: 50,

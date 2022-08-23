@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/classes/globais.dart';
+import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
+import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/widgets.dart';
 
 class ProdutoPage extends StatefulWidget {
   final ProdutoModel produto;
-  const ProdutoPage({Key? key, required this.produto}) : super(key: key);
+  final CategoriaModel categoria;
+  const ProdutoPage({Key? key, required this.produto, required this.categoria})
+      : super(key: key);
 
   @override
   State<ProdutoPage> createState() => _ProdutoPageState();
@@ -71,14 +76,17 @@ class _ProdutoPageState extends State<ProdutoPage> {
                           padding:
                               const EdgeInsets.only(left: 8, top: 8, right: 8),
                           child: Container(
-                            decoration: const BoxDecoration(
-                              color: Colors.amber,
-                              borderRadius: BorderRadius.all(
+                            decoration: BoxDecoration(
+                              color: Cores.branco,
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(10),
                               ),
                             ),
                             width: 450,
                             height: 200,
+                            child: Image.network(
+                              Globais.urlImage + widget.produto.imagem1,
+                            ),
                           ),
                         ),
                         Padding(
@@ -115,14 +123,6 @@ class _ProdutoPageState extends State<ProdutoPage> {
                                 child: Column(
                                   children: [
                                     Text(
-                                      "R\$ ${widget.produto.precoPromocional},00",
-                                      style: TextStyle(
-                                        fontSize: 25,
-                                        color: Cores.verde,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    Text(
                                       "R\$ ${widget.produto.preco},00",
                                       style: TextStyle(
                                         fontSize: 18,
@@ -130,6 +130,14 @@ class _ProdutoPageState extends State<ProdutoPage> {
                                         fontWeight: FontWeight.bold,
                                         decoration: TextDecoration.lineThrough,
                                         decorationThickness: 2.5,
+                                      ),
+                                    ),
+                                    Text(
+                                      "R\$ ${widget.produto.precoPromocional},00",
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Cores.verde,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ],
@@ -195,9 +203,31 @@ class _ProdutoPageState extends State<ProdutoPage> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children: List.generate(5, (index) {
-                                  return const ProductCard();
-                                }),
+                                children: [
+                                  FutureBuilder(
+                                    future: API()
+                                        .getRadomSugestion(widget.produto.id),
+                                    builder: (context, snapshot) {
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.waiting:
+                                        case ConnectionState.none:
+                                          return CirculoEspera.criar(
+                                              cor: Cores.branco);
+                                        default:
+                                          if (snapshot.hasError) {
+                                            return Text(
+                                                'Error: ${snapshot.error}');
+                                          } else {
+                                            return cardProduto(snapshot.data
+                                                as List<CategoriaModel>);
+                                          }
+                                      }
+                                    },
+                                  ),
+                                ],
+                                // children: List.generate(5, (index) {
+                                //   return const ProductCard();
+                                // }),
                               ),
                             ],
                           ),
@@ -211,6 +241,122 @@ class _ProdutoPageState extends State<ProdutoPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget cardProduto(List<CategoriaModel> categoria) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: Container(
+            width: 170,
+            height: 200,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color:
+                  currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
+              boxShadow: [
+                BoxShadow(
+                  color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                  blurRadius: 3,
+                  spreadRadius: 1,
+                  blurStyle: BlurStyle.normal,
+                  // offset: const Offset(1.5, 1.5),
+                ),
+              ],
+              borderRadius: const BorderRadius.all(
+                Radius.circular(10),
+              ),
+              border: Border.all(
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                width: 1,
+              ),
+            ),
+            margin: const EdgeInsets.symmetric(
+              horizontal: 6.5,
+              vertical: 6,
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 110,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Cores.branco,
+                        shape: BoxShape.rectangle,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Image.network(
+                        Globais.urlImage + widget.produto.imagem1,
+                      ),
+                    ),
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5.0),
+                      child: Flexible(
+                        child: Text(
+                          'Nome do produto',
+                          style: TextStyle(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Column(
+                        children: [
+                          Text(
+                            "R\$ ${widget.produto.preco},00",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Cores.vermelho,
+                              fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.lineThrough,
+                              decorationThickness: 1.5,
+                            ),
+                          ),
+                          Text(
+                            "R\$ ${widget.produto.precoPromocional},00",
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Cores.verde,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child:
+                          Icon(Icons.favorite, color: Cores.branco, size: 30),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

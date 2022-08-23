@@ -15,12 +15,23 @@ class API {
     return json.map((e) => CategoriaModel.fromJson(e)).toList();
   }
 
-  Future<List<ProdutoModel>> getProdutos() async {
-    var response = await request.getJson(url: Globais.urlProdutos);
+  Future<List<ProdutoModel>> getProdutos(int id) async {
+    var response = await request.getJson(
+        url: Globais.urlProdutoCategoriaId + id.toString());
     return _populateProdutos(response);
   }
 
   List<ProdutoModel> _populateProdutos(List<dynamic> json) {
+    return json.map((e) => ProdutoModel.fromJson(e)).toList();
+  }
+
+  Future<List<ProdutoModel>> getRadomSugestion(int id) async {
+    var response = await request.getJson(
+        url: Globais.urlRandon + id.toString() + "/random");
+    return _populaRandomSugestion(response);
+  }
+
+  List<ProdutoModel> _populaRandomSugestion(List<dynamic> json) {
     return json.map((e) => ProdutoModel.fromJson(e)).toList();
   }
 }

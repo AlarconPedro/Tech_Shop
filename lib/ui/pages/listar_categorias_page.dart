@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
@@ -34,7 +35,9 @@ class _ListarCategoriaState extends State<ListarCategoria> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ListarProdutos(),
+                      builder: (context) => const ListarProdutos(
+                        model: null,
+                      ),
                     ));
               },
               child: Container(
