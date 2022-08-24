@@ -60,7 +60,6 @@ class _ListarProdutosState extends State<ListarProdutos> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return ProdutoPage(
                     produto: produtos[index],
-                    categoria: widget.model![index],
                   );
                 }));
               },
