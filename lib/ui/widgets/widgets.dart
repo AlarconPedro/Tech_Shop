@@ -4,3 +4,4 @@ export 'input_text.dart';
 export 'circulo_espera.dart';
 export 'product_card.dart';
 export 'botao.dart';
+export 'product_random.dart';

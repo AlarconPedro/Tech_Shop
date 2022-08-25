@@ -144,56 +144,6 @@ class _CategoriaPageState extends State<CategoriaPage> {
             ),
           ),
         );
-        // return Padding(
-        //   padding: const EdgeInsets.all(5.0),
-        //   child: GestureDetector(
-        //     onTap: () {
-        //       Navigator.push(
-        //           context,
-        //           MaterialPageRoute(
-        //             builder: (context) => const ListarCategoria(),
-        //           ));
-        //     },
-        //     child: Container(
-        //       height: 50,
-        //       decoration: BoxDecoration(
-        //         shape: BoxShape.rectangle,
-        //         color: Cores.branco,
-        //         boxShadow: [
-        //           BoxShadow(
-        //             color: Cores.azul,
-        //             blurRadius: 3,
-        //             spreadRadius: 1,
-        //             blurStyle: BlurStyle.normal,
-        //             // offset: const Offset(1.5, 1.5),
-        //           ),
-        //         ],
-        //         borderRadius: const BorderRadius.all(
-        //           Radius.circular(10),
-        //         ),
-        //         border: Border.all(
-        //           color: Cores.azul,
-        //           width: 1,
-        //         ),
-        //       ),
-        //       child: Column(
-        //         mainAxisAlignment: MainAxisAlignment.center,
-        //         children: [
-        //           Padding(
-        //             padding: const EdgeInsets.all(8.0),
-        //             child: Text(
-        //               listaDados[index].nome,
-        //               style: TextStyle(
-        //                 fontSize: 20,
-        //                 color: Cores.pretoOpaco,
-        //               ),
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ),
-        // );
       },
     );
   }

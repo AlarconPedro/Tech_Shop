@@ -7,6 +7,7 @@ import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/circulo_espera.dart';
+import 'package:tech_shop/ui/widgets/widgets.dart';
 
 class ListarProdutos extends StatefulWidget {
   final CategoriaModel? model;
@@ -53,160 +54,19 @@ class _ListarProdutosState extends State<ListarProdutos> {
     return ListView.builder(
       itemCount: produtos.length,
       itemBuilder: (context, index) {
-        return Column(
-          children: [
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ProdutoPage(
-                    produto: produtos[index],
-                  );
-                }));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: currentTheme.isDarkTheme()
-                      ? Cores.cinzaEscuro
-                      : Cores.branco,
-                  boxShadow: [
-                    BoxShadow(
-                      color:
-                          currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-                      blurRadius: 3,
-                      spreadRadius: 1,
-                      blurStyle: BlurStyle.normal,
-                      // offset: const Offset(1.5, 1.5),
-                    ),
-                  ],
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  border: Border.all(
-                    color:
-                        currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-                    width: 1,
-                  ),
-                ),
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 6.5,
-                  vertical: 6,
-                ),
-                child: Expanded(
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: SizedBox(
-                          width: double.infinity,
-                          height: 180,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Cores.branco,
-                              shape: BoxShape.rectangle,
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            child: Image.network(
-                              Globais.urlImage + produtos[index].imagem1,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                produtos[index].nome,
-                                maxLines: 2,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 15),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "R\$ ${produtos[index].preco},00",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Cores.vermelho,
-                                    fontWeight: FontWeight.bold,
-                                    decorationStyle: TextDecorationStyle.solid,
-                                    decoration: TextDecoration.lineThrough,
-                                    decorationThickness: 2.5,
-                                  ),
-                                ),
-                                Text(
-                                  "R\$ ${produtos[index].precoPromocional},00",
-                                  style: TextStyle(
-                                    fontSize: 25,
-                                    color: Cores.verde,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            child: Icon(Icons.favorite,
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.pretoOpaco,
-                                size: 30),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+        return ProductCard(
+          preco: produtos[index].preco,
+          precoDesconto: produtos[index].precoPromocional,
+          nome: produtos[index].nome,
+          descricao: produtos[index].descricao,
+          imagem1: produtos[index].imagem1,
+          imagem2: produtos[index].imagem2,
+          imagem3: produtos[index].imagem3,
+          imagem4: produtos[index].imagem4,
+          imagem5: produtos[index].imagem5,
+          produto: produtos[index],
         );
       },
     );
   }
-
-  // criarCard() {
-  //   for (var i = 0; i < 10; i++) {
-  //     return Padding(
-  //       padding: const EdgeInsets.all(8.0),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //         children: [
-  //           Container(
-  //             width: 135,
-  //             height: 135,
-  //             color: Cores.branco,
-  //           ),
-  //           Container(
-  //             width: 135,
-  //             height: 135,
-  //             color: Cores.branco,
-  //           ),
-  //         ],
-  //       ),
-  //     );
-  //   }
-  // }
 }
