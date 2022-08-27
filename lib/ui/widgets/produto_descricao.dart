@@ -5,7 +5,6 @@ import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/temas/theme_provider.dart';
-import 'package:tech_shop/ui/widgets/slide_tile.dart';
 
 class ProdutoDescricao extends StatefulWidget {
   final ProdutoModel produto;
@@ -20,31 +19,8 @@ class ProdutoDescricao extends StatefulWidget {
 }
 
 class _ProdutoDescricaoState extends State<ProdutoDescricao> {
-  final PageController _pageController = PageController(viewportFraction: 0.8);
-  int _currentPage = 0;
-
-  @override
-  void initState() {
-    _pageController.addListener(() {
-      int? next = _pageController.page?.round();
-      if (_currentPage != next) {
-        setState(() {
-          _currentPage = next!;
-        });
-      }
-    });
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
-    final _listSlide = [
-      {'id': 0, 'image': widget.produto.imagem1},
-      {'id': 1, 'image': widget.produto.imagem2},
-      {'id': 2, 'image': widget.produto.imagem3},
-      {'id': 3, 'image': widget.produto.imagem4},
-      {'id': 4, 'image': widget.produto.imagem5},
-    ];
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Container(
       decoration: BoxDecoration(
@@ -96,7 +72,8 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
                             image: NetworkImage(
-                                Globais.urlImage + widget.produto.imagem1),
+                              Globais.urlImage + widget.produto.imagem1,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -109,7 +86,8 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
                             image: NetworkImage(
-                                Globais.urlImage + widget.produto.imagem2),
+                              Globais.urlImage + widget.produto.imagem2,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -122,7 +100,8 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
                             image: NetworkImage(
-                                Globais.urlImage + widget.produto.imagem3),
+                              Globais.urlImage + widget.produto.imagem3,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -135,7 +114,8 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
                             image: NetworkImage(
-                                Globais.urlImage + widget.produto.imagem4),
+                              Globais.urlImage + widget.produto.imagem4,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -148,7 +128,8 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                           borderRadius: BorderRadius.circular(8.0),
                           image: DecorationImage(
                             image: NetworkImage(
-                                Globais.urlImage + widget.produto.imagem5),
+                              Globais.urlImage + widget.produto.imagem5,
+                            ),
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -157,7 +138,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
 
                     //Slider Container properties
                     options: CarouselOptions(
-                      height: 180.0,
+                      height: 250,
                       enlargeCenterPage: true,
                       autoPlay: true,
                       aspectRatio: 16 / 9,
@@ -184,6 +165,114 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
               //     Globais.urlImage + widget.produto.imagem1,
               //   ),
               // ),
+            ),
+          ),
+          SizedBox(
+            height: 70,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        width: 70,
+                        height: 70,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            Globais.urlImage + widget.produto.imagem1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        width: 70,
+                        height: 70,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            Globais.urlImage + widget.produto.imagem2,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        width: 70,
+                        height: 70,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            Globais.urlImage + widget.produto.imagem3,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        width: 70,
+                        height: 70,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            Globais.urlImage + widget.produto.imagem4,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8, top: 8),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        width: 70,
+                        height: 70,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.network(
+                            Globais.urlImage + widget.produto.imagem5,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           Padding(
