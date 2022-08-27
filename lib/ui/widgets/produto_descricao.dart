@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
@@ -73,43 +74,8 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Expanded(
-          //   child: PageView.builder(
-          //     controller: _pageController,
-          //     itemCount: _listSlide.length,
-          //     itemBuilder: (conteext, index) {
-          //       bool activePage = index == _currentPage;
-          //       return SlideTile(
-          //         activePage: activePage,
-          //         image: _listSlide[index]['image'].toString(),
-          //       );
-          //     },
-          //   ),
-          // ),
           Padding(
             padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
-            // child: Container(
-            //   decoration: BoxDecoration(
-            //     color: Cores.branco,
-            //     borderRadius: const BorderRadius.all(
-            //       Radius.circular(10),
-            //     ),
-            //   ),
-            //   width: 450,
-            //   height: 250,
-            //   child: PageView.builder(
-            //     controller: _pageController,
-            //     itemCount: _listSlide.length,
-            //     itemBuilder: (conteext, index) {
-            //       bool activePage = index == _currentPage;
-            //       return SlideTile(
-            //         activePage: activePage,
-            //         image: Globais.urlImage + widget.produto.imagem1,
-            //       );
-            //     },
-            //   ),
-            // ),
-
             child: Container(
               decoration: BoxDecoration(
                 color: Cores.branco,
@@ -119,9 +85,105 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
               ),
               width: 450,
               height: 250,
-              child: Image.network(
-                Globais.urlImage + widget.produto.imagem1,
+              child: ListView(
+                children: [
+                  CarouselSlider(
+                    items: [
+                      //1st Image of Slider
+                      Container(
+                        margin: const EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                Globais.urlImage + widget.produto.imagem1),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+
+                      //2nd Image of Slider
+                      Container(
+                        margin: const EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                Globais.urlImage + widget.produto.imagem2),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+
+                      //3rd Image of Slider
+                      Container(
+                        margin: const EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                Globais.urlImage + widget.produto.imagem3),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+
+                      //4th Image of Slider
+                      Container(
+                        margin: const EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                Globais.urlImage + widget.produto.imagem4),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+
+                      //5th Image of Slider
+                      Container(
+                        margin: const EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                Globais.urlImage + widget.produto.imagem5),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+
+                    //Slider Container properties
+                    options: CarouselOptions(
+                      height: 180.0,
+                      enlargeCenterPage: true,
+                      autoPlay: true,
+                      aspectRatio: 16 / 9,
+                      autoPlayCurve: Curves.fastOutSlowIn,
+                      enableInfiniteScroll: true,
+                      autoPlayAnimationDuration:
+                          const Duration(milliseconds: 800),
+                      viewportFraction: 0.8,
+                    ),
+                  ),
+                ],
               ),
+
+              // child: Container(
+              //   decoration: BoxDecoration(
+              //     color: Cores.branco,
+              //     borderRadius: const BorderRadius.all(
+              //       Radius.circular(10),
+              //     ),
+              //   ),
+              //   width: 450,
+              //   height: 250,
+              //   child: Image.network(
+              //     Globais.urlImage + widget.produto.imagem1,
+              //   ),
+              // ),
             ),
           ),
           Padding(
