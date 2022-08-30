@@ -49,4 +49,14 @@ class ProdutoModel {
       precoPromocional: json['preco_promocional'],
     );
   }
+
+  Map<String, String> imageToJson() {
+    final Map<String, String> data = <String, String>{};
+    data['imagem1'] = imagem1;
+    data['imagem2'] = imagem2;
+    data['imagem3'] = imagem3;
+    data['imagem4'] = imagem4;
+    data['imagem5'] = imagem5;
+    return data;
+  }
 }

@@ -21,7 +21,9 @@ class ProdutoDescricao extends StatefulWidget {
 class _ProdutoDescricaoState extends State<ProdutoDescricao> {
   @override
   Widget build(BuildContext context) {
+    var produtos;
     final currentTheme = Provider.of<ThemeProvider>(context);
+    final carroselController = CarouselController();
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
@@ -60,7 +62,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                 ),
               ),
               width: 450,
-              height: 250,
+              height: 260,
               child: ListView(
                 children: [
                   CarouselSlider(
@@ -135,10 +137,10 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                         ),
                       ),
                     ],
-
+                    carouselController: carroselController,
                     //Slider Container properties
                     options: CarouselOptions(
-                      height: 250,
+                      height: 255.0,
                       enlargeCenterPage: true,
                       autoPlay: true,
                       aspectRatio: 16 / 9,
@@ -151,129 +153,150 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                   ),
                 ],
               ),
-
-              // child: Container(
-              //   decoration: BoxDecoration(
-              //     color: Cores.branco,
-              //     borderRadius: const BorderRadius.all(
-              //       Radius.circular(10),
-              //     ),
-              //   ),
-              //   width: 450,
-              //   height: 250,
-              //   child: Image.network(
-              //     Globais.urlImage + widget.produto.imagem1,
-              //   ),
-              // ),
             ),
           ),
           SizedBox(
             height: 70,
-            child: ListView(
+            child: ListView.builder(
+              itemCount: widget.produto.imageToJson().length,
               scrollDirection: Axis.horizontal,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 8),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Cores.branco,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    carroselController.animateToPage(index);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, top: 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Cores.branco,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(10),
                         ),
-                        width: 70,
-                        height: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            Globais.urlImage + widget.produto.imagem1,
-                          ),
+                      ),
+                      width: 70,
+                      height: 70,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Image.network(
+                          Globais.urlImage + widget.produto.imagem1,
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 8),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Cores.branco,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        width: 70,
-                        height: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            Globais.urlImage + widget.produto.imagem2,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 8),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Cores.branco,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        width: 70,
-                        height: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            Globais.urlImage + widget.produto.imagem3,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 8),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Cores.branco,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        width: 70,
-                        height: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            Globais.urlImage + widget.produto.imagem4,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8, top: 8),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Cores.branco,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(10),
-                          ),
-                        ),
-                        width: 70,
-                        height: 70,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.network(
-                            Globais.urlImage + widget.produto.imagem5,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                );
+              },
             ),
+            // child: ListView(
+            //   scrollDirection: Axis.horizontal8
+            //   children: [
+            //     Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         GestureDetector(
+            //           onTap: () {
+            //             carroselController.animateToPage(0);
+            //           },
+            //           child: Padding(
+            //             padding: const EdgeInsets.only(left: 8, top: 8),
+            //             child: Container(
+            //               decoration: BoxDecoration(
+            //                 color: Cores.branco,
+            //                 borderRadius: const BorderRadius.all(
+            //                   Radius.circular(10),
+            //                 ),
+            //               ),
+            //               width: 70,
+            //               height: 70,
+            //               child: Padding(
+            //                 padding: const EdgeInsets.all(8.0),
+            //                 child: Image.network(
+            //                   Globais.urlImage + widget.produto.imagem1,
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: const EdgeInsets.only(left: 8, top: 8),
+            //           child: Container(
+            //             decoration: BoxDecoration(
+            //               color: Cores.branco,
+            //               borderRadius: const BorderRadius.all(
+            //                 Radius.circular(10),
+            //               ),
+            //             ),
+            //             width: 70,
+            //             height: 70,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Image.network(
+            //                 Globais.urlImage + widget.produto.imagem2,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: const EdgeInsets.only(left: 8, top: 8),
+            //           child: Container(
+            //             decoration: BoxDecoration(
+            //               color: Cores.branco,
+            //               borderRadius: const BorderRadius.all(
+            //                 Radius.circular(10),
+            //               ),
+            //             ),
+            //             width: 70,
+            //             height: 70,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Image.network(
+            //                 Globais.urlImage + widget.produto.imagem3,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: const EdgeInsets.only(left: 8, top: 8),
+            //           child: Container(
+            //             decoration: BoxDecoration(
+            //               color: Cores.branco,
+            //               borderRadius: const BorderRadius.all(
+            //                 Radius.circular(10),
+            //               ),
+            //             ),
+            //             width: 70,
+            //             height: 70,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Image.network(
+            //                 Globais.urlImage + widget.produto.imagem4,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         Padding(
+            //           padding: const EdgeInsets.only(left: 8, top: 8),
+            //           child: Container(
+            //             decoration: BoxDecoration(
+            //               color: Cores.branco,
+            //               borderRadius: const BorderRadius.all(
+            //                 Radius.circular(10),
+            //               ),
+            //             ),
+            //             width: 70,
+            //             height: 70,
+            //             child: Padding(
+            //               padding: const EdgeInsets.all(8.0),
+            //               child: Image.network(
+            //                 Globais.urlImage + widget.produto.imagem5,
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   ],
+            // ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
