@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
@@ -16,13 +17,21 @@ class _LoginTextState extends State<LoginText> {
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return TextField(
+      style: TextStyle(
+        color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        decoration: TextDecoration.none,
+        fontStyle: FontStyle.normal,
+      ),
       textAlignVertical: TextAlignVertical.center,
-      // style: const TextStyle(
-      //   backgroundColor: Colors.transparent,
-      // ),
       decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.transparent,
+        prefixIcon: Icon(
+          Icons.person_rounded,
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        ),
+        labelText: 'Login',
+        labelStyle: TextStyle(
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
@@ -77,13 +86,25 @@ class _SenhaTextState extends State<SenhaText> {
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return TextField(
+      style: TextStyle(
+        color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        decoration: TextDecoration.none,
+        fontStyle: FontStyle.normal,
+      ),
       textAlignVertical: TextAlignVertical.center,
-      // style: const TextStyle(
-      //   backgroundColor: Colors.transparent,
-      // ),
       decoration: InputDecoration(
-        filled: true,
-        fillColor: Colors.transparent,
+        prefixIcon: Icon(
+          Icons.lock,
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        ),
+        suffixIcon: Icon(
+          Icons.remove_red_eye,
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        ),
+        labelText: 'Senha',
+        labelStyle: TextStyle(
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
             color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,

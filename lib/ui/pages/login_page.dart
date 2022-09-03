@@ -30,64 +30,63 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(),
           ),
           SingleChildScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
+            // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
             child: Row(
               children: [
                 Expanded(
-                  child: Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.computer_outlined,
-                          size: 60,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.computer_outlined,
+                        size: 60,
+                        color: currentTheme.isDarkTheme()
+                            ? Cores.branco
+                            : Cores.pretoOpaco,
+                      ),
+                      Text(
+                        'Tech Shop',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
                           color: currentTheme.isDarkTheme()
                               ? Cores.branco
-                              : Cores.pretoOpaco,
+                              : Cores.preto,
                         ),
-                        Text(
-                          'Tech Shop',
-                          style: TextStyle(
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.preto,
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                        child: LoginText(),
+                      ),
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                        child: SenhaText(),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: currentTheme.isDarkTheme()
+                              ? Cores.vermelho
+                              : Cores.azul,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
+                          fixedSize: const Size(120, 45),
                         ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                          child: LoginText(),
-                        ),
-                        const Padding(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                          child: SenhaText(),
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: currentTheme.isDarkTheme()
-                                ? Cores.vermelho
-                                : Cores.azul,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        child: const Text('Entrar'),
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MenuPage(),
                             ),
-                            fixedSize: const Size(120, 45),
-                          ),
-                          child: const Text('Entrar'),
-                          onPressed: () {
-                            Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const MenuPage(),
-                              ),
-                              (route) => false,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                            (route) => false,
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -97,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(15.0),
             child: GestureDetector(
               child: Text(
                 "Não tem conta? Cadastre-se",
@@ -106,7 +105,14 @@ class _LoginPageState extends State<LoginPage> {
                       currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CadastroPage(),
+                  ),
+                );
+              },
             ),
           ),
         ],
