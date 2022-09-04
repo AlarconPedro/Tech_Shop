@@ -6,6 +6,7 @@ import 'package:tech_shop/datasource/models/models.dart';
 class API {
   final request = HttpRequest();
 
+  // GET FUNCTIONS
   Future<List<CategoriaModel>> getCategorias() async {
     var response = await request.getJson(url: Globais.urlCategorias);
     return _populateCategorias(response);
@@ -41,6 +42,18 @@ class API {
   }
 
   List<ProdutoModel> _populateProdutosRandom(List<dynamic> json) {
+    return json.map((e) => ProdutoModel.fromJson(e)).toList();
+  }
+
+  //POST FUNCTIONS
+  Future<List<ProdutoModel>> postLogin(
+      {required String email, required String senha}) async {
+    var response = await request.postJson(
+        url: Globais.urlLogin, body: {"email": email, "senha": senha});
+    return _populateLogin(response);
+  }
+
+  List<ProdutoModel> _populateLogin(List<dynamic> json) {
     return json.map((e) => ProdutoModel.fromJson(e)).toList();
   }
 }
