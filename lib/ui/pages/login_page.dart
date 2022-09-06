@@ -17,6 +17,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _rememberMe = false;
+
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
@@ -30,8 +32,6 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(),
           ),
           SingleChildScrollView(
-            // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            // keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.manual,
             child: Row(
               children: [
                 Expanded(
@@ -65,26 +65,66 @@ class _LoginPageState extends State<LoginPage> {
                             EdgeInsets.symmetric(vertical: 8, horizontal: 15),
                         child: SenhaText(),
                       ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: currentTheme.isDarkTheme()
-                              ? Cores.vermelho
-                              : Cores.azul,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          fixedSize: const Size(120, 45),
-                        ),
-                        child: const Text('Entrar'),
-                        onPressed: () {
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MenuPage(),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Checkbox(
+                              value: _rememberMe,
+                              checkColor: Cores.preto,
+                              activeColor: Cores.branco,
+                              onChanged: (value) {
+                                setState(() {
+                                  _rememberMe = value!;
+                                });
+                              },
                             ),
-                            (route) => false,
-                          );
-                        },
+                          ),
+                          Text(
+                            "Lembrar-me",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 20,
+                              ),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  primary: currentTheme.isDarkTheme()
+                                      ? Cores.vermelho
+                                      : Cores.azul,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  fixedSize: const Size(120, 45),
+                                ),
+                                child: const Text('Entrar'),
+                                onPressed: () {
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const MenuPage(),
+                                    ),
+                                    (route) => false,
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

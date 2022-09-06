@@ -1,6 +1,7 @@
 import 'package:http/http.dart' as http;
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/datasource/http/http.dart';
+import 'package:tech_shop/datasource/models/login_model.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 
 class API {
@@ -46,14 +47,24 @@ class API {
   }
 
   //POST FUNCTIONS
-  Future<List<ProdutoModel>> postLogin(
-      {required String email, required String senha}) async {
-    var response = await request.postJson(
-        url: Globais.urlLogin, body: {"email": email, "senha": senha});
+  Future<List<LoginModel>> postLogin({
+    required String nome,
+    required String cpf,
+    required String dataNascimento,
+    required String email,
+    required String senha,
+  }) async {
+    var response = await request.postJson(url: Globais.urlLogin, body: {
+      "email": email,
+      "senha": senha,
+      "nome": nome,
+      "cpf": cpf,
+      "data_nascimento": dataNascimento
+    });
     return _populateLogin(response);
   }
 
-  List<ProdutoModel> _populateLogin(List<dynamic> json) {
-    return json.map((e) => ProdutoModel.fromJson(e)).toList();
+  List<LoginModel> _populateLogin(List<dynamic> json) {
+    return json.map((e) => LoginModel.fromJson(e)).toList();
   }
 }

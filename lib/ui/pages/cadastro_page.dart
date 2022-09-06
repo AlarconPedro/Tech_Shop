@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/datasource/api/api.dart';
+import 'package:tech_shop/datasource/http/http.dart';
+import 'package:tech_shop/datasource/models/login_model.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
+import 'package:tech_shop/ui/pages/login_page.dart';
 import 'package:tech_shop/ui/temas/theme_provider.dart';
 
 class CadastroPage extends StatefulWidget {
@@ -12,6 +18,9 @@ class CadastroPage extends StatefulWidget {
 
 class _CadastroPageState extends State<CadastroPage> {
   final TextEditingController _nomeController = TextEditingController();
+  final TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _dataNascimentoController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
   final TextEditingController _confirmaController = TextEditingController();
@@ -49,368 +58,516 @@ class _CadastroPageState extends State<CadastroPage> {
                   ),
                 ],
               ),
-              child: Column(
-                children: [
-                  SingleChildScrollView(
-                    keyboardDismissBehavior:
-                        ScrollViewKeyboardDismissBehavior.onDrag,
-                    scrollDirection: Axis.vertical,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
+              child: SingleChildScrollView(
+                child: SingleChildScrollView(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Dados do Usuário',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.branco
+                              : Cores.cinzaEscuro,
                         ),
-                        Text(
-                          'Dados do Usuário',
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _nomeController,
                           style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
                             color: currentTheme.isDarkTheme()
                                 ? Cores.branco
-                                : Cores.cinzaEscuro,
+                                : Cores.preto,
+                            decoration: TextDecoration.none,
+                            fontStyle: FontStyle.normal,
                           ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: _nomeController,
-                            style: TextStyle(
+                          decoration: InputDecoration(
+                            labelText: 'Nome',
+                            labelStyle: TextStyle(
                               color: currentTheme.isDarkTheme()
                                   ? Cores.branco
                                   : Cores.preto,
                               decoration: TextDecoration.none,
                               fontStyle: FontStyle.normal,
                             ),
-                            decoration: InputDecoration(
-                              labelText: 'Nome',
-                              labelStyle: TextStyle(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
                                 color: currentTheme.isDarkTheme()
                                     ? Cores.branco
                                     : Cores.preto,
-                                decoration: TextDecoration.none,
-                                fontStyle: FontStyle.normal,
+                                style: BorderStyle.solid,
+                                width: 2,
                               ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.vermelho
-                                      : Cores.vermelho,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              hintText: 'Digite seu Nome:',
-                              hintStyle: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.cinzaEscuro,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: _emailController,
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            decoration: InputDecoration(
-                              labelText: 'Email',
-                              labelStyle: TextStyle(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                decoration: TextDecoration.none,
-                                fontStyle: FontStyle.normal,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.vermelho
-                                      : Cores.vermelho,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              hintText: 'Digite seu Email:',
-                              hintStyle: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.cinzaEscuro,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: _senhaController,
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            decoration: InputDecoration(
-                              labelText: 'Senha',
-                              labelStyle: TextStyle(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                decoration: TextDecoration.none,
-                                fontStyle: FontStyle.normal,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.vermelho
-                                      : Cores.vermelho,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              hintText: 'Digite sua Senha:',
-                              hintStyle: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.cinzaEscuro,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            controller: _confirmaController,
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            decoration: InputDecoration(
-                              labelText: 'Confirmar Senha',
-                              labelStyle: TextStyle(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                decoration: TextDecoration.none,
-                                fontStyle: FontStyle.normal,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.branco
-                                      : Cores.preto,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.vermelho
-                                      : Cores.vermelho,
-                                  style: BorderStyle.solid,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                              ),
-                              hintText: 'Confirme sua Senha:',
-                              hintStyle: TextStyle(
-                                decoration: TextDecoration.none,
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.cinzaEscuro,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            cadastraUsuario();
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Text(
-                              'Cadastrar',
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.pretoOpaco,
-                              ),
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            primary: currentTheme.isDarkTheme()
-                                ? Cores.vermelho
-                                : Cores.azul,
-                            onPrimary: currentTheme.isDarkTheme()
-                                ? Cores.cinzaEscuro
-                                : Cores.branco,
-                            shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.vermelho
+                                    : Cores.vermelho,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            hintText: 'Digite seu Nome:',
+                            hintStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.cinzaEscuro,
+                            ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _cpfController,
+                          style: TextStyle(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.preto,
+                            decoration: TextDecoration.none,
+                            fontStyle: FontStyle.normal,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: 'CPF',
+                            labelStyle: TextStyle(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                              decoration: TextDecoration.none,
+                              fontStyle: FontStyle.normal,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.vermelho
+                                    : Cores.vermelho,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            hintText: 'Digite seu CPF:',
+                            hintStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.cinzaEscuro,
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _dataNascimentoController,
+                          style: TextStyle(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.preto,
+                            decoration: TextDecoration.none,
+                            fontStyle: FontStyle.normal,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: 'Data de Nascimento',
+                            labelStyle: TextStyle(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                              decoration: TextDecoration.none,
+                              fontStyle: FontStyle.normal,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.vermelho
+                                    : Cores.vermelho,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            hintText: 'Digite sua Data de Nascimento:',
+                            hintStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.cinzaEscuro,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _emailController,
+                          style: TextStyle(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.preto,
+                            decoration: TextDecoration.none,
+                            fontStyle: FontStyle.normal,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            labelStyle: TextStyle(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                              decoration: TextDecoration.none,
+                              fontStyle: FontStyle.normal,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.vermelho
+                                    : Cores.vermelho,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            hintText: 'Digite seu Email:',
+                            hintStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.cinzaEscuro,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _senhaController,
+                          style: TextStyle(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.preto,
+                            decoration: TextDecoration.none,
+                            fontStyle: FontStyle.normal,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: 'Senha',
+                            labelStyle: TextStyle(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                              decoration: TextDecoration.none,
+                              fontStyle: FontStyle.normal,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.vermelho
+                                    : Cores.vermelho,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            hintText: 'Digite sua Senha:',
+                            hintStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.cinzaEscuro,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          controller: _confirmaController,
+                          style: TextStyle(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.preto,
+                            decoration: TextDecoration.none,
+                            fontStyle: FontStyle.normal,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: 'Confirmar Senha',
+                            labelStyle: TextStyle(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                              decoration: TextDecoration.none,
+                              fontStyle: FontStyle.normal,
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.branco
+                                    : Cores.preto,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.vermelho
+                                    : Cores.vermelho,
+                                style: BorderStyle.solid,
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                            ),
+                            hintText: 'Confirme sua Senha:',
+                            hintStyle: TextStyle(
+                              decoration: TextDecoration.none,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.cinzaEscuro,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          cadastraUsuario();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Text(
+                            'Cadastrar',
+                            style: TextStyle(
+                              fontSize: 17,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.pretoOpaco,
+                            ),
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: currentTheme.isDarkTheme()
+                              ? Cores.vermelho
+                              : Cores.azul,
+                          onPrimary: currentTheme.isDarkTheme()
+                              ? Cores.cinzaEscuro
+                              : Cores.branco,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -424,14 +581,14 @@ class _CadastroPageState extends State<CadastroPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Erro'),
+          title: const Text('Erro'),
           content: Text(message ?? 'Erro ao cadastrar'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Ok'),
+              child: const Text('Ok'),
             ),
           ],
         );
@@ -444,10 +601,51 @@ class _CadastroPageState extends State<CadastroPage> {
         _emailController.text != "" &&
         _senhaController.text != "" &&
         _confirmaController.text != "";
-    if (_senhaController.text == _confirmaController.text) {
-      _showDialog(context, message: 'Cadastro realizado com sucesso!');
-    } else {
+    if (_nomeController.text != "" &&
+        _emailController.text != "" &&
+        _cpfController.text != "" &&
+        _senhaController.text != "" &&
+        _confirmaController.text != "") {
+      var response = _getLogin();
+      print(response);
+    } else if (_senhaController.text == _confirmaController.text) {
       _showDialog(context, message: 'Senhas não conferem!');
+      _nomeController.clear();
+      _emailController.clear();
+      _cpfController.clear();
+      _senhaController.clear();
+      _dataNascimentoController.clear();
+    } else {
+      _showDialog(context, message: 'Preencha todos os campos!');
+      _nomeController.clear();
+      _emailController.clear();
+      _cpfController.clear();
+      _senhaController.clear();
+      _dataNascimentoController.clear();
+    }
+  }
+
+  Future<List<LoginModel>> _getLogin() async {
+    var response = await HttpRequest().postLogin(
+      nome: _nomeController.text,
+      email: _emailController.text,
+      senha: _senhaController.text,
+      cpf: _cpfController.text,
+      dataNascimento: _dataNascimentoController.text,
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      var json = jsonDecode(response.body);
+      _showDialog(context, message: 'Cadastro realizado com sucesso!');
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+      );
+      return (json as List).map((e) => LoginModel.fromJson(e)).toList();
+    } else {
+      throw Exception('Erro ao cadastrar o usuário');
     }
   }
 }
