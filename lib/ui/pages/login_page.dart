@@ -177,6 +177,67 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  Widget campoLogin(
+      String label, String hint, TextEditingController controller) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return TextField(
+      controller: controller,
+      style: TextStyle(
+        color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        decoration: TextDecoration.none,
+        fontStyle: FontStyle.normal,
+      ),
+      textAlignVertical: TextAlignVertical.center,
+      decoration: InputDecoration(
+        prefixIcon: Icon(
+          Icons.person_rounded,
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        ),
+        labelText: label,
+        labelStyle: TextStyle(
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+            style: BorderStyle.solid,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+            style: BorderStyle.solid,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+            style: BorderStyle.solid,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: currentTheme.isDarkTheme() ? Cores.vermelho : Cores.vermelho,
+            style: BorderStyle.solid,
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        hintText: 'Digite seu Login:',
+        hintStyle: TextStyle(
+          decoration: TextDecoration.none,
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.cinzaEscuro,
+        ),
+      ),
+    );
+  }
+
   Future<http.Response> logar(String email, String senha) async {
     var response = await http.post(
       Uri.parse(Globais.urlLogin),
