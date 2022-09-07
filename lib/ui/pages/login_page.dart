@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/menu_page.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
@@ -8,6 +11,7 @@ import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/botao.dart';
 import 'package:tech_shop/ui/widgets/input_text.dart';
 import 'package:tech_shop/ui/widgets/login_text.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -18,6 +22,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool _rememberMe = false;
+  bool logado = false;
 
   @override
   Widget build(BuildContext context) {
@@ -113,12 +118,24 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 child: const Text('Entrar'),
                                 onPressed: () {
-                                  Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const MenuPage(),
-                                    ),
-                                    (route) => false,
+                                  logar(email, senha).then(
+                                    (value) => logado
+                                        ? Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const MenuPage(),
+                                            ),
+                                            (route) => false,
+                                          )
+                                        : Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const LoginPage(),
+                                            ),
+                                            (route) => false,
+                                          ),
                                   );
                                 },
                               ),
@@ -158,5 +175,22 @@ class _LoginPageState extends State<LoginPage> {
         ],
       ),
     );
+  }
+
+  Future<http.Response> logar(String email, String senha) async {
+    var response = await http.post(
+      Uri.parse(Globais.urlLogin),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+        'senha': senha,
+      }),
+    );
+    setState(() {
+      response.statusCode == 200 ? logado = true : logado = false;
+    });
+    return json.decode(response.body);
   }
 }
