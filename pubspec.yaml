@@ -38,6 +38,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^0.13.4
   carousel_slider: ^4.1.1
+  mask_text_input_formatter: ^2.4.0
 
 dev_dependencies:
   flutter_test:

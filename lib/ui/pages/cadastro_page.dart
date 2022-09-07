@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/http/http.dart';
@@ -19,11 +21,22 @@ class CadastroPage extends StatefulWidget {
 class _CadastroPageState extends State<CadastroPage> {
   final TextEditingController _nomeController = TextEditingController();
   final TextEditingController _cpfController = TextEditingController();
+  final TextEditingController _numeroTelefone = TextEditingController();
   final TextEditingController _dataNascimentoController =
       TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
   final TextEditingController _confirmaController = TextEditingController();
+
+  final maskCpf = MaskTextInputFormatter(
+      mask: "###.###.###-##", filter: {"#": RegExp(r'[0-9]')});
+  final maskNumero = MaskTextInputFormatter(
+      mask: "(##) #####-####", filter: {"#": RegExp(r'[0-9]')});
+  final maskData = MaskTextInputFormatter(
+      mask: "####-##-##", filter: {"#": RegExp(r'[0-9]')});
+  final maskDefault =
+      MaskTextInputFormatter(mask: "", filter: {"#": RegExp(r'[0-9]')});
+
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
@@ -81,455 +94,61 @@ class _CadastroPageState extends State<CadastroPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _nomeController,
-                          style: TextStyle(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.preto,
-                            decoration: TextDecoration.none,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'Nome',
-                            labelStyle: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.vermelho
-                                    : Cores.vermelho,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            hintText: 'Digite seu Nome:',
-                            hintStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.cinzaEscuro,
-                            ),
-                          ),
-                        ),
+                      campoTexto(
+                        controller: _nomeController,
+                        hint: 'Digite seu nome:',
+                        inputFormatter: maskDefault,
+                        keyboardType: TextInputType.name,
+                        label: 'Nome',
+                        obscureText: false,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _cpfController,
-                          style: TextStyle(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.preto,
-                            decoration: TextDecoration.none,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'CPF',
-                            labelStyle: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.vermelho
-                                    : Cores.vermelho,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            hintText: 'Digite seu CPF:',
-                            hintStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.cinzaEscuro,
-                            ),
-                          ),
-                        ),
+                      campoTexto(
+                        controller: _cpfController,
+                        hint: 'Digite seu CPF:',
+                        inputFormatter: maskCpf,
+                        keyboardType: TextInputType.number,
+                        label: 'CPF',
+                        obscureText: false,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _dataNascimentoController,
-                          style: TextStyle(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.preto,
-                            decoration: TextDecoration.none,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'Data de Nascimento',
-                            labelStyle: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.vermelho
-                                    : Cores.vermelho,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            hintText: 'Digite sua Data de Nascimento:',
-                            hintStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.cinzaEscuro,
-                            ),
-                          ),
-                        ),
+                      campoTexto(
+                        controller: _numeroTelefone,
+                        hint: 'Digite seu Numero de Telefone:',
+                        inputFormatter: maskNumero,
+                        keyboardType: TextInputType.number,
+                        label: 'Numero de Telefone',
+                        obscureText: false,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _emailController,
-                          style: TextStyle(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.preto,
-                            decoration: TextDecoration.none,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            labelStyle: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.vermelho
-                                    : Cores.vermelho,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            hintText: 'Digite seu Email:',
-                            hintStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.cinzaEscuro,
-                            ),
-                          ),
-                        ),
+                      campoTexto(
+                        controller: _dataNascimentoController,
+                        hint: 'Digite sua Data de Nascimento:',
+                        inputFormatter: maskData,
+                        keyboardType: TextInputType.datetime,
+                        label: 'Data de Nascimento',
+                        obscureText: false,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _senhaController,
-                          style: TextStyle(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.preto,
-                            decoration: TextDecoration.none,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'Senha',
-                            labelStyle: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.vermelho
-                                    : Cores.vermelho,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            hintText: 'Digite sua Senha:',
-                            hintStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.cinzaEscuro,
-                            ),
-                          ),
-                        ),
+                      campoTexto(
+                        controller: _emailController,
+                        hint: 'Digite seu Email:',
+                        inputFormatter: maskDefault,
+                        keyboardType: TextInputType.emailAddress,
+                        label: 'Email',
+                        obscureText: false,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextFormField(
-                          controller: _confirmaController,
-                          style: TextStyle(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.preto,
-                            decoration: TextDecoration.none,
-                            fontStyle: FontStyle.normal,
-                          ),
-                          decoration: InputDecoration(
-                            labelText: 'Confirmar Senha',
-                            labelStyle: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                              decoration: TextDecoration.none,
-                              fontStyle: FontStyle.normal,
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.vermelho
-                                    : Cores.vermelho,
-                                style: BorderStyle.solid,
-                                width: 2,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10),
-                              ),
-                            ),
-                            hintText: 'Confirme sua Senha:',
-                            hintStyle: TextStyle(
-                              decoration: TextDecoration.none,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.cinzaEscuro,
-                            ),
-                          ),
-                        ),
+                      campoTexto(
+                        controller: _senhaController,
+                        hint: 'Digite sua Senha:',
+                        inputFormatter: maskDefault,
+                        keyboardType: TextInputType.visiblePassword,
+                        label: 'Senha',
+                        obscureText: true,
+                      ),
+                      campoTexto(
+                        controller: _confirmaController,
+                        hint: 'Confirme sua Senha:',
+                        inputFormatter: maskDefault,
+                        keyboardType: TextInputType.visiblePassword,
+                        label: 'Confirmar Senha',
+                        obscureText: true,
                       ),
                       const SizedBox(
                         height: 20,
@@ -576,12 +195,88 @@ class _CadastroPageState extends State<CadastroPage> {
     );
   }
 
-  void _showDialog(BuildContext context, {String? message}) {
+  Widget campoTexto({
+    required String label,
+    required TextEditingController controller,
+    required String hint,
+    required TextInputFormatter inputFormatter,
+    required TextInputType? keyboardType,
+    required bool obscureText,
+  }) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: TextFormField(
+        obscureText: obscureText,
+        inputFormatters: [inputFormatter],
+        controller: controller,
+        style: TextStyle(
+          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+          decoration: TextDecoration.none,
+          fontStyle: FontStyle.normal,
+        ),
+        decoration: InputDecoration(
+          labelText: label,
+          labelStyle: TextStyle(
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+            decoration: TextDecoration.none,
+            fontStyle: FontStyle.normal,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+              style: BorderStyle.solid,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+              style: BorderStyle.solid,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+              style: BorderStyle.solid,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              color:
+                  currentTheme.isDarkTheme() ? Cores.vermelho : Cores.vermelho,
+              style: BorderStyle.solid,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          border: const OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(10),
+            ),
+          ),
+          hintText: hint,
+          hintStyle: TextStyle(
+            decoration: TextDecoration.none,
+            color:
+                currentTheme.isDarkTheme() ? Cores.branco : Cores.cinzaEscuro,
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showDialog(BuildContext context, {String? message, String? title}) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Erro'),
+          title: Text(title!),
           content: Text(message ?? 'Erro ao cadastrar'),
           actions: [
             TextButton(
@@ -609,14 +304,14 @@ class _CadastroPageState extends State<CadastroPage> {
       var response = _getLogin();
       print(response);
     } else if (_senhaController.text == _confirmaController.text) {
-      _showDialog(context, message: 'Senhas não conferem!');
+      _showDialog(context, message: 'Senhas não conferem!', title: 'Erro');
       _nomeController.clear();
       _emailController.clear();
       _cpfController.clear();
       _senhaController.clear();
       _dataNascimentoController.clear();
     } else {
-      _showDialog(context, message: 'Preencha todos os campos!');
+      _showDialog(context, message: 'Preencha todos os campos!', title: 'Erro');
       _nomeController.clear();
       _emailController.clear();
       _cpfController.clear();
@@ -636,7 +331,8 @@ class _CadastroPageState extends State<CadastroPage> {
     print(response.body);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
-      _showDialog(context, message: 'Cadastro realizado com sucesso!');
+      _showDialog(context,
+          message: 'Cadastro realizado com sucesso!', title: 'Sucesso');
       Navigator.push(
         context,
         MaterialPageRoute(

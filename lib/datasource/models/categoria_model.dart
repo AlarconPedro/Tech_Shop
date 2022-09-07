@@ -1,6 +1,5 @@
 class CategoriaModel {
   int id;
-  int status;
   String nome;
   String icone;
   String criadoEm;
@@ -8,7 +7,6 @@ class CategoriaModel {
 
   CategoriaModel({
     required this.id,
-    required this.status,
     required this.nome,
     required this.icone,
     required this.criadoEm,
@@ -18,7 +16,6 @@ class CategoriaModel {
   factory CategoriaModel.fromJson(Map<String, dynamic> json) {
     return CategoriaModel(
       id: json['id'],
-      status: json['status'],
       nome: json['nome'],
       icone: json['icone'],
       criadoEm: json['created_at'],

@@ -1,9 +1,6 @@
 class ProdutoModel {
   int id;
   int categoriaId;
-  int status;
-  String creadoEm;
-  String atualizadoEm;
   String nome;
   String descricao;
   String imagem1;
@@ -17,9 +14,6 @@ class ProdutoModel {
   ProdutoModel({
     required this.id,
     required this.categoriaId,
-    required this.status,
-    required this.creadoEm,
-    required this.atualizadoEm,
     required this.nome,
     required this.descricao,
     required this.imagem1,
@@ -35,9 +29,6 @@ class ProdutoModel {
     return ProdutoModel(
       id: json['id'],
       categoriaId: json['categoria_id'],
-      status: json['status'],
-      creadoEm: json['created_at'],
-      atualizadoEm: json['updated_at'],
       nome: json['nome'],
       descricao: json['descricao'],
       imagem1: json['imagem1'],
