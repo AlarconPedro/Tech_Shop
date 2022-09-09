@@ -21,6 +21,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _senhaController = TextEditingController();
+
   bool _rememberMe = false;
   bool logado = false;
 
@@ -43,32 +46,45 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.computer_outlined,
-                        size: 60,
-                        color: currentTheme.isDarkTheme()
-                            ? Cores.branco
-                            : Cores.pretoOpaco,
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 200,
+                        child: Image.asset("images/logo.png"),
                       ),
-                      Text(
-                        'Tech Shop',
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.branco
-                              : Cores.preto,
+                      // Icon(
+                      //   Icons.computer_outlined,
+                      //   size: 60,
+                      //   color: currentTheme.isDarkTheme()
+                      //       ? Cores.branco
+                      //       : Cores.pretoOpaco,
+                      // ),
+                      // Text(
+                      //   'Tech Shop',
+                      //   style: TextStyle(
+                      //     fontSize: 30,
+                      //     fontWeight: FontWeight.bold,
+                      //     color: currentTheme.isDarkTheme()
+                      //         ? Cores.branco
+                      //         : Cores.preto,
+                      //   ),
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 15),
+                        child: campoLogin(
+                          'E-mail',
+                          'Digite seu e-mail:',
+                          _emailController,
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                        child: LoginText(),
-                      ),
-                      const Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 15),
-                        child: SenhaText(),
+                        child: campoLogin(
+                          'Senha',
+                          'Digite sua senha:',
+                          _senhaController,
+                        ),
                       ),
                       Row(
                         children: [
@@ -118,25 +134,8 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 child: const Text('Entrar'),
                                 onPressed: () {
-                                  logar(email, senha).then(
-                                    (value) => logado
-                                        ? Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MenuPage(),
-                                            ),
-                                            (route) => false,
-                                          )
-                                        : Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginPage(),
-                                            ),
-                                            (route) => false,
-                                          ),
-                                  );
+                                  logar(_emailController.text,
+                                      _senhaController.text);
                                 },
                               ),
                             ),
@@ -229,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           borderRadius: BorderRadius.circular(30),
         ),
-        hintText: 'Digite seu Login:',
+        hintText: hint,
         hintStyle: TextStyle(
           decoration: TextDecoration.none,
           color: currentTheme.isDarkTheme() ? Cores.branco : Cores.cinzaEscuro,
@@ -238,7 +237,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<http.Response> logar(String email, String senha) async {
+  void logar(String email, String senha) async {
     var response = await http.post(
       Uri.parse(Globais.urlLogin),
       headers: <String, String>{
@@ -249,9 +248,30 @@ class _LoginPageState extends State<LoginPage> {
         'senha': senha,
       }),
     );
-    setState(() {
-      response.statusCode == 200 ? logado = true : logado = false;
-    });
-    return json.decode(response.body);
+    if (response.statusCode == 200) {
+      setState(() {
+        logado = true;
+      });
+    } else {
+      setState(() {
+        logado = false;
+      });
+    }
+    logado
+        ? Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const MenuPage(),
+            ),
+            (route) => false,
+          )
+        : Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const LoginPage(),
+            ),
+            (route) => false,
+          );
+    print(response.body);
   }
 }

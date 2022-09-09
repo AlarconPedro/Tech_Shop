@@ -33,7 +33,7 @@ class _CadastroPageState extends State<CadastroPage> {
   final maskNumero = MaskTextInputFormatter(
       mask: "(##) #####-####", filter: {"#": RegExp(r'[0-9]')});
   final maskData = MaskTextInputFormatter(
-      mask: "####-##-##", filter: {"#": RegExp(r'[0-9]')});
+      mask: "##-##-####", filter: {"#": RegExp(r'[0-9]')});
   final maskDefault =
       MaskTextInputFormatter(mask: "", filter: {"#": RegExp(r'[0-9]')});
 
