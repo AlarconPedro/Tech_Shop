@@ -1,16 +1,11 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
-import 'package:tech_shop/ui/pages/menu_page.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
-import 'package:tech_shop/ui/widgets/botao.dart';
-import 'package:tech_shop/ui/widgets/input_text.dart';
-import 'package:tech_shop/ui/widgets/login_text.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {

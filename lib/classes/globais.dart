@@ -10,4 +10,6 @@ class Globais {
       "http://187.87.223.235:8180/api/v1/produto/categoria/";
   static String urlProdutoCategoriaId =
       "http://187.87.223.235:8180/api/v1/produto/categoria/";
+  static String urlCadastroEndereco =
+      "http://187.87.223.235:8180/api/v1/endereco";
 }

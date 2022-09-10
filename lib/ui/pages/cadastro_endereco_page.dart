@@ -1,17 +1,14 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
-import 'package:tech_shop/datasource/http/http.dart';
-import 'package:tech_shop/datasource/models/login_model.dart';
+import 'package:tech_shop/classes/classes.dart';
+import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
-import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
+import 'package:http/http.dart' as http;
 
 class CadastroEnderecoPage extends StatefulWidget {
   const CadastroEnderecoPage({Key? key}) : super(key: key);
@@ -21,21 +18,20 @@ class CadastroEnderecoPage extends StatefulWidget {
 }
 
 class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
-  final TextEditingController _nomeController = TextEditingController();
-  final TextEditingController _cpfController = TextEditingController();
-  final TextEditingController _numeroTelefone = TextEditingController();
-  final TextEditingController _dataNascimentoController =
-      TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _senhaController = TextEditingController();
-  final TextEditingController _confirmaController = TextEditingController();
+  final TextEditingController _enderecoController = TextEditingController();
+  final TextEditingController _cepController = TextEditingController();
+  final TextEditingController _numeroController = TextEditingController();
+  final TextEditingController _ufController = TextEditingController();
+  final TextEditingController _cidadeController = TextEditingController();
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _complementoController = TextEditingController();
 
-  final maskCpf = MaskTextInputFormatter(
-      mask: "###.###.###-##", filter: {"#": RegExp(r'[0-9]')});
-  final maskNumero = MaskTextInputFormatter(
-      mask: "(##) #####-####", filter: {"#": RegExp(r'[0-9]')});
-  final maskData = MaskTextInputFormatter(
-      mask: "##-##-####", filter: {"#": RegExp(r'[0-9]')});
+  final maskCEP = MaskTextInputFormatter(
+      mask: "#####-###", filter: {"#": RegExp(r'[0-9]')});
+  final maskNumero =
+      MaskTextInputFormatter(mask: "####", filter: {"#": RegExp(r'[0-9]')});
+  final maskUF =
+      MaskTextInputFormatter(mask: "AA", filter: {"A": RegExp(r'[A-Z]')});
   final maskDefault =
       MaskTextInputFormatter(mask: "", filter: {"#": RegExp(r'[0-9]')});
 
@@ -43,6 +39,9 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      backgroundColor:
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.cinzaClaro,
+      extendBody: true,
       appBar: AppBar(
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
@@ -97,66 +96,99 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
                         height: 20,
                       ),
                       campoTexto(
-                        controller: _nomeController,
-                        hint: 'Digite seu nome:',
+                        controller: _enderecoController,
+                        hint: 'Digite o Endereço:',
                         inputFormatter: maskDefault,
                         keyboardType: TextInputType.name,
-                        label: 'Nome',
+                        label: 'Endereço',
                         obscureText: false,
                       ),
-                      campoTexto(
-                        controller: _cpfController,
-                        hint: 'Digite seu CPF:',
-                        inputFormatter: maskCpf,
-                        keyboardType: TextInputType.number,
-                        label: 'CPF',
-                        obscureText: false,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: campoTexto(
+                              controller: _cepController,
+                              hint: 'Digite o CEP:',
+                              inputFormatter: maskCEP,
+                              keyboardType: TextInputType.number,
+                              label: 'CEP',
+                              obscureText: false,
+                            ),
+                          ),
+                          Expanded(
+                            child: campoTexto(
+                              controller: _numeroController,
+                              hint: 'Digite o Numero:',
+                              inputFormatter: maskNumero,
+                              keyboardType: TextInputType.number,
+                              label: 'Numero',
+                              obscureText: false,
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.22,
+                            child: campoTexto(
+                              tamanhoMaximo: 2,
+                              onChanged: (value) {
+                                TextEditingValue(
+                                  text: value.toUpperCase(),
+                                  selection: _ufController.selection,
+                                );
+                                setState(() {
+                                  if (value.length == 2) {
+                                    _ufController.text = value.toUpperCase();
+                                  }
+                                });
+                              },
+                              controller: _ufController,
+                              hint: 'UF:',
+                              inputFormatter: maskDefault,
+                              keyboardType: TextInputType.name,
+                              label: 'UF',
+                              obscureText: false,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: campoTexto(
+                              controller: _cidadeController,
+                              hint: 'Digite a Cidade:',
+                              inputFormatter: maskDefault,
+                              keyboardType: TextInputType.emailAddress,
+                              label: 'Cidade',
+                              obscureText: false,
+                            ),
+                          ),
+                          Expanded(
+                            child: campoTexto(
+                              controller: _bairroController,
+                              hint: 'Digite o Bairro:',
+                              inputFormatter: maskDefault,
+                              keyboardType: TextInputType.none,
+                              label: 'Bairro',
+                              obscureText: false,
+                            ),
+                          ),
+                        ],
                       ),
                       campoTexto(
-                        controller: _numeroTelefone,
-                        hint: 'Digite seu Numero de Telefone:',
-                        inputFormatter: maskNumero,
-                        keyboardType: TextInputType.number,
-                        label: 'Numero de Telefone',
-                        obscureText: false,
-                      ),
-                      campoTexto(
-                        controller: _dataNascimentoController,
-                        hint: 'Digite sua Data de Nascimento:',
-                        inputFormatter: maskData,
-                        keyboardType: TextInputType.datetime,
-                        label: 'Data de Nascimento',
-                        obscureText: false,
-                      ),
-                      campoTexto(
-                        controller: _emailController,
-                        hint: 'Digite seu Email:',
+                        controller: _complementoController,
+                        hint: 'Digite Complemento:',
                         inputFormatter: maskDefault,
-                        keyboardType: TextInputType.emailAddress,
-                        label: 'Email',
+                        keyboardType: TextInputType.none,
+                        label: 'Complemento',
                         obscureText: false,
-                      ),
-                      campoTexto(
-                        controller: _senhaController,
-                        hint: 'Digite sua Senha:',
-                        inputFormatter: maskDefault,
-                        keyboardType: TextInputType.visiblePassword,
-                        label: 'Senha',
-                        obscureText: true,
-                      ),
-                      campoTexto(
-                        controller: _confirmaController,
-                        hint: 'Confirme sua Senha:',
-                        inputFormatter: maskDefault,
-                        keyboardType: TextInputType.visiblePassword,
-                        label: 'Confirmar Senha',
-                        obscureText: true,
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          cadastrarEndereco();
+                        },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
                           child: Text(
@@ -215,35 +247,6 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
     );
   }
 
-  void cadastraUsuario() {
-    _nomeController.text != "" &&
-        _emailController.text != "" &&
-        _senhaController.text != "" &&
-        _confirmaController.text != "";
-    if (_nomeController.text != "" &&
-        _emailController.text != "" &&
-        _cpfController.text != "" &&
-        _senhaController.text != "" &&
-        _confirmaController.text != "") {
-      var response = _getLogin();
-      print(response);
-    } else if (_senhaController.text == _confirmaController.text) {
-      _showDialog(context, message: 'Senhas não conferem!', title: 'Erro');
-      _nomeController.clear();
-      _emailController.clear();
-      _cpfController.clear();
-      _senhaController.clear();
-      _dataNascimentoController.clear();
-    } else {
-      _showDialog(context, message: 'Preencha todos os campos!', title: 'Erro');
-      _nomeController.clear();
-      _emailController.clear();
-      _cpfController.clear();
-      _senhaController.clear();
-      _dataNascimentoController.clear();
-    }
-  }
-
   Widget campoTexto({
     required String label,
     required TextEditingController controller,
@@ -251,11 +254,15 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
     required TextInputFormatter inputFormatter,
     required TextInputType? keyboardType,
     required bool obscureText,
+    int? tamanhoMaximo,
+    Function(String)? onChanged,
   }) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        onChanged: onChanged,
+        maxLength: tamanhoMaximo,
         obscureText: obscureText,
         inputFormatters: [inputFormatter],
         controller: controller,
@@ -265,6 +272,7 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
           fontStyle: FontStyle.normal,
         ),
         decoration: InputDecoration(
+          counterText: '',
           labelText: label,
           labelStyle: TextStyle(
             color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
@@ -320,28 +328,28 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
     );
   }
 
-  Future<List<LoginModel>> _getLogin() async {
-    var response = await HttpRequest().postLogin(
-      nome: _nomeController.text,
-      email: _emailController.text,
-      senha: _senhaController.text,
-      cpf: _cpfController.text,
-      dataNascimento: _dataNascimentoController.text,
+  void cadastrarEndereco() async {
+    final response = await http.post(
+      Uri.parse(Globais.urlCadastroEndereco),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: {
+        'cep': _cepController.text,
+        'logradouro': _enderecoController.text,
+        'numero': _numeroController.text,
+        'uf': _ufController.text,
+        'cidade': _cidadeController.text,
+        'bairro': _bairroController.text,
+        'complemento': _complementoController.text,
+      },
     );
     print(response.body);
     if (response.statusCode == 200) {
-      var json = jsonDecode(response.body);
-      _showDialog(context,
-          message: 'Cadastro realizado com sucesso!', title: 'Sucesso');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginPage(),
-        ),
-      );
-      return (json as List).map((e) => LoginModel.fromJson(e)).toList();
+      _showDialog(context, title: 'Sucesso', message: 'Endereço cadastrado');
+      Navigator.pop(context);
     } else {
-      throw Exception('Erro ao cadastrar o usuário');
+      _showDialog(context, title: 'Erro', message: 'Erro ao cadastrar');
     }
   }
 }
