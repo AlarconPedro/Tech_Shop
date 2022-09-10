@@ -102,21 +102,29 @@ class _CadastroPageState extends State<CadastroPage> {
                         label: 'Nome',
                         obscureText: false,
                       ),
-                      campoTexto(
-                        controller: _cpfController,
-                        hint: 'Digite seu CPF:',
-                        inputFormatter: maskCpf,
-                        keyboardType: TextInputType.number,
-                        label: 'CPF',
-                        obscureText: false,
-                      ),
-                      campoTexto(
-                        controller: _numeroTelefone,
-                        hint: 'Digite seu Numero de Telefone:',
-                        inputFormatter: maskNumero,
-                        keyboardType: TextInputType.number,
-                        label: 'Numero de Telefone',
-                        obscureText: false,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: campoTexto(
+                              controller: _cpfController,
+                              hint: 'Digite seu CPF:',
+                              inputFormatter: maskCpf,
+                              keyboardType: TextInputType.number,
+                              label: 'CPF',
+                              obscureText: false,
+                            ),
+                          ),
+                          Expanded(
+                            child: campoTexto(
+                              controller: _numeroTelefone,
+                              hint: 'Digite seu Numero de Telefone:',
+                              inputFormatter: maskNumero,
+                              keyboardType: TextInputType.number,
+                              label: 'Numero de Telefone',
+                              obscureText: false,
+                            ),
+                          ),
+                        ],
                       ),
                       campoTexto(
                         controller: _dataNascimentoController,
@@ -134,21 +142,33 @@ class _CadastroPageState extends State<CadastroPage> {
                         label: 'Email',
                         obscureText: false,
                       ),
-                      campoTexto(
-                        controller: _senhaController,
-                        hint: 'Digite sua Senha:',
-                        inputFormatter: maskDefault,
-                        keyboardType: TextInputType.visiblePassword,
-                        label: 'Senha',
-                        obscureText: true,
-                      ),
-                      campoTexto(
-                        controller: _confirmaController,
-                        hint: 'Confirme sua Senha:',
-                        inputFormatter: maskDefault,
-                        keyboardType: TextInputType.visiblePassword,
-                        label: 'Confirmar Senha',
-                        obscureText: true,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Container(
+                              child: campoTexto(
+                                controller: _senhaController,
+                                hint: 'Digite sua Senha:',
+                                inputFormatter: maskDefault,
+                                keyboardType: TextInputType.visiblePassword,
+                                label: 'Senha',
+                                obscureText: true,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              child: campoTexto(
+                                controller: _confirmaController,
+                                hint: 'Confirme sua Senha:',
+                                inputFormatter: maskDefault,
+                                keyboardType: TextInputType.visiblePassword,
+                                label: 'Confirmar Senha',
+                                obscureText: true,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 20,

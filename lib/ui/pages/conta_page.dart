@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/cadastro_endereco_page.dart';
+import 'package:tech_shop/ui/pages/listar_enderecos_page.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
@@ -170,7 +171,7 @@ class _ContaPageState extends State<ContaPage> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const CadastroEnderecoPage(),
+                                                const ListarEnderecosPage(),
                                           ),
                                         );
                                       },
