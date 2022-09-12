@@ -334,15 +334,18 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: {
-        'cep': _cepController.text,
-        'logradouro': _enderecoController.text,
-        'numero': _numeroController.text,
-        'uf': _ufController.text,
-        'cidade': _cidadeController.text,
-        'bairro': _bairroController.text,
-        'complemento': _complementoController.text,
-      },
+      body: jsonEncode(
+        <String, String>{
+          'cliente_id': '1',
+          'cep': _cepController.text,
+          'logradouro': _enderecoController.text,
+          'numero': _numeroController.text,
+          'estado': _ufController.text,
+          'cidade': _cidadeController.text,
+          'bairro': _bairroController.text,
+          'complemento': _complementoController.text,
+        },
+      ),
     );
     print(response.body);
     if (response.statusCode == 200) {
