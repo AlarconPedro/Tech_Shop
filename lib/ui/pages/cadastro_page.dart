@@ -33,7 +33,7 @@ class _CadastroPageState extends State<CadastroPage> {
   final maskNumero = MaskTextInputFormatter(
       mask: "(##) #####-####", filter: {"#": RegExp(r'[0-9]')});
   final maskData = MaskTextInputFormatter(
-      mask: "##-##-####", filter: {"#": RegExp(r'[0-9]')});
+      mask: "##/##/####", filter: {"#": RegExp(r'[0-9]')});
   final maskDefault =
       MaskTextInputFormatter(mask: "", filter: {"#": RegExp(r'[0-9]')});
 
@@ -330,8 +330,10 @@ class _CadastroPageState extends State<CadastroPage> {
       _cpfController.clear();
       _senhaController.clear();
       _dataNascimentoController.clear();
+      _dataNascimentoController.clear();
     } else {
       _showDialog(context, message: 'Preencha todos os campos!', title: 'Erro');
+      _dataNascimentoController.clear();
       _nomeController.clear();
       _emailController.clear();
       _cpfController.clear();
@@ -347,6 +349,7 @@ class _CadastroPageState extends State<CadastroPage> {
       senha: _senhaController.text,
       cpf: _cpfController.text,
       dataNascimento: _dataNascimentoController.text,
+      telefone: _numeroTelefone.text,
     );
     print(response.body);
     if (response.statusCode == 200) {
@@ -361,7 +364,9 @@ class _CadastroPageState extends State<CadastroPage> {
       );
       return (json as List).map((e) => LoginModel.fromJson(e)).toList();
     } else {
-      throw Exception('Erro ao cadastrar o usuário');
+      _showDialog(context, message: 'Erro ao Cadastrar!', title: 'Erro');
+
+      throw Exception('Falha ao Cadastrar Usuário');
     }
   }
 }

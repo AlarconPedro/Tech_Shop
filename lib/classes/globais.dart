@@ -1,5 +1,6 @@
 class Globais {
   //Rotas da API
+  static String urlPadrao = "http://";
   static String urlCategorias = "http://187.87.223.235:8180/api/v1/categoria";
   static String urlProdutos = "http://187.87.223.235:8180/api/v1/produto";
   static String urlProdutosRandom = "http://187.87.223.235:8180/api/v1/produto";
@@ -12,4 +13,23 @@ class Globais {
       "http://187.87.223.235:8180/api/v1/produto/categoria/";
   static String urlCadastroEndereco =
       "http://187.87.223.235:8180/api/v1/endereco";
+  static String urlCadastroCliente =
+      "http://187.87.223.235:8180/api/v1/cliente";
+  static String urlEnderecoId =
+      "http://187.87.223.235:8180/api/v1/enderecoCliente/";
+
+  //Valores Cliente
+  static String nomeCliente = "";
+  static String cpfCliente = "";
+  static String emailCliente = "";
+  static String senhaCliente = "";
+  static String telefoneCliente = "";
+  static String cepCliente = "";
+  static String logradouroCliente = "";
+  static String numeroCliente = "";
+  static String complementoCliente = "";
+  static String bairroCliente = "";
+  static String cidadeCliente = "";
+  static String estadoCliente = "";
+  static String idCliente = "";
 }

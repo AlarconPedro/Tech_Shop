@@ -1,5 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/classes/globais.dart';
+import 'package:tech_shop/datasource/api/api.dart';
+import 'package:tech_shop/datasource/models/endereco_model.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/cadastro_endereco_page.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
@@ -12,6 +17,7 @@ class ListarEnderecosPage extends StatefulWidget {
 }
 
 class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
+  bool isSelected = false;
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
@@ -58,7 +64,17 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                           width: 1,
                         ),
                       ),
-                      child: Column(children: [Container()]),
+                      child: Container(
+                        child: FutureBuilder(
+                          future: API().getEnderecos(),
+                          builder: (context, snapshot) {
+                            Globais.idCliente = "1";
+                            return listEndereco(
+                              snapshot.data as List<EnderecoModel>,
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -99,6 +115,79 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget listEndereco(List<EnderecoModel> endereco) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return ListView.builder(
+      itemCount: endereco.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Container(
+            decoration: isSelected
+                ? BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: currentTheme.isDarkTheme()
+                        ? Cores.cinzaEscuro
+                        : Cores.branco,
+                    boxShadow: [
+                      BoxShadow(
+                        color: currentTheme.isDarkTheme()
+                            ? Cores.verde
+                            : Cores.azul,
+                        blurRadius: 3,
+                        spreadRadius: 1,
+                        blurStyle: BlurStyle.normal,
+                        // offset: const Offset(1.5, 1.5),
+                      ),
+                    ],
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    border: Border.all(
+                      color:
+                          currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                      width: 1,
+                    ),
+                  )
+                : const BoxDecoration(),
+            child: ListTile(
+              leading: Checkbox(
+                checkColor: Cores.preto,
+                activeColor: Cores.branco,
+                value: isSelected,
+                onChanged: (value) {
+                  setState(() {
+                    isSelected = value!;
+                  });
+                },
+              ),
+              title: Text(
+                endereco[index].endereco,
+                style: TextStyle(
+                  color: currentTheme.isDarkTheme()
+                      ? Cores.branco
+                      : Cores.pretoOpaco,
+                ),
+              ),
+              subtitle: Text(
+                endereco[index].numero,
+                style: TextStyle(
+                  color: currentTheme.isDarkTheme()
+                      ? Cores.branco
+                      : Cores.pretoOpaco,
+                ),
+              ),
+              trailing: IconButton(
+                onPressed: () {},
+                icon: Icon(Icons.delete, color: Cores.vermelho),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

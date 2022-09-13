@@ -5,6 +5,7 @@ import 'package:tech_shop/classes/classes.dart';
 class HttpRequest {
   Future<List<dynamic>> getJson({required String url}) async {
     http.Response response = await http.get(Uri.parse(url));
+    print(response.body);
     return json.decode(response.body);
   }
 
@@ -19,21 +20,22 @@ class HttpRequest {
     required String senha,
     required String nome,
     required String cpf,
+    required String telefone,
     required String dataNascimento,
   }) async {
-    final _linkLogin = Globais.urlLogin;
+    final _linkLogin = Globais.urlCadastroCliente;
     return http.post(
       Uri.parse(_linkLogin),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
-        "email": email,
-        "telefone": "123456",
-        "senha": senha,
         "nome": nome,
         "cpf": cpf,
-        "data_nascimento": dataNascimento
+        "telefone": telefone,
+        "data_nascimento": dataNascimento,
+        "email": email,
+        "senha": senha,
       }),
     );
   }

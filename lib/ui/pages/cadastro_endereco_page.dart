@@ -348,11 +348,20 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
       ),
     );
     print(response.body);
-    if (response.statusCode == 200) {
-      _showDialog(context, title: 'Sucesso', message: 'Endereço cadastrado');
+    if (response.statusCode == 201) {
+      _showDialog(context,
+          title: 'Sucesso', message: 'Endereço cadastrado com Sucesso');
       Navigator.pop(context);
     } else {
-      _showDialog(context, title: 'Erro', message: 'Erro ao cadastrar');
+      _showDialog(context,
+          title: 'Erro', message: 'Erro ao cadastrar o Enderço');
+      _cepController.clear();
+      _enderecoController.clear();
+      _numeroController.clear();
+      _ufController.clear();
+      _cidadeController.clear();
+      _bairroController.clear();
+      _complementoController.clear();
     }
   }
 }

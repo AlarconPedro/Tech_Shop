@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/datasource/http/http.dart';
+import 'package:tech_shop/datasource/models/endereco_model.dart';
 import 'package:tech_shop/datasource/models/login_model.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 
@@ -44,6 +47,18 @@ class API {
 
   List<ProdutoModel> _populateProdutosRandom(List<dynamic> json) {
     return json.map((e) => ProdutoModel.fromJson(e)).toList();
+  }
+
+  Future<List<EnderecoModel>> getEnderecos() async {
+    Globais.idCliente = "1";
+    String url = Globais.urlEnderecoId + Globais.idCliente;
+    var response = await request.getJson(url: url);
+    print(response);
+    return _populateEnderecos(response);
+  }
+
+  List<EnderecoModel> _populateEnderecos(List<dynamic> json) {
+    return json.map((e) => EnderecoModel.fromJson(e)).toList();
   }
 
   //POST FUNCTIONS

@@ -70,15 +70,17 @@ class _LoginPageState extends State<LoginPage> {
                           'E-mail',
                           'Digite seu e-mail:',
                           _emailController,
+                          false,
                         ),
                       ),
                       Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 15),
                         child: campoLogin(
                           'Senha',
                           'Digite sua senha:',
                           _senhaController,
+                          true,
                         ),
                       ),
                       Row(
@@ -172,10 +174,15 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget campoLogin(
-      String label, String hint, TextEditingController controller) {
+    String label,
+    String hint,
+    TextEditingController controller,
+    bool obscureText,
+  ) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return TextField(
       controller: controller,
+      obscureText: obscureText,
       style: TextStyle(
         color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
         decoration: TextDecoration.none,
