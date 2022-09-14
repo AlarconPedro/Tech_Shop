@@ -32,4 +32,5 @@ class Globais {
   static String cidadeCliente = "";
   static String estadoCliente = "";
   static String idCliente = "";
+  static int enderecoSelected = 0;
 }

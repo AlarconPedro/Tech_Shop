@@ -8,6 +8,7 @@ import 'package:tech_shop/datasource/models/endereco_model.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/cadastro_endereco_page.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
+import 'package:tech_shop/ui/widgets/widgets.dart';
 
 class ListarEnderecosPage extends StatefulWidget {
   const ListarEnderecosPage({Key? key}) : super(key: key);
@@ -64,16 +65,24 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                           width: 1,
                         ),
                       ),
-                      child: Container(
-                        child: FutureBuilder(
-                          future: API().getEnderecos(),
-                          builder: (context, snapshot) {
-                            Globais.idCliente = "1";
-                            return listEndereco(
-                              snapshot.data as List<EnderecoModel>,
-                            );
-                          },
-                        ),
+                      child: FutureBuilder(
+                        future: API().getEnderecos(),
+                        builder: (context, snapshot) {
+                          switch (snapshot.connectionState) {
+                            case ConnectionState.waiting:
+                            case ConnectionState.none:
+                              return CirculoEspera.criar(cor: Cores.branco);
+                            default:
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else {
+                                Globais.idCliente = "1";
+                                return listEndereco(
+                                  snapshot.data as List<EnderecoModel>,
+                                );
+                              }
+                          }
+                        },
                       ),
                     ),
                   ),
@@ -123,66 +132,74 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
     return ListView.builder(
       itemCount: endereco.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          child: Container(
-            decoration: isSelected
-                ? BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: currentTheme.isDarkTheme()
-                        ? Cores.cinzaEscuro
-                        : Cores.branco,
-                    boxShadow: [
-                      BoxShadow(
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              Globais.enderecoSelected = index;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            child: Container(
+              decoration: Globais.enderecoSelected == index
+                  ? BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: currentTheme.isDarkTheme()
+                          ? Cores.cinzaEscuro
+                          : Cores.branco,
+                      boxShadow: [
+                        BoxShadow(
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.verde
+                              : Cores.azul,
+                          blurRadius: 3,
+                          spreadRadius: 1,
+                          blurStyle: BlurStyle.normal,
+                          // offset: const Offset(1.5, 1.5),
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      border: Border.all(
                         color: currentTheme.isDarkTheme()
                             ? Cores.verde
                             : Cores.azul,
-                        blurRadius: 3,
-                        spreadRadius: 1,
-                        blurStyle: BlurStyle.normal,
-                        // offset: const Offset(1.5, 1.5),
+                        width: 1,
                       ),
-                    ],
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    border: Border.all(
-                      color:
-                          currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-                      width: 1,
-                    ),
-                  )
-                : const BoxDecoration(),
-            child: ListTile(
-              leading: Checkbox(
-                checkColor: Cores.preto,
-                activeColor: Cores.branco,
-                value: isSelected,
-                onChanged: (value) {
-                  setState(() {
-                    isSelected = value!;
-                  });
-                },
-              ),
-              title: Text(
-                endereco[index].endereco,
-                style: TextStyle(
-                  color: currentTheme.isDarkTheme()
-                      ? Cores.branco
-                      : Cores.pretoOpaco,
+                    )
+                  : const BoxDecoration(),
+              child: ListTile(
+                leading: Checkbox(
+                  checkColor: Cores.preto,
+                  activeColor: Cores.branco,
+                  value: Globais.enderecoSelected == index,
+                  onChanged: (value) {
+                    setState(() {
+                      Globais.enderecoSelected = index;
+                    });
+                  },
                 ),
-              ),
-              subtitle: Text(
-                endereco[index].numero,
-                style: TextStyle(
-                  color: currentTheme.isDarkTheme()
-                      ? Cores.branco
-                      : Cores.pretoOpaco,
+                title: Text(
+                  endereco[index].endereco,
+                  style: TextStyle(
+                    color: currentTheme.isDarkTheme()
+                        ? Cores.branco
+                        : Cores.pretoOpaco,
+                  ),
                 ),
-              ),
-              trailing: IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.delete, color: Cores.vermelho),
+                subtitle: Text(
+                  endereco[index].numero,
+                  style: TextStyle(
+                    color: currentTheme.isDarkTheme()
+                        ? Cores.branco
+                        : Cores.pretoOpaco,
+                  ),
+                ),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: Icon(Icons.delete, color: Cores.vermelho),
+                ),
               ),
             ),
           ),
