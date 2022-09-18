@@ -82,4 +82,13 @@ class API {
   List<LoginModel> _populateLogin(List<dynamic> json) {
     return json.map((e) => LoginModel.fromJson(e)).toList();
   }
+
+  // PUT FUNCTIONS
+
+  // DELETE FUNCTIONS
+  void deleteEndereco(String id) async {
+    String url = Globais.urlDeleteEndereco + id;
+    var response = await request.deleteJson(url: url);
+    print(response);
+  }
 }

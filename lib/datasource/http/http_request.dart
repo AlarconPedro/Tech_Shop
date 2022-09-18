@@ -15,6 +15,17 @@ class HttpRequest {
     return json.decode(response.body);
   }
 
+  Future<List<dynamic>> putJson(
+      {required String url, required Map body}) async {
+    http.Response response = await http.put(Uri.parse(url), body: body);
+    return json.decode(response.body);
+  }
+
+  Future<Map<String, dynamic>> deleteJson({required String url}) async {
+    http.Response response = await http.delete(Uri.parse(url));
+    return json.decode(response.body);
+  }
+
   Future<http.Response> postLogin({
     required String email,
     required String senha,

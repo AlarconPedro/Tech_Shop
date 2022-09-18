@@ -197,7 +197,34 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                   ),
                 ),
                 trailing: IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Excluir Endereço'),
+                          content: const Text(
+                              'Deseja realmente excluir este endereço?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Não'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                API().deleteEndereco(Globais.idCliente);
+                                Navigator.pop(context);
+                                setState(() {});
+                              },
+                              child: const Text('Sim'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
                   icon: Icon(Icons.delete, color: Cores.vermelho),
                 ),
               ),

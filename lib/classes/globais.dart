@@ -1,6 +1,6 @@
 class Globais {
   //Rotas da API
-  static String urlPadrao = "http://";
+  static String urlPadrao = "http://http://187.87.223.235:8180";
   static String urlCategorias = "http://187.87.223.235:8180/api/v1/categoria";
   static String urlProdutos = "http://187.87.223.235:8180/api/v1/produto";
   static String urlProdutosRandom = "http://187.87.223.235:8180/api/v1/produto";
@@ -17,6 +17,8 @@ class Globais {
       "http://187.87.223.235:8180/api/v1/cliente";
   static String urlEnderecoId =
       "http://187.87.223.235:8180/api/v1/enderecoCliente/";
+  static String urlDeleteEndereco =
+      "http://187.87.223.235:8180/api/v1/endereco/";
 
   //Valores Cliente
   static String nomeCliente = "";
