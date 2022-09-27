@@ -9,7 +9,7 @@ class ProdutoModel {
   String imagem4;
   String imagem5;
   int preco;
-  int precoPromocional;
+  int? precoPromocional;
 
   ProdutoModel({
     required this.id,

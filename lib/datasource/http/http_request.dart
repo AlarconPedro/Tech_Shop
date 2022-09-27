@@ -22,7 +22,8 @@ class HttpRequest {
   }
 
   Future<Map<String, dynamic>> deleteJson({required String url}) async {
-    http.Response response = await http.delete(Uri.parse(url));
+    http.Response response = await http
+        .delete(Uri.parse(url), headers: {"Content-Type": "application/json"});
     return json.decode(response.body);
   }
 

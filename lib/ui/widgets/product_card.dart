@@ -8,7 +8,7 @@ import 'package:tech_shop/ui/temas/temas.dart';
 
 class ProductCard extends StatefulWidget {
   int preco;
-  int precoDesconto;
+  int? precoDesconto;
   String nome;
   String descricao;
   String imagem1;

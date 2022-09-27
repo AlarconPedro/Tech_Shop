@@ -36,8 +36,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ],
         ),
-        //   color: currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
-        // ),
       );
     }
 

@@ -146,18 +146,23 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                       thickness: 2,
                     ),
                     Expanded(
-                      child: Container(
-                        child: Row(
-                          children: [
-                            Column(
-                              children: [
-                                Row(
-                                  children: [],
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  itemCarrinho(
+                                    nome: 'Teste',
+                                    quantidade: 1,
+                                    preco: 10,
+                                  ),
+                                ],
+                                // Adicionar Itens do Carrinho
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     Divider(
@@ -209,5 +214,119 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
         ],
       ),
     );
+  }
+
+  Widget itemCarrinho(
+      {required String nome, required int quantidade, required double preco}) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 5, bottom: 5, right: 2),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.46,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Cores.cinzaClaro,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+              border: Border.all(
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                width: 2,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 5, bottom: 5, right: 2),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.22,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Cores.cinzaClaro,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+              border: Border.all(
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                width: 2,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 5, bottom: 5, right: 2),
+          child: Container(
+            width: MediaQuery.of(context).size.width * 0.20,
+            height: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Cores.cinzaClaro,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+              border: Border.all(
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                width: 2,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+    // return Padding(
+    //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+    //   child: Container(
+    //     decoration: BoxDecoration(
+    //       boxShadow: [
+    //         BoxShadow(
+    //           color: currentTheme.isDarkTheme()
+    //               ? Cores.cinzaEscuro.withOpacity(0.5)
+    //               : Cores.branco.withOpacity(0.5),
+    //           spreadRadius: 5,
+    //           blurRadius: 7,
+    //           offset: const Offset(0, 3), // changes position of shadow
+    //         ),
+    //       ],
+    //     ),
+    //     width: MediaQuery.of(context).size.width,
+    //     height: MediaQuery.of(context).size.height * 0.1,
+    //     child: Row(
+    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //       children: [
+    //         Text(
+    //           nome,
+    //           style: TextStyle(
+    //             color: Cores.pretoOpaco,
+    //             fontSize: 20,
+    //           ),
+    //         ),
+    //         Expanded(
+    //           child: Container(),
+    //         ),
+    //         Text(
+    //           quantidade.toString(),
+    //           style: TextStyle(
+    //             color: Cores.pretoOpaco,
+    //             fontSize: 20,
+    //           ),
+    //         ),
+    //         Expanded(
+    //           child: Container(),
+    //         ),
+    //         Text(
+    //           'R\$ $preco',
+    //           style: TextStyle(
+    //             color: Cores.pretoOpaco,
+    //             fontSize: 20,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }

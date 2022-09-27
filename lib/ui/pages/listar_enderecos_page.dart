@@ -76,7 +76,6 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                Globais.idCliente = "1";
                                 return listEndereco(
                                   snapshot.data as List<EnderecoModel>,
                                 );

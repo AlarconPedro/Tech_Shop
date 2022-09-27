@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/globais.dart';
+import 'package:tech_shop/datasource/models/login_model.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
@@ -25,150 +26,159 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
-    return Scaffold(
-      backgroundColor:
-          currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Container(),
-          ),
-          SingleChildScrollView(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 200,
-                        child: Image.asset("images/logo.png"),
-                      ),
-                      // Icon(
-                      //   Icons.computer_outlined,
-                      //   size: 60,
-                      //   color: currentTheme.isDarkTheme()
-                      //       ? Cores.branco
-                      //       : Cores.pretoOpaco,
-                      // ),
-                      // Text(
-                      //   'Tech Shop',
-                      //   style: TextStyle(
-                      //     fontSize: 30,
-                      //     fontWeight: FontWeight.bold,
-                      //     color: currentTheme.isDarkTheme()
-                      //         ? Cores.branco
-                      //         : Cores.preto,
-                      //   ),
-                      // ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 15),
-                        child: campoLogin(
-                          'E-mail',
-                          'Digite seu e-mail:',
-                          _emailController,
-                          false,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 15),
-                        child: campoLogin(
-                          'Senha',
-                          'Digite sua senha:',
-                          _senhaController,
-                          true,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Checkbox(
-                              value: _rememberMe,
-                              checkColor: Cores.preto,
-                              activeColor: Cores.branco,
-                              onChanged: (value) {
-                                setState(() {
-                                  _rememberMe = value!;
-                                });
-                              },
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor:
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
+        body: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Expanded(
+              //   child: Container(),
+              // ),
+              Row(
+                children: [
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 200,
+                              child: Image.asset("images/logo.png"),
                             ),
-                          ),
-                          Text(
-                            "Lembrar-me",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.preto,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Padding(
+                            // Icon(
+                            //   Icons.computer_outlined,
+                            //   size: 60,
+                            //   color: currentTheme.isDarkTheme()
+                            //       ? Cores.branco
+                            //       : Cores.pretoOpaco,
+                            // ),
+                            // Text(
+                            //   'Tech Shop',
+                            //   style: TextStyle(
+                            //     fontSize: 30,
+                            //     fontWeight: FontWeight.bold,
+                            //     color: currentTheme.isDarkTheme()
+                            //         ? Cores.branco
+                            //         : Cores.preto,
+                            //   ),
+                            // ),
+                            Padding(
                               padding: const EdgeInsets.symmetric(
-                                vertical: 10,
-                                horizontal: 20,
-                              ),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: currentTheme.isDarkTheme()
-                                      ? Cores.vermelho
-                                      : Cores.azul,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  fixedSize: const Size(120, 45),
-                                ),
-                                child: const Text('Entrar'),
-                                onPressed: () {
-                                  logar(_emailController.text,
-                                      _senhaController.text);
-                                },
+                                  vertical: 8, horizontal: 15),
+                              child: campoLogin(
+                                'E-mail',
+                                'Digite seu e-mail:',
+                                _emailController,
+                                false,
                               ),
                             ),
-                          ),
-                        ],
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 8, horizontal: 15),
+                              child: campoLogin(
+                                'Senha',
+                                'Digite sua senha:',
+                                _senhaController,
+                                true,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Checkbox(
+                                    value: _rememberMe,
+                                    checkColor: Cores.preto,
+                                    activeColor: Cores.branco,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _rememberMe = value!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                Text(
+                                  "Lembrar-me",
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: currentTheme.isDarkTheme()
+                                        ? Cores.branco
+                                        : Cores.preto,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 10,
+                                      horizontal: 20,
+                                    ),
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: currentTheme.isDarkTheme()
+                                            ? Cores.vermelho
+                                            : Cores.azul,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        fixedSize: const Size(120, 45),
+                                      ),
+                                      child: const Text('Entrar'),
+                                      onPressed: () {
+                                        logar(_emailController.text,
+                                            _senhaController.text);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Container(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: GestureDetector(
-              child: Text(
-                "Não tem conta? Cadastre-se",
-                style: TextStyle(
-                  color:
-                      currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+                ],
+              ),
+              Expanded(
+                child: Container(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: GestureDetector(
+                  child: Text(
+                    "Não tem conta? Cadastre-se",
+                    style: TextStyle(
+                      color: currentTheme.isDarkTheme()
+                          ? Cores.branco
+                          : Cores.preto,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const CadastroPage(),
+                      ),
+                    );
+                  },
                 ),
               ),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CadastroPage(),
-                  ),
-                );
-              },
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -239,7 +249,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void logar(String email, String senha) async {
+  Future<LoginModel> logar(String email, String senha) async {
     var response = await http.post(
       Uri.parse(Globais.urlLogin),
       headers: <String, String>{
@@ -253,6 +263,8 @@ class _LoginPageState extends State<LoginPage> {
     if (response.statusCode == 200) {
       setState(() {
         logado = true;
+        var decodedJson = json.decode(response.body);
+        populateUser(decodedJson);
       });
     } else {
       setState(() {
@@ -275,5 +287,16 @@ class _LoginPageState extends State<LoginPage> {
             (route) => false,
           );
     // print(response.body);
+    var decodedJson = json.decode(response.body);
+    return populateUser(decodedJson);
+  }
+
+  LoginModel populateUser(Map<String, dynamic> json) {
+    print(json);
+    LoginModel login = LoginModel.fromJson(json['data']);
+    Globais.idCliente = json['data']['id'].toString();
+    Globais.nomeCliente = json['data']['nome'];
+    Globais.emailCliente = json['data']['email'];
+    return login;
   }
 }

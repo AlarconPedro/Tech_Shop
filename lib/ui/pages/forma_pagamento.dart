@@ -7,6 +7,8 @@ import 'package:tech_shop/ui/estilos/cores.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
+import '../../classes/classes.dart';
+
 class FormaPagamento extends StatefulWidget {
   const FormaPagamento({Key? key}) : super(key: key);
 
@@ -94,7 +96,7 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      'Nome completo do usuário',
+                                      Globais.nomeCliente,
                                       style: TextStyle(
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.branco

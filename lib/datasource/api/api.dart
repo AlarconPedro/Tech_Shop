@@ -50,7 +50,6 @@ class API {
   }
 
   Future<List<EnderecoModel>> getEnderecos() async {
-    Globais.idCliente = "1";
     String url = Globais.urlEnderecoId + Globais.idCliente;
     var response = await request.getJson(url: url);
     print(response);

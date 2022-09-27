@@ -69,74 +69,84 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                   CarouselSlider(
                     items: [
                       //1st Image of Slider
-                      Container(
-                        margin: const EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              Globais.urlImage + widget.produto.imagem1,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                      widget.produto.imagem1 != ""
+                          ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem1,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(),
 
                       //2nd Image of Slider
-                      Container(
-                        margin: const EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              Globais.urlImage + widget.produto.imagem2,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                      widget.produto.imagem2 != ""
+                          ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem2,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(),
 
                       //3rd Image of Slider
-                      Container(
-                        margin: const EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              Globais.urlImage + widget.produto.imagem3,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                      widget.produto.imagem3 != ""
+                          ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem3,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(),
 
                       //4th Image of Slider
-                      Container(
-                        margin: const EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              Globais.urlImage + widget.produto.imagem4,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                      widget.produto.imagem4 != ""
+                          ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem4,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(),
 
                       //5th Image of Slider
-                      Container(
-                        margin: const EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              Globais.urlImage + widget.produto.imagem5,
-                            ),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                      widget.produto.imagem5 != ""
+                          ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem5,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ],
                     carouselController: carroselController,
                     //Slider Container properties
@@ -266,6 +276,17 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 fontSize: 18,
+                color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Text(
+              "Qtd. Estoque: 10",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
                 color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
               ),
             ),

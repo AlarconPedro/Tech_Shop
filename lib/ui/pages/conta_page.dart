@@ -6,6 +6,8 @@ import 'package:tech_shop/ui/pages/listar_enderecos_page.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
+import '../../classes/classes.dart';
+
 class ContaPage extends StatefulWidget {
   const ContaPage({Key? key}) : super(key: key);
 
@@ -93,16 +95,29 @@ class _ContaPageState extends State<ContaPage> {
                           Row(
                             children: [
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      'Nome completo do usuário',
+                                      Globais.nomeCliente,
                                       style: TextStyle(
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.branco
                                             : Cores.preto,
                                         fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Text(
+                                      Globais.emailCliente,
+                                      style: TextStyle(
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.preto,
+                                        fontSize: 13,
                                       ),
                                     ),
                                   ),
