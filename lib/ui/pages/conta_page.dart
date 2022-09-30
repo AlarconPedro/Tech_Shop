@@ -347,7 +347,7 @@ class _ContaPageState extends State<ContaPage> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (context) =>
-                                                  const LoginPage(),
+                                                  const CarrinhoPage(),
                                             ),
                                           );
                                         },

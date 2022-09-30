@@ -199,7 +199,9 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                         Cores.vermelho,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Globais.carrinho.add(widget.produto);
+                    },
                     child: const Text(
                       'Comprar',
                       style: TextStyle(fontSize: 20),

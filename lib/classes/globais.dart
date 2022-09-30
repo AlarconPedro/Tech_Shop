@@ -1,3 +1,5 @@
+import 'package:tech_shop/datasource/models/produto_model.dart';
+
 class Globais {
   //Rotas da API
   static String urlPadrao = "http://http://187.87.223.235:8180";
@@ -35,4 +37,7 @@ class Globais {
   static String estadoCliente = "";
   static String idCliente = "";
   static int enderecoSelected = 0;
+
+  // Carrinho
+  static List<ProdutoModel> carrinho = [];
 }
