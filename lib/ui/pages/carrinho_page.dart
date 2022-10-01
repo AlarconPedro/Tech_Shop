@@ -84,7 +84,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
+                              vertical: 5,
+                              horizontal: 10,
+                            ),
                             child: Text(
                               'Produto',
                               style: TextStyle(
@@ -157,17 +159,18 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                               Row(
                                 children: [
                                   FutureBuilder(
-                                      future: Future.delayed(
-                                        const Duration(seconds: 2),
-                                      ),
-                                      builder: (context, snapshot) {
-                                        return itemCarrinho(
-                                          nome: 'Teste',
-                                          quantidade: 1,
-                                          preco: 10,
-                                          produto: Globais.carrinho,
-                                        );
-                                      }),
+                                    future: Future.delayed(
+                                      const Duration(seconds: 2),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      return itemCarrinho(
+                                        nome: 'Teste',
+                                        quantidade: 1,
+                                        preco: 10,
+                                        produto: Globais.carrinho,
+                                      );
+                                    },
+                                  ),
                                 ],
                                 // Adicionar Itens do Carrinho
                               ),
@@ -234,134 +237,165 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     required List<ProdutoModel> produto,
   }) {
     final currentTheme = Provider.of<ThemeProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.all(3),
-      child: Container(
-        decoration: BoxDecoration(
-          color: currentTheme.isDarkTheme() ? Cores.branco : Cores.cinzaClaro,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 5, bottom: 5, right: 2, top: 5),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.46,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Cores.branco,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      border: Border.all(
-                        color: currentTheme.isDarkTheme()
-                            ? Cores.verde
-                            : Cores.azul,
-                        width: 2,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(1),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.all(1.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.0),
-                                image: DecorationImage(
-                                  image: NetworkImage(
-                                    Globais.urlImage + produto[0].imagem1,
+
+    return Globais.carrinho.isNotEmpty
+        ? Padding(
+            padding: const EdgeInsets.all(3),
+            child: Container(
+              decoration: BoxDecoration(
+                color: currentTheme.isDarkTheme()
+                    ? Cores.branco
+                    : Cores.cinzaClaro,
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 5,
+                          bottom: 5,
+                          right: 2,
+                          top: 5,
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.46,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: Cores.branco,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            border: Border.all(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.verde
+                                  : Cores.azul,
+                              width: 2,
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.all(1.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      image: DecorationImage(
+                                        image: NetworkImage(
+                                          Globais.urlImage + produto[0].imagem1,
+                                        ),
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
                                   ),
-                                  fit: BoxFit.contain,
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5),
+                                  child: Text(
+                                    produto[0].nome,
+                                    style: TextStyle(
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.pretoClaro
+                                            : Cores.pretoOpaco,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 2,
+                          bottom: 5,
+                          right: 2,
+                          top: 5,
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.22,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: Cores.branco,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            border: Border.all(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.verde
+                                  : Cores.azul,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              '$quantidade',
+                              style: TextStyle(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.pretoClaro
+                                    : Cores.pretoOpaco,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 5),
-                            child: Text(
-                              produto[0].nome,
-                              style: TextStyle(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.pretoClaro
-                                      : Cores.pretoOpaco,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 2,
-                    bottom: 5,
-                    right: 2,
-                    top: 5,
-                  ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.22,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Cores.branco,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      border: Border.all(
-                        color: currentTheme.isDarkTheme()
-                            ? Cores.verde
-                            : Cores.azul,
-                        width: 2,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        '$quantidade',
-                        style: TextStyle(
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.pretoClaro
-                              : Cores.pretoOpaco,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 2,
-                    bottom: 5,
-                    right: 5,
-                    top: 5,
-                  ),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.20,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Cores.branco,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          left: 2,
+                          bottom: 5,
+                          right: 5,
+                          top: 5,
+                        ),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.20,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            color: Cores.branco,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                            border: Border.all(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.verde
+                                  : Cores.azul,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'R\$ ${produto[0].preco}',
+                              style: TextStyle(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.pretoClaro
+                                    : Cores.pretoOpaco,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
-                      border: Border.all(
-                        color: currentTheme.isDarkTheme()
-                            ? Cores.verde
-                            : Cores.azul,
-                        width: 2,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'R\$ ${produto[0].preco}',
+                    ],
+                  ),
+                  Divider(
+                    color:
+                        currentTheme.isDarkTheme() ? Cores.preto : Cores.preto,
+                    thickness: 2,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        produto[0].descricao,
                         style: TextStyle(
                           color: currentTheme.isDarkTheme()
                               ? Cores.pretoClaro
@@ -370,41 +404,30 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              ],
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.delete_rounded,
+                          color: Cores.vermelho,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
-            Divider(
-              color: currentTheme.isDarkTheme() ? Cores.preto : Cores.preto,
-              thickness: 2,
+          )
+        : Center(
+            child: Text(
+              "Sem Itens no Carrinho !",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Cores.branco,
+              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  produto[0].descricao,
-                  style: TextStyle(
-                    color: currentTheme.isDarkTheme()
-                        ? Cores.pretoClaro
-                        : Cores.pretoOpaco,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.delete_rounded,
-                    color: Cores.vermelho,
-                  ),
-                )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+          );
+
     // return Padding(
     //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
     //   child: Container(
