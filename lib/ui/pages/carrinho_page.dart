@@ -15,6 +15,8 @@ class CarrinhoPage extends StatefulWidget {
 }
 
 class _CarrinhoPageState extends State<CarrinhoPage> {
+  int quantidade = 1;
+  double preco = 0;
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
@@ -80,7 +82,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     // ),
                     IntrinsicHeight(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -96,9 +98,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                 fontSize: 20,
                               ),
                             ),
-                          ),
-                          Expanded(
-                            child: Container(),
                           ),
                           VerticalDivider(
                             color: currentTheme.isDarkTheme()
@@ -164,10 +163,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                     ),
                                     builder: (context, snapshot) {
                                       return itemCarrinho(
-                                        nome: 'Teste',
-                                        quantidade: 1,
-                                        preco: 10,
-                                        produto: Globais.carrinho,
+                                        'Teste',
+                                        10,
+                                        Globais.carrinho,
                                       );
                                     },
                                   ),
@@ -205,7 +203,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                             child: Container(),
                           ),
                           Text(
-                            'R\$ 0,00',
+                            'R\$ ${preco * quantidade},00',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -230,37 +228,307 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     );
   }
 
-  Widget itemCarrinho({
-    required String nome,
-    required int quantidade,
-    required double preco,
-    required List<ProdutoModel> produto,
-  }) {
-    final currentTheme = Provider.of<ThemeProvider>(context);
+  // Widget itemCarrinho({
+  //   required String nome,
+  //   required int quantidade,
+  //   required double preco,
+  //   required List<ProdutoModel> produto,
+  // }) {
+  //   final currentTheme = Provider.of<ThemeProvider>(context);
 
-    return Globais.carrinho.isNotEmpty
-        ? Padding(
-            padding: const EdgeInsets.all(3),
-            child: Container(
-              decoration: BoxDecoration(
-                color: currentTheme.isDarkTheme()
-                    ? Cores.branco
-                    : Cores.cinzaClaro,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Column(
+  //   return Globais.carrinho.isNotEmpty
+  //       ? Padding(
+  //           padding: const EdgeInsets.all(3),
+  //           child: Container(
+  //             decoration: BoxDecoration(
+  //               color: currentTheme.isDarkTheme()
+  //                   ? Cores.branco
+  //                   : Cores.cinzaClaro,
+  //               borderRadius: BorderRadius.circular(8.0),
+  //             ),
+  //             child: Column(
+  //               children: [
+  //                 // Row(
+  //                 //   children: [
+  //                 //     Padding(
+  //                 //       padding: const EdgeInsets.only(
+  //                 //         left: 5,
+  //                 //         bottom: 5,
+  //                 //         right: 2,
+  //                 //         top: 5,
+  //                 //       ),
+  //                 //       child: Container(
+  //                 //         width: MediaQuery.of(context).size.width * 0.46,
+  //                 //         height: 50,
+  //                 //         decoration: BoxDecoration(
+  //                 //           shape: BoxShape.rectangle,
+  //                 //           color: Cores.branco,
+  //                 //           borderRadius: const BorderRadius.all(
+  //                 //             Radius.circular(8),
+  //                 //           ),
+  //                 //           border: Border.all(
+  //                 //             color: currentTheme.isDarkTheme()
+  //                 //                 ? Cores.verde
+  //                 //                 : Cores.azul,
+  //                 //             width: 2,
+  //                 //           ),
+  //                 //         ),
+  // child: Padding(
+  //   padding: const EdgeInsets.all(1),
+  //   child: Row(
+  //     children: [
+  //       Expanded(
+  //         child: Container(
+  //           margin: const EdgeInsets.all(1.0),
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(8.0),
+  //             image: DecorationImage(
+  //               image: NetworkImage(
+  //                 Globais.urlImage + produto[0].imagem1,
+  //               ),
+  //               fit: BoxFit.contain,
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //       // Padding(
+  //                 //               //   padding: const EdgeInsets.only(left: 5),
+  //                 //               //   child: Text(
+  //                 //               //     produto[0].nome,
+  //                 //               //     overflow: TextOverflow.ellipsis,
+  //                 //               //     style: TextStyle(
+  //                 //               //       color: currentTheme.isDarkTheme()
+  //                 //               //           ? Cores.pretoClaro
+  //                 //               //           : Cores.pretoOpaco,
+  //                 //               //       fontSize: 12,
+  //                 //               //       fontWeight: FontWeight.bold,
+  //                 //               //     ),
+  //                 //               //   ),
+  //                 //               // ),
+  //                 //             ],
+  //                 //           ),
+  //                 //         ),
+  //                 //       ),
+  //                 //     ),
+  //                 //     Padding(
+  //                 //       padding: const EdgeInsets.only(
+  //                 //         left: 2,
+  //                 //         bottom: 5,
+  //                 //         right: 2,
+  //                 //         top: 5,
+  //                 //       ),
+  //                 //       child: Container(
+  //                 //         width: MediaQuery.of(context).size.width * 0.22,
+  //                 //         height: 50,
+  //                 //         decoration: BoxDecoration(
+  //                 //           shape: BoxShape.rectangle,
+  //                 //           color: Cores.branco,
+  //                 //           borderRadius: const BorderRadius.all(
+  //                 //             Radius.circular(8),
+  //                 //           ),
+  //                 //           border: Border.all(
+  //                 //             color: currentTheme.isDarkTheme()
+  //                 //                 ? Cores.verde
+  //                 //                 : Cores.azul,
+  //                 //             width: 2,
+  //                 //           ),
+  //                 //         ),
+  //                 //         child: Center(
+  //                 //           child: Text(
+  //                 //             '$quantidade',
+  //                 //             style: TextStyle(
+  //                 //               color: currentTheme.isDarkTheme()
+  //                 //                   ? Cores.pretoClaro
+  //                 //                   : Cores.pretoOpaco,
+  //                 //               fontSize: 20,
+  //                 //               fontWeight: FontWeight.bold,
+  //                 //             ),
+  //                 //           ),
+  //                 //         ),
+  //                 //       ),
+  //                 //     ),
+  //                 //     Padding(
+  //                 //       padding: const EdgeInsets.only(
+  //                 //         left: 2,
+  //                 //         bottom: 5,
+  //                 //         right: 2,
+  //                 //         top: 5,
+  //                 //       ),
+  //                 //       child: Container(
+  //                 //         width: MediaQuery.of(context).size.width * 0.20,
+  //                 //         height: 50,
+  //                 //         decoration: BoxDecoration(
+  //                 //           shape: BoxShape.rectangle,
+  //                 //           color: Cores.branco,
+  //                 //           borderRadius: const BorderRadius.all(
+  //                 //             Radius.circular(8),
+  //                 //           ),
+  //                 //           border: Border.all(
+  //                 //             color: currentTheme.isDarkTheme()
+  //                 //                 ? Cores.verde
+  //                 //                 : Cores.azul,
+  //                 //             width: 2,
+  //                 //           ),
+  //                 //         ),
+  //                 //         child: Center(
+  //                 //           child: Text(
+  //                 //             'R\$ ${produto[0].preco}',
+  //                 //             style: TextStyle(
+  //                 //               color: currentTheme.isDarkTheme()
+  //                 //                   ? Cores.pretoClaro
+  //                 //                   : Cores.pretoOpaco,
+  //                 //               fontSize: 16,
+  //                 //               fontWeight: FontWeight.bold,
+  //                 //             ),
+  //                 //           ),
+  //                 //         ),
+  //                 //       ),
+  //                 //     ),
+  //                 //   ],
+  //                 // ),
+  //                 // Divider(
+  //                 //   color:
+  //                 //       currentTheme.isDarkTheme() ? Cores.preto : Cores.preto,
+  //                 //   thickness: 2,
+  //                 // ),
+  //                 // Expanded(
+  //                 //   child: Row(
+  //                 //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //                 //     children: [
+  //                 //       Text(
+  //                 //         produto[0].descricao,
+  //                 //         style: TextStyle(
+  //                 //           color: currentTheme.isDarkTheme()
+  //                 //               ? Cores.pretoClaro
+  //                 //               : Cores.pretoOpaco,
+  //                 //           fontSize: 16,
+  //                 //           fontWeight: FontWeight.bold,
+  //                 //         ),
+  //                 //       ),
+  //                 //       IconButton(
+  //                 //         onPressed: () {},
+  //                 //         icon: Icon(
+  //                 //           Icons.delete_rounded,
+  //                 //           color: Cores.vermelho,
+  //                 //         ),
+  //                 //       )
+  //                 //     ],
+  //                 //   ),
+  //                 // )
+  //               ],
+  //             ),
+  //           ),
+  //         )
+  //       : Center(
+  //           child: Text(
+  //             "Sem Itens no Carrinho !",
+  //             style: TextStyle(
+  //               fontSize: 20,
+  //               fontWeight: FontWeight.bold,
+  //               color: Cores.branco,
+  //             ),
+  //           ),
+  //         );
+
+  // return Padding(
+  //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+  //   child: Container(
+  //     decoration: BoxDecoration(
+  //       boxShadow: [
+  //         BoxShadow(
+  //           color: currentTheme.isDarkTheme()
+  //               ? Cores.cinzaEscuro.withOpacity(0.5)
+  //               : Cores.branco.withOpacity(0.5),
+  //           spreadRadius: 5,
+  //           blurRadius: 7,
+  //           offset: const Offset(0, 3), // changes position of shadow
+  //         ),
+  //       ],
+  //     ),
+  //     width: MediaQuery.of(context).size.width,
+  //     height: MediaQuery.of(context).size.height * 0.1,
+  //     child: Row(
+  //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //       children: [
+  //         Text(
+  //           nome,
+  //           style: TextStyle(
+  //             color: Cores.pretoOpaco,
+  //             fontSize: 20,
+  //           ),
+  //         ),
+  //         Expanded(
+  //           child: Container(),
+  //         ),
+  //         Text(
+  //           quantidade.toString(),
+  //           style: TextStyle(
+  //             color: Cores.pretoOpaco,
+  //             fontSize: 20,
+  //           ),
+  //         ),
+  //         Expanded(
+  //           child: Container(),
+  //         ),
+  //         Text(
+  //           'R\$ $preco',
+  //           style: TextStyle(
+  //             color: Cores.pretoOpaco,
+  //             fontSize: 20,
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   ),
+  // );
+  // }
+
+  Widget itemCarrinho(
+      String nome, double precoProduto, List<ProdutoModel> produto) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    preco = precoProduto;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      child: Expanded(
+        child: Container(
+          width: 332,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            color: Cores.branco,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(8),
+            ),
+            border: Border.all(
+              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+              width: 2,
+            ),
+          ),
+          child: Column(
+            children: [
+              Row(
                 children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      // image: DecorationImage(
+                      //   image: NetworkImage(
+                      //     Globais.urlImage + produto[0].imagem1,
+                      //   ),
+                      //   fit: BoxFit.contain,
+                      // ),
+                    ),
+                    child: Icon(
+                      Icons.image,
+                      color: Cores.pretoOpaco,
+                      size: 100,
+                    ),
+                  ),
                   Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(
-                          left: 5,
-                          bottom: 5,
-                          right: 2,
-                          top: 5,
-                        ),
+                        padding: const EdgeInsets.all(5),
                         child: Container(
-                          width: MediaQuery.of(context).size.width * 0.46,
+                          width: 110,
                           height: 50,
                           decoration: BoxDecoration(
                             shape: BoxShape.rectangle,
@@ -275,209 +543,164 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                               width: 2,
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(1),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.all(1.0),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          Globais.urlImage + produto[0].imagem1,
-                                        ),
-                                        fit: BoxFit.contain,
-                                      ),
-                                    ),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    quantidade--;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.remove,
+                                  color: Cores.vermelho,
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  quantidade.toString(),
+                                  style: TextStyle(
+                                    color: currentTheme.isDarkTheme()
+                                        ? Cores.pretoClaro
+                                        : Cores.pretoOpaco,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 5),
-                                  child: Text(
-                                    produto[0].nome,
-                                    style: TextStyle(
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.pretoClaro
-                                            : Cores.pretoOpaco,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    quantidade++;
+                                  });
+                                },
+                                icon: Icon(
+                                  Icons.add,
+                                  color: Cores.verde,
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 2,
-                          bottom: 5,
-                          right: 2,
-                          top: 5,
+                      Container(
+                        width: 100,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.verde
+                                : Cores.azul,
+                            width: 2,
+                          ),
                         ),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.22,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: Cores.branco,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                            border: Border.all(
+                        child: Center(
+                          child: Text(
+                            'R\$ ${produto[0].preco * quantidade},00',
+                            style: TextStyle(
                               color: currentTheme.isDarkTheme()
-                                  ? Cores.verde
-                                  : Cores.azul,
-                              width: 2,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              '$quantidade',
-                              style: TextStyle(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.pretoClaro
-                                    : Cores.pretoOpaco,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                          left: 2,
-                          bottom: 5,
-                          right: 5,
-                          top: 5,
-                        ),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width * 0.20,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: Cores.branco,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                            border: Border.all(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.verde
-                                  : Cores.azul,
-                              width: 2,
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'R\$ ${produto[0].preco}',
-                              style: TextStyle(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.pretoClaro
-                                    : Cores.pretoOpaco,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  ? Cores.pretoClaro
+                                  : Cores.pretoOpaco,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  Divider(
-                    color:
-                        currentTheme.isDarkTheme() ? Cores.preto : Cores.preto,
-                    thickness: 2,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        produto[0].descricao,
-                        style: TextStyle(
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.pretoClaro
-                              : Cores.pretoOpaco,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.delete_rounded,
-                          color: Cores.vermelho,
-                        ),
-                      )
-                    ],
-                  )
                 ],
               ),
-            ),
-          )
-        : Center(
-            child: Text(
-              "Sem Itens no Carrinho !",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Cores.branco,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Divider(
+                  color: Cores.pretoOpaco,
+                  thickness: 1,
+                ),
               ),
-            ),
-          );
-
-    // return Padding(
-    //   padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-    //   child: Container(
-    //     decoration: BoxDecoration(
-    //       boxShadow: [
-    //         BoxShadow(
-    //           color: currentTheme.isDarkTheme()
-    //               ? Cores.cinzaEscuro.withOpacity(0.5)
-    //               : Cores.branco.withOpacity(0.5),
-    //           spreadRadius: 5,
-    //           blurRadius: 7,
-    //           offset: const Offset(0, 3), // changes position of shadow
-    //         ),
-    //       ],
-    //     ),
-    //     width: MediaQuery.of(context).size.width,
-    //     height: MediaQuery.of(context).size.height * 0.1,
-    //     child: Row(
-    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //       children: [
-    //         Text(
-    //           nome,
-    //           style: TextStyle(
-    //             color: Cores.pretoOpaco,
-    //             fontSize: 20,
-    //           ),
-    //         ),
-    //         Expanded(
-    //           child: Container(),
-    //         ),
-    //         Text(
-    //           quantidade.toString(),
-    //           style: TextStyle(
-    //             color: Cores.pretoOpaco,
-    //             fontSize: 20,
-    //           ),
-    //         ),
-    //         Expanded(
-    //           child: Container(),
-    //         ),
-    //         Text(
-    //           'R\$ $preco',
-    //           style: TextStyle(
-    //             color: Cores.pretoOpaco,
-    //             fontSize: 20,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.7,
+                      height: MediaQuery.of(context).size.height * 0.18,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: Cores.branco,
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                        border: Border.all(
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.verde
+                              : Cores.azul,
+                          width: 2,
+                        ),
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: ListView(
+                            children: [
+                              Text(
+                                produto[0].nome,
+                                style: TextStyle(
+                                  color: currentTheme.isDarkTheme()
+                                      ? Cores.pretoClaro
+                                      : Cores.pretoOpaco,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  // overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Cores.branco,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      border: Border.all(
+                        color: currentTheme.isDarkTheme()
+                            ? Cores.verde
+                            : Cores.azul,
+                        width: 2,
+                      ),
+                    ),
+                    child: Center(
+                      child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            // carrinho.remove(produto[0]);
+                          });
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: Cores.vermelho,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
