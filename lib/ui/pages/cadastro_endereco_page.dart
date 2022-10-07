@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -336,7 +337,7 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
       },
       body: jsonEncode(
         <String, String>{
-          'cliente_id': '1',
+          'cliente_id': Globais.idCliente,
           'cep': _cepController.text,
           'logradouro': _enderecoController.text,
           'numero': _numeroController.text,

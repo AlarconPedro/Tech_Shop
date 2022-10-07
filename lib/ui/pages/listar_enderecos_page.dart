@@ -180,7 +180,7 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                   },
                 ),
                 title: Text(
-                  endereco[index].endereco,
+                  "${endereco[index].endereco} - ${endereco[index].numero}",
                   style: TextStyle(
                     color: currentTheme.isDarkTheme()
                         ? Cores.branco
@@ -188,7 +188,7 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                   ),
                 ),
                 subtitle: Text(
-                  endereco[index].numero,
+                  endereco[index].bairro,
                   style: TextStyle(
                     color: currentTheme.isDarkTheme()
                         ? Cores.branco
