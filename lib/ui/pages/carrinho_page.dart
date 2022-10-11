@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
+import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
+import 'package:tech_shop/ui/widgets/carrinho_card.dart';
 
 import '../../classes/globais.dart';
 import '../../datasource/models/models.dart';
+import '../widgets/widgets.dart';
 
 class CarrinhoPage extends StatefulWidget {
-  const CarrinhoPage({Key? key}) : super(key: key);
+  const CarrinhoPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CarrinhoPage> createState() => _CarrinhoPageState();
@@ -158,15 +163,23 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                               Row(
                                 children: [
                                   FutureBuilder(
-                                    future: Future.delayed(
-                                      const Duration(seconds: 2),
-                                    ),
+                                    future: API().getItensCarrinho(),
                                     builder: (context, snapshot) {
-                                      return itemCarrinho(
-                                        'Teste',
-                                        10,
-                                        Globais.carrinho,
-                                      );
+                                      switch (snapshot.connectionState) {
+                                        case ConnectionState.waiting:
+                                        case ConnectionState.none:
+                                          return CirculoEspera.criar(
+                                              cor: Cores.branco);
+                                        default:
+                                          if (snapshot.hasError) {
+                                            return Text(
+                                                'Error: ${snapshot.error}');
+                                          } else {
+                                            return itemCarrinho(
+                                              snapshot.data as ProdutoModel,
+                                            );
+                                          }
+                                      }
                                     },
                                   ),
                                 ],
@@ -203,7 +216,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                             child: Container(),
                           ),
                           Text(
-                            'R\$ ${Globais.carrinho[0].preco * quantidade},00',
+                            'R\$ ${Globais.carrinho[0].preco * quantidade},00' ??
+                                "0",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -228,223 +242,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     );
   }
 
-  Widget itemCarrinho(
-      String nome, double precoProduto, List<ProdutoModel> produto) {
-    final currentTheme = Provider.of<ThemeProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      child: Expanded(
-        child: Container(
-          width: 332,
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Cores.branco,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(8),
-            ),
-            border: Border.all(
-              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-              width: 2,
-            ),
-          ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      // image: DecorationImage(
-                      //   image: NetworkImage(
-                      //     Globais.urlImage + produto[0].imagem1,
-                      //   ),
-                      //   fit: BoxFit.contain,
-                      // ),
-                    ),
-                    child: Icon(
-                      Icons.image,
-                      color: Cores.pretoOpaco,
-                      size: 100,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Container(
-                          width: 110,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: Cores.branco,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                            border: Border.all(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.verde
-                                  : Cores.azul,
-                              width: 2,
-                            ),
-                          ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    quantidade--;
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.remove,
-                                  color: Cores.vermelho,
-                                ),
-                              ),
-                              Center(
-                                child: Text(
-                                  quantidade.toString(),
-                                  style: TextStyle(
-                                    color: currentTheme.isDarkTheme()
-                                        ? Cores.pretoClaro
-                                        : Cores.pretoOpaco,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    quantidade++;
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Cores.verde,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 100,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          color: Cores.branco,
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                          border: Border.all(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.verde
-                                : Cores.azul,
-                            width: 2,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'R\$ ${produto[0].preco * quantidade},00',
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.pretoClaro
-                                  : Cores.pretoOpaco,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Divider(
-                  color: Cores.pretoOpaco,
-                  thickness: 1,
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: Cores.branco,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.verde
-                              : Cores.azul,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: ListView(
-                            children: [
-                              Text(
-                                produto[0].nome,
-                                style: TextStyle(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.pretoClaro
-                                      : Cores.pretoOpaco,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  // overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Cores.branco,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      border: Border.all(
-                        color: currentTheme.isDarkTheme()
-                            ? Cores.verde
-                            : Cores.azul,
-                        width: 2,
-                      ),
-                    ),
-                    child: Center(
-                      child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            // carrinho.remove(produto[0]);
-                          });
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Cores.vermelho,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  Widget itemCarrinho(ProdutoModel produtoModel) {
+    return CarrinhoCard(produto: produtoModel);
   }
 }

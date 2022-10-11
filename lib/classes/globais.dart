@@ -2,25 +2,20 @@ import 'package:tech_shop/datasource/models/produto_model.dart';
 
 class Globais {
   //Rotas da API
-  static String urlPadrao = "http://http://187.87.223.235:8180";
-  static String urlCategorias = "http://187.87.223.235:8180/api/v1/categoria";
-  static String urlProdutos = "http://187.87.223.235:8180/api/v1/produto";
-  static String urlProdutosRandom = "http://187.87.223.235:8180/api/v1/produto";
-  static String urlProdutoId = "http://187.87.223.235:8180/api/v1/produto/";
-  static String urlImage = "http://187.87.223.235:8180/produtos/";
-  static String urlLogin = "http://187.87.223.235:8180/api/v1/loginCliente";
-  static String urlRandon =
-      "http://187.87.223.235:8180/api/v1/produto/categoria/";
-  static String urlProdutoCategoriaId =
-      "http://187.87.223.235:8180/api/v1/produto/categoria/";
-  static String urlCadastroEndereco =
-      "http://187.87.223.235:8180/api/v1/endereco";
-  static String urlCadastroCliente =
-      "http://187.87.223.235:8180/api/v1/cliente";
-  static String urlEnderecoId =
-      "http://187.87.223.235:8180/api/v1/enderecoCliente/";
-  static String urlDeleteEndereco =
-      "http://187.87.223.235:8180/api/v1/endereco/";
+  static String urlPadrao = "http://187.87.223.235:8180";
+  static String urlCategorias = "$urlPadrao/api/v1/categoria";
+  static String urlProdutos = "$urlPadrao/api/v1/produto";
+  static String urlProdutosRandom = "$urlPadrao/api/v1/produto";
+  static String urlProdutoId = "$urlPadrao/api/v1/produto/";
+  static String urlImage = "$urlPadrao/produtos/";
+  static String urlLogin = "$urlPadrao/api/v1/loginCliente";
+  static String urlRandon = "$urlPadrao/api/v1/produto/categoria/";
+  static String urlProdutoCategoriaId = "$urlPadrao/api/v1/produto/categoria/";
+  static String urlCadastroEndereco = "$urlPadrao/api/v1/endereco";
+  static String urlCadastroCliente = "$urlPadrao/api/v1/cliente";
+  static String urlEnderecoId = "$urlPadrao/api/v1/enderecoCliente/";
+  static String urlDeleteEndereco = "$urlPadrao/api/v1/endereco/";
+  static String urlItensCarrinho = "$urlPadrao/api/venda/carrinho/";
 
   //Valores Cliente
   static String nomeCliente = "";
@@ -40,4 +35,5 @@ class Globais {
 
   // Carrinho
   static List<ProdutoModel> carrinho = [];
+  static int idCarrinho = 0;
 }

@@ -60,6 +60,17 @@ class API {
     return json.map((e) => EnderecoModel.fromJson(e)).toList();
   }
 
+  Future<List<ProdutoModel>> getItensCarrinho() async {
+    String url = Globais.urlItensCarrinho + Globais.idCarrinho.toString();
+    var response = await request.getJson(url: url);
+    print(response);
+    return _populateItensCarrinho(response);
+  }
+
+  List<ProdutoModel> _populateItensCarrinho(List<dynamic> json) {
+    return json.map((e) => ProdutoModel.fromJson(e)).toList();
+  }
+
   //POST FUNCTIONS
   Future<List<LoginModel>> postLogin({
     required String nome,
@@ -82,6 +93,11 @@ class API {
     return json.map((e) => LoginModel.fromJson(e)).toList();
   }
 
+  void criarCarrinho() {}
+
+  void adicionarAoCarrinho() {}
+
+  void removerDoCarrinho() {}
   // PUT FUNCTIONS
 
   // DELETE FUNCTIONS
