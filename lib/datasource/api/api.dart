@@ -93,11 +93,28 @@ class API {
     return json.map((e) => LoginModel.fromJson(e)).toList();
   }
 
-  void criarCarrinho() {}
+  void criarCarrinho() {
+    request.postJson(url: Globais.urlCriarCarrinho, body: {
+      "id_cliente": Globais.idCliente,
+      "id_venda": "0",
+      "status": "0",
+    });
+  }
 
-  void adicionarAoCarrinho() {}
+  void adicionarAoCarrinho() {
+    request.postJson(url: Globais.urlAddItemCarrinho, body: {
+      "valor": "valor",
+      "id_produto": "Globais.idProduto",
+      "quantidade": "Globais.quantidade",
+    });
+  }
 
-  void removerDoCarrinho() {}
+  void removerDoCarrinho() {
+    request.postJson(url: Globais.urlDeleteItemCarrinho, body: {
+      "id_produto": "Globais.idProduto",
+      "id_carrinho": "Globais.idCarrinho",
+    });
+  }
   // PUT FUNCTIONS
 
   // DELETE FUNCTIONS

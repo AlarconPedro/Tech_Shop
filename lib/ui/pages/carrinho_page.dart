@@ -169,11 +169,13 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                         case ConnectionState.waiting:
                                         case ConnectionState.none:
                                           return CirculoEspera.criar(
-                                              cor: Cores.branco);
+                                            cor: Cores.branco,
+                                          );
                                         default:
                                           if (snapshot.hasError) {
                                             return Text(
-                                                'Error: ${snapshot.error}');
+                                              'Error: ${snapshot.error}',
+                                            );
                                           } else {
                                             return itemCarrinho(
                                               snapshot.data as ProdutoModel,
