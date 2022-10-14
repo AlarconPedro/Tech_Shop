@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
+import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/temas/theme_provider.dart';
@@ -200,7 +201,17 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                       ),
                     ),
                     onPressed: () {
-                      Globais.carrinho.add(widget.produto);
+                      Globais.qtdCarrinho < 1
+                          ? API().criarCarrinho(Globais.idCliente)
+                          : API().adicionarAoCarrinho(
+                              produtoId: widget.produto.id,
+                              quantidade: Globais.qtdCarrinho,
+                              valor: widget.produto.preco,
+                              vendaId: Globais.vendaId,
+                            );
+                      setState(() {
+                        Globais.qtdCarrinho++;
+                      });
                     },
                     child: const Text(
                       'Comprar',

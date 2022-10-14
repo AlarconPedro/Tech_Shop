@@ -213,7 +213,8 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                API().deleteEndereco(Globais.idCliente);
+                                API().deleteEndereco(
+                                    Globais.idCliente.toString());
                                 Navigator.pop(context);
                                 setState(() {});
                               },

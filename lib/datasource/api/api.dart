@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/datasource/http/http.dart';
+import 'package:tech_shop/datasource/models/criarCarrinho_model.dart';
 import 'package:tech_shop/datasource/models/endereco_model.dart';
 import 'package:tech_shop/datasource/models/login_model.dart';
 import 'package:tech_shop/datasource/models/models.dart';
@@ -50,7 +52,7 @@ class API {
   }
 
   Future<List<EnderecoModel>> getEnderecos() async {
-    String url = Globais.urlEnderecoId + Globais.idCliente;
+    String url = Globais.urlEnderecoId + Globais.idCliente.toString();
     var response = await request.getJson(url: url);
     print(response);
     return _populateEnderecos(response);
@@ -61,7 +63,7 @@ class API {
   }
 
   Future<List<ProdutoModel>> getItensCarrinho() async {
-    String url = Globais.urlItensCarrinho + Globais.idCarrinho.toString();
+    String url = Globais.urlItensCarrinho + Globais.vendaId.toString();
     var response = await request.getJson(url: url);
     print(response);
     return _populateItensCarrinho(response);
@@ -93,27 +95,41 @@ class API {
     return json.map((e) => LoginModel.fromJson(e)).toList();
   }
 
-  void criarCarrinho() {
-    request.postJson(url: Globais.urlCriarCarrinho, body: {
-      "id_cliente": Globais.idCliente,
-      "id_venda": "0",
-      "status": "0",
+  void criarCarrinho(int idCliente) async {
+    var response =
+        await request.postVenda(url: Globais.urlCriarCarrinho, body: {
+      "cliente_id": Globais.idCliente.toString(),
+      "usuario_id": "1",
+      "status": "aguardando pagamento",
     });
+    Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;
   }
 
-  void adicionarAoCarrinho() {
-    request.postJson(url: Globais.urlAddItemCarrinho, body: {
-      "valor": "valor",
-      "id_produto": "Globais.idProduto",
-      "quantidade": "Globais.quantidade",
-    });
+  void adicionarAoCarrinho({
+    required double valor,
+    required int produtoId,
+    required int quantidade,
+    required int vendaId,
+  }) async {
+    var response = await request.postVenda(
+      url: Globais.urlAddItemCarrinho,
+      body: {
+        "valor": valor.toString(),
+        "venda_id": Globais.vendaId.toString(),
+        "produto_id": produtoId.toString(),
+        "quantidade": quantidade.toString(),
+      },
+    );
   }
 
   void removerDoCarrinho() {
-    request.postJson(url: Globais.urlDeleteItemCarrinho, body: {
-      "id_produto": "Globais.idProduto",
-      "id_carrinho": "Globais.idCarrinho",
-    });
+    request.postJson(
+      url: Globais.urlDeleteItemCarrinho,
+      body: {
+        "produto_id": "Globais.idProduto",
+        "venda_id": "Globais.idCarrinho",
+      },
+    );
   }
   // PUT FUNCTIONS
 

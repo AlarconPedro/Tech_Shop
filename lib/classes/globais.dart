@@ -33,10 +33,10 @@ class Globais {
   static String bairroCliente = "";
   static String cidadeCliente = "";
   static String estadoCliente = "";
-  static String idCliente = "";
+  static int idCliente = 0;
   static int enderecoSelected = 0;
 
   // Carrinho
-  static List<ProdutoModel> carrinho = [];
-  static int idCarrinho = 0;
+  static int qtdCarrinho = 0;
+  static int vendaId = 0;
 }

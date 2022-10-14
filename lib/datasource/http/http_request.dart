@@ -15,6 +15,12 @@ class HttpRequest {
     return json.decode(response.body);
   }
 
+  Future<Map<String, dynamic>> postVenda(
+      {required String url, required Map body}) async {
+    http.Response response = await http.post(Uri.parse(url), body: body);
+    return json.decode(response.body);
+  }
+
   Future<List<dynamic>> putJson(
       {required String url, required Map body}) async {
     http.Response response = await http.put(Uri.parse(url), body: body);

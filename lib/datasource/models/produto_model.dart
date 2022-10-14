@@ -8,7 +8,7 @@ class ProdutoModel {
   String imagem3;
   String imagem4;
   String imagem5;
-  int preco;
+  double preco;
   int? precoPromocional;
 
   ProdutoModel({
@@ -27,16 +27,16 @@ class ProdutoModel {
 
   factory ProdutoModel.fromJson(Map<String, dynamic> json) {
     return ProdutoModel(
-      id: json['id'],
-      categoriaId: json['categoria_id'],
+      id: json['id'] ?? 0,
+      categoriaId: json['categoria_id'] ?? 0,
       nome: json['nome'],
       descricao: json['descricao'],
-      imagem1: json['imagem1'],
-      imagem2: json['imagem2'],
-      imagem3: json['imagem3'],
-      imagem4: json['imagem4'],
-      imagem5: json['imagem5'],
-      preco: json['preco'],
+      imagem1: json['imagem1'] ?? '',
+      imagem2: json['imagem2'] ?? '',
+      imagem3: json['imagem3'] ?? '',
+      imagem4: json['imagem4'] ?? '',
+      imagem5: json['imagem5'] ?? '',
+      preco: json['preco'].toDouble(),
       precoPromocional: json['preco_promocional'],
     );
   }

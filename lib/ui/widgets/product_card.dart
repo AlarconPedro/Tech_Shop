@@ -7,7 +7,7 @@ import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
 class ProductCard extends StatefulWidget {
-  int preco;
+  double preco;
   int? precoDesconto;
   String nome;
   String descricao;

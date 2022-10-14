@@ -294,7 +294,7 @@ class _LoginPageState extends State<LoginPage> {
   LoginModel populateUser(Map<String, dynamic> json) {
     print(json);
     LoginModel login = LoginModel.fromJson(json['data']);
-    Globais.idCliente = json['data']['id'].toString();
+    Globais.idCliente = json['data']['id'];
     Globais.nomeCliente = json['data']['nome'];
     Globais.emailCliente = json['data']['email'];
     return login;

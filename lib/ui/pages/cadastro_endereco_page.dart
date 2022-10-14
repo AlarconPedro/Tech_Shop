@@ -337,7 +337,7 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
       },
       body: jsonEncode(
         <String, String>{
-          'cliente_id': Globais.idCliente,
+          'cliente_id': Globais.idCliente.toString(),
           'cep': _cepController.text,
           'logradouro': _enderecoController.text,
           'numero': _numeroController.text,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/datasource/api/api.dart';
 
 import '../../datasource/models/models.dart';
 import '../estilos/estilos.dart';
@@ -228,6 +229,7 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                       child: IconButton(
                         onPressed: () {
                           setState(() {
+                            API().removerDoCarrinho();
                             // carrinho.remove(produto[0]);
                           });
                         },
