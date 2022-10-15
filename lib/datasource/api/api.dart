@@ -95,7 +95,7 @@ class API {
     return json.map((e) => LoginModel.fromJson(e)).toList();
   }
 
-  void criarCarrinho(int idCliente) async {
+  void criarCarrinho(int idCliente, ProdutoModel produtoModel) async {
     var response =
         await request.postVenda(url: Globais.urlCriarCarrinho, body: {
       "cliente_id": Globais.idCliente.toString(),
@@ -103,6 +103,11 @@ class API {
       "status": "aguardando pagamento",
     });
     Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;
+    API().adicionarAoCarrinho(
+        valor: produtoModel.preco,
+        produtoId: produtoModel.id,
+        quantidade: 1,
+        vendaId: Globais.vendaId);
   }
 
   void adicionarAoCarrinho({

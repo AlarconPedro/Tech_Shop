@@ -202,7 +202,10 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                     ),
                     onPressed: () {
                       Globais.qtdCarrinho < 1
-                          ? API().criarCarrinho(Globais.idCliente)
+                          ? API().criarCarrinho(
+                              Globais.idCliente,
+                              widget.produto,
+                            )
                           : API().adicionarAoCarrinho(
                               produtoId: widget.produto.id,
                               quantidade: Globais.qtdCarrinho,
