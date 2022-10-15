@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 
+import '../../classes/classes.dart';
 import '../../datasource/models/models.dart';
 import '../estilos/estilos.dart';
 import '../temas/temas.dart';
@@ -9,7 +10,10 @@ import '../temas/temas.dart';
 class CarrinhoCard extends StatefulWidget {
   final ProdutoModel produto;
 
-  const CarrinhoCard({Key? key, required this.produto}) : super(key: key);
+  const CarrinhoCard({
+    Key? key,
+    required this.produto,
+  }) : super(key: key);
 
   @override
   State<CarrinhoCard> createState() => _CarrinhoCardState();
@@ -51,7 +55,7 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                       // ),
                       image: DecorationImage(
                         image: NetworkImage(
-                          widget.produto.imagem1,
+                          Globais.urlImage + widget.produto.imagem1,
                         ),
                         fit: BoxFit.contain,
                       ),

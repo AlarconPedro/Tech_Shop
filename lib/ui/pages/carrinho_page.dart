@@ -245,7 +245,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
   }
 
   Widget itemCarrinho(List<ProdutoModel> produtoModel) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
     return ListView.builder(
+      itemCount: produtoModel.length,
       itemBuilder: ((context, index) {
         return CarrinhoCard(produto: produtoModel[index]);
       }),
