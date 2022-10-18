@@ -219,7 +219,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                             child: Container(),
                           ),
                           Text(
-                            "0",
+                            "R\$ ${Globais.valorTotalCarrinho.toStringAsFixed(2)}",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -245,11 +245,13 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
   }
 
   Widget itemCarrinho(List<ProdutoModel> produtoModel) {
-    final currentTheme = Provider.of<ThemeProvider>(context);
     return ListView.builder(
       itemCount: produtoModel.length,
       itemBuilder: ((context, index) {
-        return CarrinhoCard(produto: produtoModel[index]);
+        return CarrinhoCard(
+          produto: produtoModel[index],
+          quantidade: produtoModel[index].quantidade,
+        );
       }),
     );
   }

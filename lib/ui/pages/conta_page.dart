@@ -17,6 +17,7 @@ class ContaPage extends StatefulWidget {
 class _ContaPageState extends State<ContaPage> {
   @override
   Widget build(BuildContext context) {
+    Globais.valorTotalCarrinho = 0;
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:

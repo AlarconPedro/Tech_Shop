@@ -38,5 +38,6 @@ class Globais {
 
   // Carrinho
   static int qtdCarrinho = 0;
+  static double valorTotalCarrinho = 0.0;
   static int vendaId = 0;
 }

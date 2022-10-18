@@ -10,6 +10,7 @@ class ProdutoModel {
   String imagem5;
   double preco;
   int? precoPromocional;
+  int? quantidade;
 
   ProdutoModel({
     required this.id,
@@ -23,6 +24,7 @@ class ProdutoModel {
     required this.imagem5,
     required this.preco,
     required this.precoPromocional,
+    required this.quantidade,
   });
 
   factory ProdutoModel.fromJson(Map<String, dynamic> json) {
@@ -38,6 +40,7 @@ class ProdutoModel {
       imagem5: json['imagem5'] ?? '',
       preco: json['preco'].toDouble(),
       precoPromocional: json['preco_promocional'],
+      quantidade: json['quantidade'],
     );
   }
 

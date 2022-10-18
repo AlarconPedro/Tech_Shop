@@ -5,14 +5,17 @@ import 'package:tech_shop/datasource/api/api.dart';
 import '../../classes/classes.dart';
 import '../../datasource/models/models.dart';
 import '../estilos/estilos.dart';
+import '../pages/pages.dart';
 import '../temas/temas.dart';
 
 class CarrinhoCard extends StatefulWidget {
   final ProdutoModel produto;
+  int? quantidade;
 
-  const CarrinhoCard({
+  CarrinhoCard({
     Key? key,
     required this.produto,
+    required this.quantidade,
   }) : super(key: key);
 
   @override
@@ -20,94 +23,202 @@ class CarrinhoCard extends StatefulWidget {
 }
 
 class _CarrinhoCardState extends State<CarrinhoCard> {
+  void calculaValorCarrinho(ProdutoModel produto) {
+    if (widget.quantidade != 0) {
+      for (var i = 0; i < widget.quantidade!; i++) {
+        setState(() {
+          Globais.valorTotalCarrinho += produto.preco.toDouble();
+        });
+      }
+    } else {
+      setState(() {
+        Globais.valorTotalCarrinho = 0;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    int quantidade = 0;
+    calculaValorCarrinho(widget.produto);
     final currentTheme = Provider.of<ThemeProvider>(context);
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      child: Expanded(
-        child: Container(
-          width: 332,
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Cores.branco,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(8),
-            ),
-            border: Border.all(
-              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-              width: 2,
-            ),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ProdutoPage(
+                produto: widget.produto,
+              );
+            },
           ),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      // image: DecorationImage(
-                      //   image: NetworkImage(
-                      //     Globais.urlImage + produto[0].imagem1,
-                      //   ),
-                      //   fit: BoxFit.contain,
-                      // ),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          Globais.urlImage + widget.produto.imagem1,
-                        ),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    // child: SizedBox(
-                    //   width: 100,
-                    //   height: 100,
-                    //   child: Image.network(widget.produto.imagem1),
-                    // ),
-                    // child: Icon(
-                    //   Icons.image,
-                    //   color: Cores.pretoOpaco,
-                    //   size: 100,
-                    // ),
-                  ),
-                  Row(
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        child: Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Cores.branco,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+              border: Border.all(
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                width: 2,
+              ),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Container(
-                          width: 110,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: Cores.branco,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                            border: Border.all(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.verde
-                                  : Cores.azul,
-                              width: 2,
-                            ),
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: Image.network(
+                            Globais.urlImage + widget.produto.imagem1,
                           ),
-                          child: Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    quantidade--;
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.remove,
-                                  color: Cores.vermelho,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Container(
+                              width: 110,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Cores.branco,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                                border: Border.all(
+                                  color: currentTheme.isDarkTheme()
+                                      ? Cores.verde
+                                      : Cores.azul,
+                                  width: 2,
                                 ),
                               ),
-                              Center(
-                                child: Text(
-                                  quantidade.toString(),
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.quantidade != 0
+                                            ? widget.quantidade =
+                                                widget.quantidade! - 1
+                                            : widget.quantidade = 1;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: Cores.vermelho,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      widget.quantidade.toString(),
+                                      style: TextStyle(
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.pretoClaro
+                                            : Cores.pretoOpaco,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        widget.quantidade != 0
+                                            ? widget.quantidade =
+                                                widget.quantidade! + 1
+                                            : widget.quantidade = 1;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Cores.verde,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 110,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Cores.branco,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                              border: Border.all(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.verde
+                                    : Cores.azul,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'R\$ ${widget.produto.preco.toInt()},00',
+                                style: TextStyle(
+                                  color: currentTheme.isDarkTheme()
+                                      ? Cores.pretoClaro
+                                      : Cores.pretoOpaco,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Divider(
+                    color: Cores.pretoOpaco,
+                    thickness: 1,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: ListView(
+                              children: [
+                                Text(
+                                  widget.produto.descricao,
                                   style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
                                     color: currentTheme.isDarkTheme()
                                         ? Cores.pretoClaro
                                         : Cores.pretoOpaco,
@@ -115,24 +226,16 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    quantidade++;
-                                  });
-                                },
-                                icon: Icon(
-                                  Icons.add,
-                                  color: Cores.verde,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                      Container(
-                        width: 100,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Container(
+                        width: 50,
                         height: 50,
                         decoration: BoxDecoration(
                           shape: BoxShape.rectangle,
@@ -148,105 +251,27 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                           ),
                         ),
                         child: Center(
-                          child: Text(
-                            'R\$ ${widget.produto.preco},00',
-                            style: TextStyle(
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.pretoClaro
-                                  : Cores.pretoOpaco,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                          child: IconButton(
+                            onPressed: () {
+                              setState(
+                                () {
+                                  API().removerDoCarrinho();
+                                  // carrinho.remove(produto[0]);
+                                },
+                              );
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: Cores.vermelho,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Divider(
-                  color: Cores.pretoOpaco,
-                  thickness: 1,
+                    ),
+                  ],
                 ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      height: MediaQuery.of(context).size.height * 0.18,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: Cores.branco,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                        border: Border.all(
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.verde
-                              : Cores.azul,
-                          width: 2,
-                        ),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: ListView(
-                            children: [
-                              Text(
-                                widget.produto.descricao,
-                                style: TextStyle(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.pretoClaro
-                                      : Cores.pretoOpaco,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  // overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: Cores.branco,
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                      border: Border.all(
-                        color: currentTheme.isDarkTheme()
-                            ? Cores.verde
-                            : Cores.azul,
-                        width: 2,
-                      ),
-                    ),
-                    child: Center(
-                      child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            API().removerDoCarrinho();
-                            // carrinho.remove(produto[0]);
-                          });
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Cores.vermelho,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

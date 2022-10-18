@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/enumerators/enum_Icons.dart';
@@ -20,6 +21,9 @@ class CategoriaPage extends StatefulWidget {
 class _CategoriaPageState extends State<CategoriaPage> {
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      Globais.valorTotalCarrinho = 0;
+    });
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:
