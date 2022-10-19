@@ -21,9 +21,6 @@ class CategoriaPage extends StatefulWidget {
 class _CategoriaPageState extends State<CategoriaPage> {
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      Globais.valorTotalCarrinho = 0;
-    });
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor:

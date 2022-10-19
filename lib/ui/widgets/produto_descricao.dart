@@ -214,6 +214,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                             );
                       setState(() {
                         Globais.qtdCarrinho++;
+                        Globais.valorTotalCarrinho += widget.produto.preco;
                       });
                     },
                     child: const Text(

@@ -23,23 +23,8 @@ class CarrinhoCard extends StatefulWidget {
 }
 
 class _CarrinhoCardState extends State<CarrinhoCard> {
-  void calculaValorCarrinho(ProdutoModel produto) {
-    if (widget.quantidade != 0) {
-      for (var i = 0; i < widget.quantidade!; i++) {
-        setState(() {
-          Globais.valorTotalCarrinho += produto.preco.toDouble();
-        });
-      }
-    } else {
-      setState(() {
-        Globais.valorTotalCarrinho = 0;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    calculaValorCarrinho(widget.produto);
     final currentTheme = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {
