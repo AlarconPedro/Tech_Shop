@@ -9,6 +9,8 @@ import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:http/http.dart' as http;
 
+import '../../datasource/local/tb_usuario.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -19,9 +21,19 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
+  var tbUsuario = TbUsuario();
 
   bool _rememberMe = false;
   bool logado = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  // TODO - Implementar o método de login
+  _carregaDadosUsuario() async {}
 
   @override
   Widget build(BuildContext context) {

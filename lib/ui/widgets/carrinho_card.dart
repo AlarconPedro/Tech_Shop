@@ -102,6 +102,8 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                                             ? widget.quantidade =
                                                 widget.quantidade! - 1
                                             : widget.quantidade = 1;
+                                        Globais.valorTotalCarrinho -=
+                                            widget.produto.preco.toDouble();
                                       });
                                     },
                                     icon: Icon(
@@ -128,6 +130,10 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                                             ? widget.quantidade =
                                                 widget.quantidade! + 1
                                             : widget.quantidade = 1;
+                                        Future.delayed(Duration.zero, () {
+                                          Globais.valorTotalCarrinho +=
+                                              widget.produto.preco.toDouble();
+                                        });
                                       });
                                     },
                                     icon: Icon(

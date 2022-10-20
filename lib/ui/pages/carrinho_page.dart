@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
+import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/carrinho_card.dart';
 
@@ -71,18 +72,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     const SizedBox(
                       height: 5,
                     ),
-                    // Text(
-                    //   'Produtos',
-                    //   style: TextStyle(
-                    //     fontSize: 20,
-                    //     fontWeight: FontWeight.bold,
-                    //     color: Cores.branco,
-                    //   ),
-                    // ),
-                    // Divider(
-                    //   color: Cores.verde,
-                    //   thickness: 2,
-                    // ),
                     IntrinsicHeight(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -248,11 +237,327 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     return ListView.builder(
       itemCount: produtoModel.length,
       itemBuilder: ((context, index) {
-        return CarrinhoCard(
-          produto: produtoModel[index],
-          quantidade: produtoModel[index].quantidade,
+        return carrinhoCardo(
+          produtoModel[index],
+          produtoModel[index].quantidade,
         );
       }),
+    );
+  }
+
+  Widget carrinhoCardo(ProdutoModel produtoModel, int? quantidade) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return ProdutoPage(
+                produto: produtoModel,
+              );
+            },
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        child: Expanded(
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Cores.branco,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(8),
+              ),
+              border: Border.all(
+                color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                width: 2,
+              ),
+            ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: SizedBox(
+                          width: 80,
+                          height: 80,
+                          child: Image.network(
+                            Globais.urlImage + produtoModel.imagem1,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: Container(
+                              width: 110,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: Cores.branco,
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(8),
+                                ),
+                                border: Border.all(
+                                  color: currentTheme.isDarkTheme()
+                                      ? Cores.verde
+                                      : Cores.azul,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        quantidade != 0
+                                            ? quantidade = quantidade! - 1
+                                            : quantidade = 1;
+                                        Globais.valorTotalCarrinho -=
+                                            produtoModel.preco.toDouble();
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.remove,
+                                      color: Cores.vermelho,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      quantidade.toString(),
+                                      style: TextStyle(
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.pretoClaro
+                                            : Cores.pretoOpaco,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        quantidade != 0
+                                            ? quantidade = quantidade! + 1
+                                            : quantidade = 1;
+                                        Future.delayed(Duration.zero, () {
+                                          Globais.valorTotalCarrinho +=
+                                              produtoModel.preco.toDouble();
+                                        });
+                                      });
+                                    },
+                                    icon: Icon(
+                                      Icons.add,
+                                      color: Cores.verde,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Container(
+                            width: 110,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Cores.branco,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(8),
+                              ),
+                              border: Border.all(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.verde
+                                    : Cores.azul,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'R\$ ${produtoModel.preco}0',
+                                style: TextStyle(
+                                  color: currentTheme.isDarkTheme()
+                                      ? Cores.pretoClaro
+                                      : Cores.pretoOpaco,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Divider(
+                    color: Cores.pretoOpaco,
+                    thickness: 1,
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
+                            child: ListView(
+                              children: [
+                                Text(
+                                  produtoModel.descricao,
+                                  style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    color: currentTheme.isDarkTheme()
+                                        ? Cores.pretoClaro
+                                        : Cores.pretoOpaco,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 5),
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.verde
+                                : Cores.azul,
+                            width: 2,
+                          ),
+                        ),
+                        child: Center(
+                          child: IconButton(
+                            onPressed: () {
+                              setState(
+                                () {
+                                  API().removerDoCarrinho();
+                                  // carrinho.remove(produto[0]);
+                                },
+                              );
+                            },
+                            icon: Icon(
+                              Icons.delete,
+                              color: Cores.vermelho,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget botaoFinalizarCompra() {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return Padding(
+      padding: const EdgeInsets.only(
+        bottom: 10,
+        left: 10,
+        right: 10,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+              blurRadius: 3,
+              spreadRadius: 1,
+              blurStyle: BlurStyle.normal,
+              // offset: const Offset(1.5, 1.5),
+            ),
+          ],
+          shape: BoxShape.rectangle,
+          color: currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(15),
+          ),
+          border: Border.all(
+            color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+            width: 1,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                  ),
+                  child: Text(
+                    'Finalizar Compra',
+                    style: TextStyle(
+                      color: currentTheme.isDarkTheme()
+                          ? Cores.branco
+                          : Cores.pretoOpaco,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                ),
+                child: Text(
+                  "R\$ ${Globais.valorTotalCarrinho.toStringAsFixed(2)}",
+                  style: TextStyle(
+                    color: currentTheme.isDarkTheme()
+                        ? Cores.branco
+                        : Cores.pretoOpaco,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
