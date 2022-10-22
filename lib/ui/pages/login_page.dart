@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/globais.dart';
+import 'package:tech_shop/datasource/local/querys/tb_usuario_helper.dart';
 import 'package:tech_shop/datasource/models/login_model.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
@@ -28,12 +29,20 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    _carregaDadosUsuario();
     // TODO: implement initState
     super.initState();
   }
 
   // TODO - Implementar o método de login
-  _carregaDadosUsuario() async {}
+  _carregaDadosUsuario() async {
+    tbUsuario = await TbUsuarioHelper().getUsuario();
+    if (tbUsuario.usuario != "" && tbUsuario.senha != "") {
+      _emailController.text = tbUsuario.usuario;
+      _senhaController.text = tbUsuario.senha;
+      logar(_emailController.text, _senhaController.text);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,9 +57,6 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Expanded(
-                //   child: Container(),
-                // ),
                 Row(
                   children: [
                     Expanded(
@@ -137,9 +143,10 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      primary: currentTheme.isDarkTheme()
-                                          ? Cores.vermelho
-                                          : Cores.azul,
+                                      backgroundColor:
+                                          currentTheme.isDarkTheme()
+                                              ? Cores.vermelho
+                                              : Cores.azul,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
@@ -147,8 +154,26 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     child: const Text('Entrar'),
                                     onPressed: () {
-                                      logar(_emailController.text,
-                                          _senhaController.text);
+                                      if (_rememberMe) {
+                                        TbUsuarioHelper().updateUsuario(
+                                          _emailController.text.toString(),
+                                          _senhaController.text.toString(),
+                                        );
+
+                                        logar(
+                                          _emailController.text,
+                                          _senhaController.text,
+                                        );
+                                      } else {
+                                        TbUsuarioHelper().insertLogin(
+                                          _emailController.text,
+                                          _senhaController.text,
+                                        );
+                                        logar(
+                                          _emailController.text,
+                                          _senhaController.text,
+                                        );
+                                      }
                                     },
                                   ),
                                 ),

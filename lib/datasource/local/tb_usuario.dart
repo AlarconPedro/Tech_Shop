@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tech_shop/classes/classes.dart';
 
 class TbUsuario {
   static const String nomeTabela = 'TbUsuario';
@@ -10,9 +11,9 @@ class TbUsuario {
   static const String scriptCreateTable = '''
     CREATE TABLE $nomeTabela (
       $idColumn INTEGER PRIMARY KEY,
-      $usuarioColumn TEXT NOT NULL,
-      $senhaColumn TEXT NOT NULL,
-      $nomeColumn TEXT NOT NULL
+      $usuarioColumn TEXT,
+      $senhaColumn TEXT,
+      $nomeColumn TEXT
     )
   ''';
 
@@ -27,7 +28,7 @@ class TbUsuario {
     id = map[idColumn];
     usuario = map[usuarioColumn];
     senha = map[senhaColumn];
-    nome = map[nomeColumn];
+    nome = map[nomeColumn] ?? Globais.nomeCliente;
   }
 
   Map toMap() {

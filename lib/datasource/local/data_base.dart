@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:path/path.dart';
 
 class BancoDados {
-  final String nomeBanco = "techshop.local";
+  final String nomeBanco = "techshop.db";
 
   static final BancoDados _instance = BancoDados.internal();
   factory BancoDados() => _instance;
