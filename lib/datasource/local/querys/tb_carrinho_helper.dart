@@ -19,19 +19,24 @@ class TbCarrinhoHelper {
   }
 
   // INSERT
-  void insertCarrinho(TbCarrinho carrinho) async {
+  void insertCarrinho(
+    int idProduto,
+    int idVenda,
+    double valorProduto,
+    double valorTotal,
+    int qtdeProduto,
+  ) async {
     Database db = await BancoDados().db;
     int id2 = await db.rawInsert(
       'INSERT INTO ${TbCarrinho.nomeTabela} (${TbCarrinho.idProdutoColumn}, ${TbCarrinho.idColumn}, ${TbCarrinho.valorProdutoColumn}, ${TbCarrinho.valorTotalColumn}, ${TbCarrinho.qtdeProdutoColumn}) VALUES (?, ?, ?, ?, ?)',
       [
-        carrinho.idProduto,
-        carrinho.id,
-        carrinho.valorProduto,
-        carrinho.valorTotal,
-        carrinho.qtdeProduto,
+        idProduto,
+        idVenda,
+        valorProduto,
+        valorTotal,
+        qtdeProduto,
       ],
     );
-    print(id2);
   }
 
   // UPDATE

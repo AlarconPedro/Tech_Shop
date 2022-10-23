@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/datasource/http/http.dart';
+import 'package:tech_shop/datasource/local/querys/tb_carrinho_helper.dart';
 import 'package:tech_shop/datasource/models/criarCarrinho_model.dart';
 import 'package:tech_shop/datasource/models/endereco_model.dart';
 import 'package:tech_shop/datasource/models/login_model.dart';
@@ -104,10 +105,18 @@ class API {
     });
     Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;
     API().adicionarAoCarrinho(
-        valor: produtoModel.preco,
-        produtoId: produtoModel.id,
-        quantidade: 1,
-        vendaId: Globais.vendaId);
+      valor: produtoModel.preco,
+      produtoId: produtoModel.id,
+      quantidade: 1,
+      vendaId: Globais.vendaId,
+    );
+    TbCarrinhoHelper().insertCarrinho(
+      produtoModel.id,
+      Globais.vendaId,
+      produtoModel.preco,
+      Globais.valorTotalCarrinho += produtoModel.preco,
+      1,
+    );
   }
 
   void adicionarAoCarrinho({
