@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
+import 'package:tech_shop/datasource/local/querys/tb_carrinho_helper.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
@@ -21,6 +22,16 @@ class CarrinhoPage extends StatefulWidget {
 }
 
 class _CarrinhoPageState extends State<CarrinhoPage> {
+  void carregaDados() async {
+    TbCarrinhoHelper helper = TbCarrinhoHelper();
+    var response = helper.getCarrinho();
+    response.then((value) {
+      for (var item in value) {
+        Globais.valorTotalCarrinho += item.valorProduto;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
@@ -324,6 +335,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                             : quantidade = 1;
                                         Globais.valorTotalCarrinho -=
                                             produtoModel.preco.toDouble();
+                                        TbCarrinhoHelper()
+                                            .updateQuantidadeMenos();
                                       });
                                     },
                                     icon: Icon(
@@ -333,7 +346,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                   ),
                                   Center(
                                     child: Text(
-                                      quantidade.toString(),
+                                      TbCarrinhoHelper()
+                                          .getQtdeCarrinho(produtoModel.id)
+                                          .toString(),
                                       style: TextStyle(
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.pretoClaro
@@ -352,6 +367,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                         Future.delayed(Duration.zero, () {
                                           Globais.valorTotalCarrinho +=
                                               produtoModel.preco.toDouble();
+                                          TbCarrinhoHelper()
+                                              .updateQuantidadeMais();
                                         });
                                       });
                                     },

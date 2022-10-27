@@ -18,6 +18,16 @@ class TbCarrinhoHelper {
     return list;
   }
 
+  Future<int> getQtdeCarrinho(int idProduto) async {
+    Database db = await BancoDados().db;
+    var response = await db.rawQuery(
+      "SELECT SUM(${TbCarrinho.qtdeProdutoColumn}) FROM ${TbCarrinho.nomeTabela} WHERE ${TbCarrinho.idProdutoColumn} = ?",
+      [idProduto],
+    );
+    print(response);
+    return Sqflite.firstIntValue(response)!;
+  }
+
   // INSERT
   void insertCarrinho(
     int idProduto,
@@ -40,17 +50,34 @@ class TbCarrinhoHelper {
   }
 
   // UPDATE
-  void updateCarrinho(TbCarrinho carrinho) async {
+  void updateCarrinho(int idProduto, double valorProduto, double valorTotal,
+      int qtdeProduto) async {
     Database db = await BancoDados().db;
     await db.rawUpdate(
       "UPDATE ${TbCarrinho.nomeTabela} SET ${TbCarrinho.idProdutoColumn} = ?, ${TbCarrinho.valorProdutoColumn} = ?, ${TbCarrinho.valorTotalColumn} = ?, ${TbCarrinho.qtdeProdutoColumn} = ? WHERE ${TbCarrinho.idColumn} = ?",
       [
-        carrinho.idProduto,
-        carrinho.valorProduto,
-        carrinho.valorTotal,
-        carrinho.qtdeProduto,
+        idProduto,
+        valorProduto,
+        valorTotal,
+        qtdeProduto,
         Globais.idCliente,
       ],
+    );
+  }
+
+  void updateQuantidadeMais() async {
+    Database db = await BancoDados().db;
+    await db.rawUpdate(
+      "UPDATE ${TbCarrinho.nomeTabela} SET ${TbCarrinho.qtdeProdutoColumn} = ${TbCarrinho.qtdeProdutoColumn} + 1 WHERE ${TbCarrinho.idColumn} = ?",
+      [Globais.idCliente],
+    );
+  }
+
+  void updateQuantidadeMenos() async {
+    Database db = await BancoDados().db;
+    await db.rawUpdate(
+      "UPDATE ${TbCarrinho.nomeTabela} SET ${TbCarrinho.qtdeProdutoColumn} = ${TbCarrinho.qtdeProdutoColumn} - 1 WHERE ${TbCarrinho.idColumn} = ?",
+      [Globais.idCliente],
     );
   }
 

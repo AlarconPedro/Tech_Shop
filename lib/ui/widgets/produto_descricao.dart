@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
+import 'package:tech_shop/datasource/local/querys/tb_carrinho_helper.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/temas/theme_provider.dart';
@@ -212,9 +213,16 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                               valor: widget.produto.preco,
                               vendaId: Globais.vendaId,
                             );
+                      TbCarrinhoHelper().insertCarrinho(
+                        widget.produto.id,
+                        Globais.vendaId,
+                        widget.produto.preco,
+                        widget.produto.preco * 1,
+                        1,
+                      );
                       setState(() {
                         Globais.qtdCarrinho++;
-                        Globais.valorTotalCarrinho += widget.produto.preco;
+                        // Globais.valorTotalCarrinho += widget.produto.preco;
                       });
                     },
                     child: const Text(
