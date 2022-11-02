@@ -9,6 +9,13 @@ class HttpRequest {
     return json.decode(response.body);
   }
 
+  Future<dynamic> getCarrinho({required String url}) async {
+    http.Response response = await http.get(Uri.parse(url));
+    print(response.body);
+    var result = json.decode(response.body);
+    return result;
+  }
+
   Future<List<dynamic>> postJson(
       {required String url, required Map body}) async {
     http.Response response = await http.post(Uri.parse(url), body: body);

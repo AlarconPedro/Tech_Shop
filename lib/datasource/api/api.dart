@@ -4,11 +4,12 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/datasource/http/http.dart';
-import 'package:tech_shop/datasource/local/querys/tb_carrinho_helper.dart';
 import 'package:tech_shop/datasource/models/criarCarrinho_model.dart';
 import 'package:tech_shop/datasource/models/endereco_model.dart';
 import 'package:tech_shop/datasource/models/login_model.dart';
 import 'package:tech_shop/datasource/models/models.dart';
+
+import '../models/carrinho_model.dart';
 
 class API {
   final request = HttpRequest();
@@ -64,14 +65,28 @@ class API {
   }
 
   Future<List<ProdutoModel>> getItensCarrinho() async {
-    String url = Globais.urlItensCarrinho + Globais.vendaId.toString();
-    var response = await request.getJson(url: url);
+    String url = Globais.urlItensCarrinho + Globais.idCliente.toString();
+    var response = await request.getCarrinho(url: url);
     print(response);
-    return _populateItensCarrinho(response);
+    return _populateItensCarrinho(
+      CarrinhoModel(
+        vendaId: response['venda_id'],
+        valorTotal: response['valor_total'],
+        produtos: response['produtos'],
+        status: response['status'],
+        data: response['data_atualizacao'],
+        cliente: response['cliente'],
+      ),
+    );
   }
 
-  List<ProdutoModel> _populateItensCarrinho(List<dynamic> json) {
-    return json.map((e) => ProdutoModel.fromJson(e)).toList();
+  List<ProdutoModel> _populateItensCarrinho(CarrinhoModel json) {
+    List<ProdutoModel> produtos = [];
+    for (var item in json.produtos) {
+      produtos.add(ProdutoModel.fromJson(item));
+    }
+    return produtos;
+    // return json.map((e) => ProdutoModel.fromJson(e)).toList();
   }
 
   //POST FUNCTIONS
@@ -100,26 +115,21 @@ class API {
     var response =
         await request.postVenda(url: Globais.urlCriarCarrinho, body: {
       "cliente_id": Globais.idCliente.toString(),
-      "usuario_id": "1",
-      "status": "aguardando pagamento",
+      "usuario_id": idCliente.toString(),
+      "status": "A",
     });
     Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;
     API().adicionarAoCarrinho(
+      produtoModel,
       valor: produtoModel.preco,
       produtoId: produtoModel.id,
       quantidade: 1,
       vendaId: Globais.vendaId,
     );
-    TbCarrinhoHelper().insertCarrinho(
-      produtoModel.id,
-      Globais.vendaId,
-      produtoModel.preco,
-      Globais.valorTotalCarrinho += produtoModel.preco,
-      1,
-    );
   }
 
-  void adicionarAoCarrinho({
+  void adicionarAoCarrinho(
+    ProdutoModel produtoModel, {
     required double valor,
     required int produtoId,
     required int quantidade,

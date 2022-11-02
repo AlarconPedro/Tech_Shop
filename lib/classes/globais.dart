@@ -15,7 +15,7 @@ class Globais {
   static String urlCadastroCliente = "$urlPadrao/api/v1/cliente";
   static String urlEnderecoId = "$urlPadrao/api/v1/enderecoCliente/";
   static String urlDeleteEndereco = "$urlPadrao/api/v1/endereco/";
-  static String urlItensCarrinho = "$urlPadrao/api/venda/carrinho/";
+  static String urlItensCarrinho = "$urlPadrao/api/carrinho/cliente/";
   static String urlCriarCarrinho = "$urlPadrao/api/nova_venda";
   static String urlAddItemCarrinho = "$urlPadrao/api/venda/novo_produto";
   static String urlDeleteItemCarrinho = "$urlPadrao/api/venda/remover_poduto";

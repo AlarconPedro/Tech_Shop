@@ -10,7 +10,7 @@ class TbUsuario {
 
   static const String scriptCreateTable = '''
     CREATE TABLE $nomeTabela (
-      $idColumn INTEGER PRIMARY KEY,
+      $idColumn INTEGER PRIMARY KEY AUTOINCREMENT,
       $usuarioColumn TEXT,
       $senhaColumn TEXT,
       $nomeColumn TEXT

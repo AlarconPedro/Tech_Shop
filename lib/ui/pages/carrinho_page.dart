@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
-import 'package:tech_shop/datasource/local/querys/tb_carrinho_helper.dart';
+import 'package:tech_shop/datasource/models/carrinho_model.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
@@ -22,16 +22,6 @@ class CarrinhoPage extends StatefulWidget {
 }
 
 class _CarrinhoPageState extends State<CarrinhoPage> {
-  void carregaDados() async {
-    TbCarrinhoHelper helper = TbCarrinhoHelper();
-    var response = helper.getCarrinho();
-    response.then((value) {
-      for (var item in value) {
-        Globais.valorTotalCarrinho += item.valorProduto;
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
@@ -248,7 +238,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     return ListView.builder(
       itemCount: produtoModel.length,
       itemBuilder: ((context, index) {
-        return carrinhoCardo(
+        Globais.valorTotalCarrinho =
+            produtoModel[index].preco * produtoModel[index].quantidade!;
+        return carrinhoCard(
           produtoModel[index],
           produtoModel[index].quantidade,
         );
@@ -256,7 +248,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     );
   }
 
-  Widget carrinhoCardo(ProdutoModel produtoModel, int? quantidade) {
+  Widget carrinhoCard(ProdutoModel produtoModel, int? quantidade) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {
@@ -335,8 +327,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                             : quantidade = 1;
                                         Globais.valorTotalCarrinho -=
                                             produtoModel.preco.toDouble();
-                                        TbCarrinhoHelper()
-                                            .updateQuantidadeMenos();
                                       });
                                     },
                                     icon: Icon(
@@ -346,9 +336,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                   ),
                                   Center(
                                     child: Text(
-                                      TbCarrinhoHelper()
-                                          .getQtdeCarrinho(produtoModel.id)
-                                          .toString(),
+                                      quantidade.toString(),
                                       style: TextStyle(
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.pretoClaro
@@ -367,8 +355,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                         Future.delayed(Duration.zero, () {
                                           Globais.valorTotalCarrinho +=
                                               produtoModel.preco.toDouble();
-                                          TbCarrinhoHelper()
-                                              .updateQuantidadeMais();
                                         });
                                       });
                                     },

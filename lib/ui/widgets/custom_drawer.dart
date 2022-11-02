@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/datasource/local/querys/tb_usuario_helper.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/pages/login_page.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
@@ -122,6 +123,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     leading: const Icon(Icons.exit_to_app),
                     title: const Text('Sair'),
                     onTap: () {
+                      TbUsuarioHelper().updateUsuario("", "");
                       Navigator.pop(context);
                       Navigator.pushAndRemoveUntil(
                           context,

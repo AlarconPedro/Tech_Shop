@@ -155,6 +155,14 @@ class _LoginPageState extends State<LoginPage> {
                                     child: const Text('Entrar'),
                                     onPressed: () {
                                       if (_rememberMe) {
+                                        TbUsuarioHelper().insertLogin(
+                                          _emailController.text,
+                                          _senhaController.text,
+                                        );
+                                        logar(
+                                          _emailController.text,
+                                          _senhaController.text,
+                                        );
                                         TbUsuarioHelper().updateUsuario(
                                           _emailController.text.toString(),
                                           _senhaController.text.toString(),
@@ -164,16 +172,7 @@ class _LoginPageState extends State<LoginPage> {
                                           _emailController.text,
                                           _senhaController.text,
                                         );
-                                      } else {
-                                        TbUsuarioHelper().insertLogin(
-                                          _emailController.text,
-                                          _senhaController.text,
-                                        );
-                                        logar(
-                                          _emailController.text,
-                                          _senhaController.text,
-                                        );
-                                      }
+                                      } else {}
                                     },
                                   ),
                                 ),
@@ -308,6 +307,7 @@ class _LoginPageState extends State<LoginPage> {
         logado = false;
       });
     }
+    !logado ? TbUsuarioHelper().updateUsuario("", "") : null;
     logado
         ? Navigator.pushAndRemoveUntil(
             context,
