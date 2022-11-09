@@ -4,6 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/ui/estilos/cores.dart';
+import 'package:tech_shop/ui/pages/listar_boleto_page.dart';
+import 'package:tech_shop/ui/pages/listar_cartao_page.dart';
+import 'package:tech_shop/ui/pages/listar_pix_page.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 
@@ -122,10 +125,65 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                             thickness: 2,
                           ),
                           Expanded(
-                            child: Container(
-                              child: ListView(
-                                children: [
-                                  Container(
+                            child: ListView(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: const BorderRadius.all(
+                                      Radius.circular(15),
+                                    ),
+                                    color: currentTheme.isDarkTheme()
+                                        ? Cores.cinzaMedio
+                                        : Cores.cinzaClaro,
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                    vertical: 4,
+                                    horizontal: 8,
+                                  ),
+                                  child: ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    style: ListTileStyle.list,
+                                    trailing: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.branco
+                                          : Cores.pretoOpaco,
+                                    ),
+                                    title: Text(
+                                      'Pix',
+                                      style: TextStyle(
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.preto,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    leading: Icon(
+                                      Icons.pix_rounded,
+                                      size: 28,
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.branco
+                                          : Cores.preto,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ListarPixPage(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 4,
+                                    horizontal: 8,
+                                  ),
+                                  child: Container(
                                     decoration: BoxDecoration(
                                       borderRadius: const BorderRadius.all(
                                         Radius.circular(15),
@@ -133,10 +191,6 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                       color: currentTheme.isDarkTheme()
                                           ? Cores.cinzaMedio
                                           : Cores.cinzaClaro,
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 8,
                                     ),
                                     child: ListTile(
                                       shape: RoundedRectangleBorder(
@@ -150,7 +204,7 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                             : Cores.pretoOpaco,
                                       ),
                                       title: Text(
-                                        'Pix',
+                                        'Cartão de Crédito',
                                         style: TextStyle(
                                           color: currentTheme.isDarkTheme()
                                               ? Cores.branco
@@ -159,7 +213,7 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                         ),
                                       ),
                                       leading: Icon(
-                                        Icons.pix_rounded,
+                                        Icons.credit_card_rounded,
                                         size: 28,
                                         color: currentTheme.isDarkTheme()
                                             ? Cores.branco
@@ -170,122 +224,67 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                           context,
                                           MaterialPageRoute(
                                             builder: (context) =>
-                                                const LoginPage(),
+                                                const ListarCartaoPage(),
                                           ),
                                         );
                                       },
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 8,
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(15),
-                                        ),
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.cinzaMedio
-                                            : Cores.cinzaClaro,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 4,
+                                    horizontal: 8,
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(15),
                                       ),
-                                      child: ListTile(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        style: ListTileStyle.list,
-                                        trailing: Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: currentTheme.isDarkTheme()
-                                              ? Cores.branco
-                                              : Cores.pretoOpaco,
-                                        ),
-                                        title: Text(
-                                          'Cartão de Crédito',
-                                          style: TextStyle(
-                                            color: currentTheme.isDarkTheme()
-                                                ? Cores.branco
-                                                : Cores.preto,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        leading: Icon(
-                                          Icons.credit_card_rounded,
-                                          size: 28,
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.cinzaMedio
+                                          : Cores.cinzaClaro,
+                                    ),
+                                    child: ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                      style: ListTileStyle.list,
+                                      trailing: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.pretoOpaco,
+                                      ),
+                                      title: Text(
+                                        'Boleto',
+                                        style: TextStyle(
                                           color: currentTheme.isDarkTheme()
                                               ? Cores.branco
                                               : Cores.preto,
+                                          fontSize: 20,
                                         ),
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginPage(),
-                                            ),
-                                          );
-                                        },
                                       ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 8,
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(15),
-                                        ),
+                                      leading: Icon(
+                                        Icons.monetization_on_rounded,
+                                        size: 28,
                                         color: currentTheme.isDarkTheme()
-                                            ? Cores.cinzaMedio
-                                            : Cores.cinzaClaro,
+                                            ? Cores.branco
+                                            : Cores.preto,
                                       ),
-                                      child: ListTile(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        style: ListTileStyle.list,
-                                        trailing: Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: currentTheme.isDarkTheme()
-                                              ? Cores.branco
-                                              : Cores.pretoOpaco,
-                                        ),
-                                        title: Text(
-                                          'Boleto',
-                                          style: TextStyle(
-                                            color: currentTheme.isDarkTheme()
-                                                ? Cores.branco
-                                                : Cores.preto,
-                                            fontSize: 20,
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const ListarBoletoPage(),
                                           ),
-                                        ),
-                                        leading: Icon(
-                                          Icons.monetization_on_rounded,
-                                          size: 28,
-                                          color: currentTheme.isDarkTheme()
-                                              ? Cores.branco
-                                              : Cores.preto,
-                                        ),
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const FormaPagamento(),
-                                            ),
-                                          );
-                                        },
-                                      ),
+                                        );
+                                      },
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ],

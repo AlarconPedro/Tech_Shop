@@ -52,21 +52,21 @@ class _MenuPageState extends State<MenuPage>
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinza,
         actions: [
-          const SizedBox(
-            width: 60,
-          ),
-          const Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
-              child: InputText(),
-            ),
-          ),
+          // const SizedBox(
+          //   width: 60,
+          // ),
+          // const Expanded(
+          //   child: Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
+          //     child: InputText(),
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {},
               child: Icon(
-                Icons.search,
+                CupertinoIcons.cart,
                 color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
               ),
             ),

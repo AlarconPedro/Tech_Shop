@@ -92,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                               'E-mail',
                               'Digite seu e-mail:',
                               _emailController,
+                              Icons.person_rounded,
                               false,
                             ),
                           ),
@@ -102,6 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                               'Senha',
                               'Digite sua senha:',
                               _senhaController,
+                              Icons.lock_rounded,
                               true,
                             ),
                           ),
@@ -163,16 +165,12 @@ class _LoginPageState extends State<LoginPage> {
                                           _emailController.text,
                                           _senhaController.text,
                                         );
-                                        TbUsuarioHelper().updateUsuario(
-                                          _emailController.text.toString(),
-                                          _senhaController.text.toString(),
-                                        );
-
+                                      } else {
                                         logar(
                                           _emailController.text,
                                           _senhaController.text,
                                         );
-                                      } else {}
+                                      }
                                     },
                                   ),
                                 ),
@@ -223,6 +221,7 @@ class _LoginPageState extends State<LoginPage> {
     String label,
     String hint,
     TextEditingController controller,
+    IconData icon,
     bool obscureText,
   ) {
     final currentTheme = Provider.of<ThemeProvider>(context);
@@ -237,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
       textAlignVertical: TextAlignVertical.center,
       decoration: InputDecoration(
         prefixIcon: Icon(
-          Icons.person_rounded,
+          icon,
           color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
         ),
         labelText: label,
