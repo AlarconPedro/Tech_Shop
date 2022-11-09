@@ -3,7 +3,7 @@ import 'package:tech_shop/datasource/models/models.dart';
 class CarrinhoModel {
   int vendaId;
   String valorTotal;
-  List<dynamic> produtos;
+  List<dynamic>? produtos;
   String status;
   String data;
   String cliente;
@@ -11,7 +11,7 @@ class CarrinhoModel {
   CarrinhoModel({
     required this.vendaId,
     required this.valorTotal,
-    required this.produtos,
+    this.produtos,
     required this.status,
     required this.data,
     required this.cliente,

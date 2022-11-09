@@ -18,7 +18,8 @@ class Globais {
   static String urlItensCarrinho = "$urlPadrao/api/carrinho/cliente/";
   static String urlCriarCarrinho = "$urlPadrao/api/nova_venda";
   static String urlAddItemCarrinho = "$urlPadrao/api/venda/novo_produto";
-  static String urlDeleteItemCarrinho = "$urlPadrao/api/venda/remover_poduto";
+  static String urlRetiraItemCarrinho = "$urlPadrao/api/venda/diminuir_produto";
+  static String urlDeleteItemCarrinho = "$urlPadrao/api/venda/remover_produto";
 
   //Valores Cliente
   static String nomeCliente = "";
@@ -38,6 +39,6 @@ class Globais {
 
   // Carrinho
   static int qtdCarrinho = 0;
-  static double valorTotalCarrinho = 0.0;
+  static String valorTotalCarrinho = "";
   static int vendaId = 0;
 }

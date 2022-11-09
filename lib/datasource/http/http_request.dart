@@ -17,8 +17,12 @@ class HttpRequest {
   }
 
   Future<List<dynamic>> postJson(
-      {required String url, required Map body}) async {
-    http.Response response = await http.post(Uri.parse(url), body: body);
+      {required String url,
+      required String body,
+      required Map<String, String> headers}) async {
+    http.Response response =
+        await http.post(Uri.parse(url), body: body, headers: headers);
+    print(response.body);
     return json.decode(response.body);
   }
 

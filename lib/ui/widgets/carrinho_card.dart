@@ -97,13 +97,17 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                                 children: [
                                   IconButton(
                                     onPressed: () {
+                                      API().retirarDoCarrinho(
+                                        widget.produto.id,
+                                        Globais.vendaId,
+                                      );
                                       setState(() {
                                         widget.quantidade != 0
                                             ? widget.quantidade =
                                                 widget.quantidade! - 1
                                             : widget.quantidade = 1;
-                                        Globais.valorTotalCarrinho -=
-                                            widget.produto.preco.toDouble();
+                                        // Globais.valorTotalCarrinho -=
+                                        //     widget.produto.preco.toDouble();
                                       });
                                     },
                                     icon: Icon(
@@ -125,15 +129,15 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                                   ),
                                   IconButton(
                                     onPressed: () {
+                                      API().adicionarAoCarrinho(
+                                        produtoId: widget.produto.id,
+                                        vendaId: Globais.vendaId,
+                                      );
                                       setState(() {
                                         widget.quantidade != 0
                                             ? widget.quantidade =
                                                 widget.quantidade! + 1
                                             : widget.quantidade = 1;
-                                        Future.delayed(Duration.zero, () {
-                                          Globais.valorTotalCarrinho +=
-                                              widget.produto.preco.toDouble();
-                                        });
                                       });
                                     },
                                     icon: Icon(
@@ -246,7 +250,10 @@ class _CarrinhoCardState extends State<CarrinhoCard> {
                             onPressed: () {
                               setState(
                                 () {
-                                  API().removerDoCarrinho();
+                                  API().removerDoCarrinho(
+                                    widget.produto.id,
+                                    Globais.idCliente,
+                                  );
                                   // carrinho.remove(produto[0]);
                                 },
                               );

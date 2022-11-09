@@ -131,7 +131,7 @@ class _CategoriaPageState extends State<CategoriaPage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(
-                          iconCategorias(IconesCategoria.computadores),
+                          iconCategorias(index),
                           // Icons.category,
                           color: currentTheme.isDarkTheme()
                               ? Cores.branco

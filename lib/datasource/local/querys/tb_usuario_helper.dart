@@ -19,11 +19,11 @@ class TbUsuarioHelper {
   }
 
   // INSERT
-  void insertCodigoVenda(String usuario, String senha) async {
+  void insertCodigoVenda(int codigoVenda) async {
     Database db = await BancoDados().db;
     await db.rawQuery(
-      'UPDATE ${TbUsuario.nomeTabela} SET ${TbUsuario.usuarioColumn} = ?, ${TbUsuario.senhaColumn} = ? WHERE ${TbUsuario.idColumn} = ?',
-      [usuario, senha, Globais.idCliente],
+      'UPDATE ${TbUsuario.nomeTabela} SET ${TbUsuario.idVendaColumn} = ? WHERE ${TbUsuario.idColumn} = ?',
+      [codigoVenda, Globais.idCliente],
     );
   }
 

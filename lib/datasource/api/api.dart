@@ -72,19 +72,31 @@ class API {
       CarrinhoModel(
         vendaId: response['venda_id'],
         valorTotal: response['valor_total'],
-        produtos: response['produtos'],
         status: response['status'],
         data: response['data_atualizacao'],
         cliente: response['cliente'],
       ),
+      _populateProdutosCarrinho(response['produtos']),
     );
   }
 
-  List<ProdutoModel> _populateItensCarrinho(CarrinhoModel json) {
+  List<ProdutoModel> _populateProdutosCarrinho(List<dynamic> carrinho) {
+    var response = carrinho.map((e) => ProdutoModel.fromJson(e)).toList();
+    return response;
+  }
+
+  List<ProdutoModel> _populateItensCarrinho(
+      CarrinhoModel json, List<ProdutoModel> produtosCarrinho) {
     List<ProdutoModel> produtos = [];
-    for (var item in json.produtos) {
-      produtos.add(ProdutoModel.fromJson(item));
-    }
+    Globais.valorTotalCarrinho = json.valorTotal;
+    produtosCarrinho.forEach((element) {
+      produtos.add(element);
+      // for (var item in json.produtos) {
+      //   Globais.valorTotalCarrinho = json.valorTotal;
+      //   produtos.add(ProdutoModel.fromJson(item));
+      // }
+    });
+
     return produtos;
     // return json.map((e) => ProdutoModel.fromJson(e)).toList();
   }
@@ -97,13 +109,18 @@ class API {
     required String email,
     required String senha,
   }) async {
-    var response = await request.postJson(url: Globais.urlLogin, body: {
+    var body = json.encode({
       "email": email,
       "senha": senha,
       "nome": nome,
       "cpf": cpf,
       "data_nascimento": dataNascimento
     });
+    var response =
+        await request.postJson(url: Globais.urlLogin, body: body, headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
+
     return _populateLogin(response);
   }
 
@@ -120,7 +137,6 @@ class API {
     });
     Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;
     API().adicionarAoCarrinho(
-      produtoModel,
       valor: produtoModel.preco,
       produtoId: produtoModel.id,
       quantidade: 1,
@@ -128,11 +144,11 @@ class API {
     );
   }
 
-  void adicionarAoCarrinho(
-    ProdutoModel produtoModel, {
-    required double valor,
+  // PUT FUNCTIONS
+  void adicionarAoCarrinho({
+    double? valor,
     required int produtoId,
-    required int quantidade,
+    int? quantidade,
     required int vendaId,
   }) async {
     var response = await request.postVenda(
@@ -146,21 +162,38 @@ class API {
     );
   }
 
-  void removerDoCarrinho() {
+  void retirarDoCarrinho(int produtoId, int vendaId) async {
+    var body = json.encode({
+      "produto_id": produtoId.toString(),
+      "venda_id": vendaId.toString(),
+    });
     request.postJson(
-      url: Globais.urlDeleteItemCarrinho,
-      body: {
-        "produto_id": "Globais.idProduto",
-        "venda_id": "Globais.idCarrinho",
+      url: Globais.urlRetiraItemCarrinho,
+      body: body,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
       },
     );
   }
-  // PUT FUNCTIONS
 
   // DELETE FUNCTIONS
   void deleteEndereco(String id) async {
     String url = Globais.urlDeleteEndereco + id;
     var response = await request.deleteJson(url: url);
     print(response);
+  }
+
+  void removerDoCarrinho(int produtoId, int vendaId) async {
+    var body = json.encode({
+      "produto_id": produtoId.toString(),
+      "venda_id": vendaId.toString(),
+    });
+    request.postJson(
+      url: Globais.urlDeleteItemCarrinho,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: body,
+    );
   }
 }

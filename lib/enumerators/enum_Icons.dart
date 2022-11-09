@@ -7,15 +7,15 @@ enum IconesCategoria {
   tablets,
 }
 
-IconData iconCategorias(IconesCategoria icone) {
+IconData iconCategorias(int icone) {
   switch (icone) {
-    case IconesCategoria.computadores:
-      return Icons.computer;
-    case IconesCategoria.notebooks:
+    case 0:
+      return Icons.desktop_mac_outlined;
+    case 1:
       return Icons.laptop;
-    case IconesCategoria.smartphones:
+    case 2:
       return Icons.smartphone;
-    case IconesCategoria.tablets:
+    case 3:
       return Icons.tablet;
     default:
       return Icons.computer;

@@ -207,7 +207,6 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                               widget.produto,
                             )
                           : API().adicionarAoCarrinho(
-                              widget.produto,
                               produtoId: widget.produto.id,
                               quantidade: Globais.qtdCarrinho,
                               valor: widget.produto.preco,
