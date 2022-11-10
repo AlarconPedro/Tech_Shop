@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/datasource/http/http.dart';
+import 'package:tech_shop/datasource/local/querys/tb_usuario_helper.dart';
 import 'package:tech_shop/datasource/models/criarCarrinho_model.dart';
 import 'package:tech_shop/datasource/models/endereco_model.dart';
 import 'package:tech_shop/datasource/models/login_model.dart';
@@ -67,6 +68,8 @@ class API {
   Future<List<ProdutoModel>> getItensCarrinho() async {
     String url = Globais.urlItensCarrinho + Globais.idCliente.toString();
     var response = await request.getCarrinho(url: url);
+    Globais.vendaId = response['venda_id'].toInt();
+    TbUsuarioHelper().insertCodigoVenda(Globais.vendaId);
     print(response);
     return _populateItensCarrinho(
       CarrinhoModel(

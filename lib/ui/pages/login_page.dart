@@ -157,10 +157,15 @@ class _LoginPageState extends State<LoginPage> {
                                     child: const Text('Entrar'),
                                     onPressed: () {
                                       if (_rememberMe) {
-                                        TbUsuarioHelper().insertLogin(
-                                          _emailController.text,
-                                          _senhaController.text,
-                                        );
+                                        tbUsuario.usuario == ""
+                                            ? TbUsuarioHelper().insertLogin(
+                                                _emailController.text,
+                                                _senhaController.text,
+                                              )
+                                            : TbUsuarioHelper().updateUsuario(
+                                                _emailController.text,
+                                                _senhaController.text,
+                                              );
                                         logar(
                                           _emailController.text,
                                           _senhaController.text,

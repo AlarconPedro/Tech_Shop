@@ -22,16 +22,16 @@ class TbUsuarioHelper {
   void insertCodigoVenda(int codigoVenda) async {
     Database db = await BancoDados().db;
     await db.rawQuery(
-      'UPDATE ${TbUsuario.nomeTabela} SET ${TbUsuario.idVendaColumn} = ? WHERE ${TbUsuario.idColumn} = ?',
-      [codigoVenda, Globais.idCliente],
+      'UPDATE ${TbUsuario.nomeTabela} SET ${TbUsuario.idVendaColumn} = ?',
+      [codigoVenda],
     );
   }
 
   void insertLogin(String usuario, String senha) async {
     Database db = await BancoDados().db;
     int id2 = await db.rawInsert(
-      'INSERT INTO ${TbUsuario.nomeTabela} (${TbUsuario.usuarioColumn}, ${TbUsuario.senhaColumn}) VALUES (?, ?)',
-      [usuario, senha],
+      'INSERT INTO ${TbUsuario.nomeTabela} (${TbUsuario.usuarioColumn}, ${TbUsuario.senhaColumn}, ${TbUsuario.idVendaColumn}, ${TbUsuario.nomeColumn}) VALUES (?, ?, ?, ?)',
+      [usuario, senha, 0, Globais.nomeCliente ?? ""],
     );
     print(id2);
   }
