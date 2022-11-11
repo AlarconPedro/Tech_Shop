@@ -22,7 +22,7 @@ class _ProductRandomCardState extends State<ProductRandomCard> {
   @override
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: ListView.builder(
@@ -105,7 +105,7 @@ class _ProductRandomCardState extends State<ProductRandomCard> {
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
                               child: Flexible(
-                                child: Container(
+                                child: SizedBox(
                                   width: 160,
                                   child: Text(
                                     widget.produtos[index].nome,

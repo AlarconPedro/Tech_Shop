@@ -85,92 +85,90 @@ class _ProductCardState extends State<ProductCard> {
                 horizontal: 6.5,
                 vertical: 6,
               ),
-              child: Expanded(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 180,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Cores.branco,
-                            shape: BoxShape.rectangle,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(10),
-                            ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 180,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Cores.branco,
+                          shape: BoxShape.rectangle,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(10),
                           ),
-                          child: Image.network(
-                            Globais.urlImage + widget.produto.imagem1,
-                          ),
+                        ),
+                        child: Image.network(
+                          Globais.urlImage + widget.produto.imagem1,
                         ),
                       ),
                     ),
-                    Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Text(
-                              widget.produto.nome,
-                              maxLines: 2,
-                              style: TextStyle(
-                                overflow: TextOverflow.ellipsis,
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.branco
-                                    : Cores.preto,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                  ),
+                  Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            widget.produto.nome,
+                            maxLines: 2,
+                            style: TextStyle(
+                              overflow: TextOverflow.ellipsis,
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.branco
+                                  : Cores.preto,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 15),
-                          child: Column(
-                            children: [
-                              Text(
-                                "R\$ ${widget.produto.preco},00",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Cores.vermelho,
-                                  fontWeight: FontWeight.bold,
-                                  decorationStyle: TextDecorationStyle.solid,
-                                  decoration: TextDecoration.lineThrough,
-                                  decorationThickness: 2.5,
-                                ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 15),
+                        child: Column(
+                          children: [
+                            Text(
+                              "R\$ ${widget.produto.preco},00",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Cores.vermelho,
+                                fontWeight: FontWeight.bold,
+                                decorationStyle: TextDecorationStyle.solid,
+                                decoration: TextDecoration.lineThrough,
+                                decorationThickness: 2.5,
                               ),
-                              Text(
-                                "R\$ ${widget.produto.precoPromocional},00",
-                                style: TextStyle(
-                                  fontSize: 25,
-                                  color: Cores.verde,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            Text(
+                              "R\$ ${widget.produto.precoPromocional},00",
+                              style: TextStyle(
+                                fontSize: 25,
+                                color: Cores.verde,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Icon(Icons.favorite,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.pretoOpaco,
-                              size: 30),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Icon(Icons.favorite,
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.pretoOpaco,
+                            size: 30),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),

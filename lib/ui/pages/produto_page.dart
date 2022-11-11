@@ -59,42 +59,40 @@ class _ProdutoPageState extends State<ProdutoPage> {
                   ),
                   Row(
                     children: [
-                      Expanded(
-                        child: SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.45,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  FutureBuilder(
-                                    future: API().getRadomSugestion(
-                                      widget.produto.categoriaId,
-                                      widget.produto.id,
-                                    ),
-                                    builder: (context, snapshot) {
-                                      switch (snapshot.connectionState) {
-                                        case ConnectionState.waiting:
-                                        case ConnectionState.none:
-                                          return CirculoEspera.criar(
-                                              cor: Cores.branco);
-                                        default:
-                                          if (snapshot.hasError) {
-                                            return Text(
-                                                'Error: ${snapshot.error}');
-                                          } else {
-                                            return criarCardRandom(snapshot.data
-                                                as List<ProdutoModel>);
-                                          }
-                                      }
-                                    },
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height * 0.45,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                FutureBuilder(
+                                  future: API().getRadomSugestion(
+                                    widget.produto.categoriaId,
+                                    widget.produto.id,
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                  builder: (context, snapshot) {
+                                    switch (snapshot.connectionState) {
+                                      case ConnectionState.waiting:
+                                      case ConnectionState.none:
+                                        return CirculoEspera.criar(
+                                            cor: Cores.branco);
+                                      default:
+                                        if (snapshot.hasError) {
+                                          return Text(
+                                              'Error: ${snapshot.error}');
+                                        } else {
+                                          return criarCardRandom(snapshot.data
+                                              as List<ProdutoModel>);
+                                        }
+                                    }
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
