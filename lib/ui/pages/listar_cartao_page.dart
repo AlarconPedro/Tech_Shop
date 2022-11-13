@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/ui/pages/cadastro_cartao_page.dart';
 
 import '../../classes/classes.dart';
 import '../../datasource/api/api.dart';
@@ -103,7 +104,7 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const CadatroPixPage(),
+                            builder: (context) => const CadastroCartaoPage(),
                           ),
                         );
                       },

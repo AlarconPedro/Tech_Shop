@@ -40,6 +40,7 @@ dependencies:
   sqflite: ^2.0.3
   carousel_slider: ^4.1.1
   mask_text_input_formatter: ^2.4.0
+  flutter_credit_card_brazilian: ^2.0.0
 
 dev_dependencies:
   flutter_test:
