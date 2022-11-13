@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:tech_shop/classes/classes.dart';
 
 class TbUsuario {
