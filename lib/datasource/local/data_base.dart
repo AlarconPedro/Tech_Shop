@@ -1,5 +1,7 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:tech_shop/datasource/local/tb_pagamento.dart';
+import 'package:tech_shop/datasource/local/tb_pagamento_boleto.dart';
+import 'package:tech_shop/datasource/local/tb_pagamento_cartao.dart';
+import 'package:tech_shop/datasource/local/tb_pagamento_pix.dart';
 import 'package:tech_shop/datasource/local/tb_usuario.dart';
 import 'dart:async';
 import 'package:path/path.dart';
@@ -25,7 +27,9 @@ class BancoDados {
     return await openDatabase(caminhoBanco, version: 1,
         onCreate: (Database db, int newVersion) async {
       await _executarComando(db, TbUsuario.scriptCreateTable);
-      await _executarComando(db, TbPagamento.scriptCreateTable);
+      await _executarComando(db, TbPagamentoCartao.scriptCreateTable);
+      await _executarComando(db, TbPagamentoBoleto.scriptCreateTable);
+      await _executarComando(db, TbPagamentoPix.scriptCreateTable);
     });
   }
 

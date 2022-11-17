@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_credit_card_brazilian/flutter_credit_card.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/datasource/local/querys/tb_pagamentoCartao_helper.dart';
 
 import '../estilos/estilos.dart';
 import '../temas/temas.dart';
@@ -17,9 +18,9 @@ class CadastroCartaoPage extends StatefulWidget {
 }
 
 class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
-  String cardNumber = '';
-  String expiryDate = '';
-  String cardHolderName = '';
+  String numeroCartao = '';
+  String vencimento = '';
+  String nomeTitular = '';
   String cvvCode = '';
   bool isCvvFocused = false;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -41,9 +42,9 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
               cardName: (String value) {
                 print(value);
               },
-              cardNumber: cardNumber,
-              expiryDate: expiryDate,
-              cardHolderName: cardHolderName,
+              cardNumber: numeroCartao,
+              expiryDate: vencimento,
+              cardHolderName: nomeTitular,
               cvvCode: cvvCode,
               showBackView: isCvvFocused,
               obscureCardNumber: true,
@@ -64,10 +65,10 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
                       formKey: formKey,
                       obscureCvv: true,
                       obscureNumber: true,
-                      cardNumber: cardNumber,
+                      cardNumber: numeroCartao,
                       cvvCode: cvvCode,
-                      cardHolderName: cardHolderName,
-                      expiryDate: expiryDate,
+                      cardHolderName: nomeTitular,
+                      expiryDate: vencimento,
                       themeColor: Colors.blue,
                       cardNumberDecoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -112,6 +113,12 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
                           print('valid!');
+                          TbPagamentoCartaoHelper().insertPagamentoCartao(
+                            nomeTitular,
+                            numeroCartao,
+                            cvvCode,
+                            vencimento,
+                          );
                         } else {
                           print('invalid!');
                         }
@@ -129,9 +136,9 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
 
   void onCreditCardModelChange(CreditCardModel? creditCardModel) {
     setState(() {
-      cardNumber = creditCardModel!.cardNumber;
-      expiryDate = creditCardModel.expiryDate;
-      cardHolderName = creditCardModel.cardHolderName;
+      numeroCartao = creditCardModel!.cardNumber;
+      vencimento = creditCardModel.expiryDate;
+      nomeTitular = creditCardModel.cardHolderName;
       cvvCode = creditCardModel.cvvCode;
       isCvvFocused = creditCardModel.isCvvFocused;
     });
