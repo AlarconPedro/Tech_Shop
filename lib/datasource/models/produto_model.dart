@@ -34,10 +34,10 @@ class ProdutoModel {
       nome: json['nome'],
       descricao: json['descricao'],
       imagem1: json['imagem1'] ?? '',
-      imagem2: json['imagem2'] ?? '',
-      imagem3: json['imagem3'] ?? '',
-      imagem4: json['imagem4'] ?? '',
-      imagem5: json['imagem5'] ?? '',
+      imagem2: json['imagem2'] == "" ? "" : json['imagem1'] ?? '',
+      imagem3: json['imagem3'] == "" ? "" : json['imagem1'] ?? '',
+      imagem4: json['imagem4'] == "" ? "" : json['imagem1'] ?? '',
+      imagem5: json['imagem5'] == "" ? "" : json['imagem1'] ?? '',
       preco: json['preco'].toDouble(),
       precoPromocional: json['preco_promocional'],
       quantidade: json['quantidade'],
@@ -45,7 +45,13 @@ class ProdutoModel {
   }
 
   List<dynamic> imageToJson() {
-    final List data = [imagem1, imagem2, imagem3, imagem4, imagem5];
+    final List data = [
+      imagem1,
+      imagem2 == "" ? imagem1 : imagem2,
+      imagem3 == "" ? imagem1 : imagem3,
+      imagem4 == "" ? imagem1 : imagem4,
+      imagem5 == "" ? imagem1 : imagem5,
+    ];
     return data;
   }
 }

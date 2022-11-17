@@ -150,12 +150,12 @@ class _ProductRandomCardState extends State<ProductRandomCard> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: Icon(Icons.favorite,
-                                  color: Cores.branco, size: 30),
-                            ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.symmetric(horizontal: 5),
+                            //   child: Icon(Icons.favorite,
+                            //       color: Cores.branco, size: 30),
+                            // ),
                           ],
                         ),
                       ],

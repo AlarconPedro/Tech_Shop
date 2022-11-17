@@ -123,7 +123,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     leading: const Icon(Icons.exit_to_app),
                     title: const Text('Sair'),
                     onTap: () {
-                      TbUsuarioHelper().updateUsuario("", "");
+                      TbUsuarioHelper().deleteUsuario();
                       Navigator.pop(context);
                       Navigator.pushAndRemoveUntil(
                           context,

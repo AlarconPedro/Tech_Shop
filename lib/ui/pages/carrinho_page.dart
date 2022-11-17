@@ -204,16 +204,71 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                           Expanded(
                             child: Container(),
                           ),
-                          Text(
-                            "R\$ ${Globais.valorTotalCarrinho}",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.pretoOpaco,
-                            ),
+                          FutureBuilder(
+                            future: API().getValorTotalCarrinho(),
+                            builder: (context, snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                case ConnectionState.none:
+                                  return CirculoEspera.criar(
+                                    cor: Cores.branco,
+                                  );
+                                default:
+                                  if (snapshot.hasError) {
+                                    return Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          'Carrinho Vazio',
+                                          style: TextStyle(
+                                            color: currentTheme.isDarkTheme()
+                                                ? Cores.branco
+                                                : Cores.pretoOpaco,
+                                            fontSize: 20,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return valorTotalCarrinho(
+                                        snapshot.data as String,
+                                        currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.pretoOpaco);
+                                  }
+                                //     if (snapshot.hasData) {
+                                //   return Text(
+                                //     'R\$ ${Globais.valorTotalCarrinho}0',
+                                //     style: TextStyle(
+                                //       color: currentTheme.isDarkTheme()
+                                //           ? Cores.branco
+                                //           : Cores.pretoOpaco,
+                                //       fontSize: 20,
+                                //     ),
+                                //   );
+                                // } else {
+                                //   return Text(
+                                //     'R\$ 0,00',
+                                //     style: TextStyle(
+                                //       color: currentTheme.isDarkTheme()
+                                //           ? Cores.branco
+                                //           : Cores.pretoOpaco,
+                                //       fontSize: 20,
+                                //     ),
+                                //   );
+                                // }
+                              }
+                            },
                           ),
+                          // Text(
+                          //   "R\$ ${Globais.valorTotalCarrinho}",
+                          //   style: TextStyle(
+                          //     fontSize: 20,
+                          //     fontWeight: FontWeight.bold,
+                          //     color: currentTheme.isDarkTheme()
+                          //         ? Cores.branco
+                          //         : Cores.pretoOpaco,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -236,15 +291,25 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
       itemBuilder: ((context, index) {
         // Globais.valorTotalCarrinho =
         //     produtoModel[index].preco * produtoModel[index].quantidade!;
-        return carrinhoCard(
-          produtoModel[index],
-          produtoModel[index].quantidade,
+        return Column(
+          children: [
+            carrinhoCard(
+              produtoModel[index],
+              produtoModel[index].quantidade,
+              produtoModel[index].id,
+              Globais.vendaId,
+            ),
+            index == produtoModel.length - 1
+                ? botaoFinalizarCompra()
+                : const SizedBox(),
+          ],
         );
       }),
     );
   }
 
-  Widget carrinhoCard(ProdutoModel produtoModel, int? quantidade) {
+  Widget carrinhoCard(
+      ProdutoModel produtoModel, int? quantidade, int produtoId, int vendaId) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {
@@ -316,7 +381,14 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                               children: [
                                 IconButton(
                                   onPressed: () {
+                                    quantidade! >= 1
+                                        ? API().retirarDoCarrinho(
+                                            produtoId,
+                                            Globais.vendaId,
+                                          )
+                                        : null;
                                     setState(() {
+                                      Globais.valorTotalCarrinho;
                                       quantidade != 0
                                           ? quantidade = quantidade! - 1
                                           : quantidade = 1;
@@ -343,7 +415,13 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                 ),
                                 IconButton(
                                   onPressed: () {
+                                    API().addCarrinho(
+                                      produtoId: produtoId,
+                                      vendaId: Globais.vendaId,
+                                    );
+
                                     setState(() {
+                                      Globais.valorTotalCarrinho;
                                       quantidade != 0
                                           ? quantidade = quantidade! + 1
                                           : quantidade = 1;
@@ -496,66 +574,131 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
         left: 10,
         right: 10,
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-              blurRadius: 3,
-              spreadRadius: 1,
-              blurStyle: BlurStyle.normal,
-              // offset: const Offset(1.5, 1.5),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Container(
+          decoration: BoxDecoration(
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+            //     blurRadius: 3,
+            //     spreadRadius: 1,
+            //     blurStyle: BlurStyle.normal,
+            //     // offset: const Offset(1.5, 1.5),
+            //   ),
+            // ],
+            shape: BoxShape.rectangle,
+            color: currentTheme.isDarkTheme() ? Cores.vermelho : Cores.branco,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(8),
             ),
-          ],
-          shape: BoxShape.rectangle,
-          color: currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(15),
+            // border: Border.all(
+            //   color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+            //   width: 1,
+            // ),
           ),
-          border: Border.all(
-            color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-            width: 1,
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                    left: 10,
-                    right: 10,
-                  ),
-                  child: Text(
-                    'Finalizar Compra',
-                    style: TextStyle(
-                      color: currentTheme.isDarkTheme()
-                          ? Cores.branco
-                          : Cores.pretoOpaco,
-                      fontSize: 20,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Finalizar Compra',
+                        style: TextStyle(
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.branco
+                              : Cores.pretoOpaco,
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 10,
-                  right: 10,
-                ),
-                child: Text(
-                  "R\$ ${Globais.valorTotalCarrinho}",
-                  style: TextStyle(
-                    color: currentTheme.isDarkTheme()
-                        ? Cores.branco
-                        : Cores.pretoOpaco,
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-            ],
+                // FutureBuilder(
+                //   future: API().getValorTotalCarrinho(),
+                //   builder: (context, snapshot) {
+                //     switch (snapshot.connectionState) {
+                //       case ConnectionState.waiting:
+                //       case ConnectionState.none:
+                //         return CirculoEspera.criar(
+                //           cor: Cores.branco,
+                //         );
+                //       default:
+                //         if (snapshot.hasError) {
+                //           return Expanded(
+                //             child: Center(
+                //               child: Text(
+                //                 'Carrinho Vazio',
+                //                 style: TextStyle(
+                //                   color: currentTheme.isDarkTheme()
+                //                       ? Cores.branco
+                //                       : Cores.pretoOpaco,
+                //                   fontSize: 20,
+                //                 ),
+                //               ),
+                //             ),
+                //           );
+                //         } else {
+                //           return valorTotalCarrinho(
+                //               snapshot.data as double,
+                //               currentTheme.isDarkTheme()
+                //                   ? Cores.branco
+                //                   : Cores.pretoOpaco);
+                //         }
+                //       //     if (snapshot.hasData) {
+                //       //   return Text(
+                //       //     'R\$ ${Globais.valorTotalCarrinho}0',
+                //       //     style: TextStyle(
+                //       //       color: currentTheme.isDarkTheme()
+                //       //           ? Cores.branco
+                //       //           : Cores.pretoOpaco,
+                //       //       fontSize: 20,
+                //       //     ),
+                //       //   );
+                //       // } else {
+                //       //   return Text(
+                //       //     'R\$ 0,00',
+                //       //     style: TextStyle(
+                //       //       color: currentTheme.isDarkTheme()
+                //       //           ? Cores.branco
+                //       //           : Cores.pretoOpaco,
+                //       //       fontSize: 20,
+                //       //     ),
+                //       //   );
+                //       // }
+                //     }
+                //   },
+                // ),
+              ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget valorTotalCarrinho(String valor, Color cor) {
+    // valor = valor.toInt();
+    valor = valor.replaceAll("0", "");
+    valor = valor.replaceAll(".", "");
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 10,
+        right: 10,
+      ),
+      child: Text(
+        'R\$ $valor,00',
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: cor,
         ),
       ),
     );

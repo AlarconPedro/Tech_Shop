@@ -70,7 +70,25 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                   CarouselSlider(
                     items: [
                       //1st Image of Slider
-                      widget.produto.imagem1 != ""
+                      widget.produto.imagem1 == ""
+                          ? Container(
+                              color: Cores.branco,
+                            )
+                          : Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem1,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+
+                      //2nd Image of Slider
+                      widget.produto.imagem2 == ""
                           ? Container(
                               margin: const EdgeInsets.all(6.0),
                               decoration: BoxDecoration(
@@ -83,11 +101,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                                 ),
                               ),
                             )
-                          : Container(),
-
-                      //2nd Image of Slider
-                      widget.produto.imagem2 != ""
-                          ? Container(
+                          : Container(
                               margin: const EdgeInsets.all(6.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -98,12 +112,23 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                            )
-                          : Container(),
+                            ),
 
                       //3rd Image of Slider
-                      widget.produto.imagem3 != ""
+                      widget.produto.imagem3 == ""
                           ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem1,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(
                               margin: const EdgeInsets.all(6.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -114,12 +139,23 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                            )
-                          : Container(),
+                            ),
 
                       //4th Image of Slider
-                      widget.produto.imagem4 != ""
+                      widget.produto.imagem4 == ""
                           ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem1,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(
                               margin: const EdgeInsets.all(6.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -130,12 +166,23 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                                   fit: BoxFit.cover,
                                 ),
                               ),
-                            )
-                          : Container(),
+                            ),
 
                       //5th Image of Slider
-                      widget.produto.imagem5 != ""
+                      widget.produto.imagem5 == ""
                           ? Container(
+                              margin: const EdgeInsets.all(6.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    Globais.urlImage + widget.produto.imagem1,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                          : Container(
                               margin: const EdgeInsets.all(6.0),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8.0),
@@ -147,7 +194,6 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                                 ),
                               ),
                             )
-                          : Container(),
                     ],
                     carouselController: carroselController,
                     //Slider Container properties
@@ -212,13 +258,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                               valor: widget.produto.preco,
                               vendaId: Globais.vendaId,
                             );
-                      // TbCarrinhoHelper().insertCarrinho(
-                      //   widget.produto.id,
-                      //   Globais.vendaId,
-                      //   widget.produto.preco,
-                      //   widget.produto.preco * 1,
-                      //   1,
-                      // );
+
                       setState(() {
                         Globais.qtdCarrinho++;
                         // Globais.valorTotalCarrinho += widget.produto.preco;
@@ -263,16 +303,16 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Icon(
-                    Icons.favorite,
-                    color: currentTheme.isDarkTheme()
-                        ? Cores.branco
-                        : Cores.pretoOpaco,
-                    size: 30,
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                //   child: Icon(
+                //     Icons.favorite,
+                //     color: currentTheme.isDarkTheme()
+                //         ? Cores.branco
+                //         : Cores.pretoOpaco,
+                //     size: 30,
+                //   ),
+                // ),
               ],
             ),
           ),

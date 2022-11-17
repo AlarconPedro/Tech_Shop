@@ -70,7 +70,6 @@ class API {
     var response = await request.getCarrinho(url: url);
     Globais.vendaId = response['venda_id'].toInt();
     TbUsuarioHelper().insertCodigoVenda(Globais.vendaId);
-    print(response);
     return _populateItensCarrinho(
       CarrinhoModel(
         vendaId: response['venda_id'],
@@ -81,6 +80,12 @@ class API {
       ),
       _populateProdutosCarrinho(response['produtos']),
     );
+  }
+
+  Future<String> getValorTotalCarrinho() async {
+    String url = Globais.urlItensCarrinho + Globais.idCliente.toString();
+    var response = await request.getCarrinho(url: url);
+    return response['valor_total'];
   }
 
   List<ProdutoModel> _populateProdutosCarrinho(List<dynamic> carrinho) {
@@ -163,6 +168,16 @@ class API {
         "quantidade": quantidade.toString(),
       },
     );
+  }
+
+  void addCarrinho({required int produtoId, required int vendaId}) async {
+    var body = json.encode({
+      "produto_id": produtoId.toString(),
+      "venda_id": vendaId.toString(),
+    });
+    request.postJson(url: Globais.urlAddItemCarrinho, body: body, headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    });
   }
 
   void retirarDoCarrinho(int produtoId, int vendaId) async {

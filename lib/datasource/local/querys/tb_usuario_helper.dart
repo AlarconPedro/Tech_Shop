@@ -44,5 +44,12 @@ class TbUsuarioHelper {
       [usuario, senha],
     );
   }
+
   // DELETE
+  void deleteUsuario() async {
+    Database db = await BancoDados().db;
+    await db.rawDelete(
+      "DELETE FROM ${TbUsuario.nomeTabela}",
+    );
+  }
 }

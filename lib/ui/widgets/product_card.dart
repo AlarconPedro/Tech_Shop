@@ -158,14 +158,14 @@ class _ProductCardState extends State<ProductCard> {
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: Icon(Icons.favorite,
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.pretoOpaco,
-                            size: 30),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                      //   child: Icon(Icons.favorite,
+                      //       color: currentTheme.isDarkTheme()
+                      //           ? Cores.branco
+                      //           : Cores.pretoOpaco,
+                      //       size: 30),
+                      // ),
                     ],
                   ),
                 ],
