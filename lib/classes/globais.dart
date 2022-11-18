@@ -1,3 +1,4 @@
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:tech_shop/datasource/models/produto_model.dart';
 
 class Globais {
@@ -36,6 +37,12 @@ class Globais {
   static String estadoCliente = "";
   static int idCliente = 0;
   static int enderecoSelected = 0;
+  static int cartaoSelected = 0;
+  static int pixSelected = 0;
+  static MaskTextInputFormatter maskCpf = MaskTextInputFormatter(
+    mask: '###.###.###-##',
+    filter: {"#": RegExp(r'[0-9]')},
+  );
 
   // Carrinho
   static int qtdCarrinho = 0;

@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/datasource/api/api.dart';
+import 'package:tech_shop/datasource/local/querys/tb_pagamentoPix_helper.dart';
+import 'package:tech_shop/datasource/local/tb_pagamento_pix.dart';
 import 'package:tech_shop/ui/pages/cadastro_pix_page.dart';
 
 import '../../classes/classes.dart';
@@ -67,7 +69,7 @@ class _ListarPixPageState extends State<ListarPixPage> {
                         ),
                       ),
                       child: FutureBuilder(
-                        future: API().getEnderecos(),
+                        future: getPixCadastrados(),
                         builder: (context, snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
@@ -77,8 +79,8 @@ class _ListarPixPageState extends State<ListarPixPage> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return listEndereco(
-                                  snapshot.data as List<EnderecoModel>,
+                                return listarPixCadastrados(
+                                  snapshot.data as List<TbPagamentoPix>,
                                 );
                               }
                           }
@@ -103,11 +105,12 @@ class _ListarPixPageState extends State<ListarPixPage> {
                           ? Cores.vermelho
                           : Cores.azul,
                       onPressed: () {
-                        Navigator.push(
+                        Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const CadatroPixPage(),
                           ),
+                          (route) => true,
                         );
                       },
                       child: Icon(
@@ -127,10 +130,15 @@ class _ListarPixPageState extends State<ListarPixPage> {
     );
   }
 
-  Widget listEndereco(List<EnderecoModel> endereco) {
+  Future<List<TbPagamentoPix>> getPixCadastrados() async {
+    var response = await TbPagamentoPixHelper().getPagamentoPix();
+    return response;
+  }
+
+  Widget listarPixCadastrados(List<TbPagamentoPix> pix) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return ListView.builder(
-      itemCount: endereco.length,
+      itemCount: pix.length,
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
@@ -173,23 +181,15 @@ class _ListarPixPageState extends State<ListarPixPage> {
                 leading: Checkbox(
                   checkColor: Cores.preto,
                   activeColor: Cores.branco,
-                  value: Globais.enderecoSelected == index,
+                  value: Globais.pixSelected == index,
                   onChanged: (value) {
                     setState(() {
-                      Globais.enderecoSelected = index;
+                      Globais.pixSelected = index;
                     });
                   },
                 ),
                 title: Text(
-                  "${endereco[index].endereco} - ${endereco[index].numero}",
-                  style: TextStyle(
-                    color: currentTheme.isDarkTheme()
-                        ? Cores.branco
-                        : Cores.pretoOpaco,
-                  ),
-                ),
-                subtitle: Text(
-                  endereco[index].bairro,
+                  "${pix[index].chave.substring(0, 4)} **** **** ${pix[index].chave.substring(11, 14)}",
                   style: TextStyle(
                     color: currentTheme.isDarkTheme()
                         ? Cores.branco
@@ -202,9 +202,9 @@ class _ListarPixPageState extends State<ListarPixPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Excluir Endereço'),
+                          title: const Text('Excluir Chave Pix'),
                           content: const Text(
-                              'Deseja realmente excluir este endereço?'),
+                              'Deseja realmente excluir esta cahve Pix?'),
                           actions: [
                             TextButton(
                               onPressed: () {

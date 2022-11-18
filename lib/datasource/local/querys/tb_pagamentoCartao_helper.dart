@@ -4,16 +4,16 @@ import 'package:tech_shop/datasource/local/tb_pagamento_cartao.dart';
 
 class TbPagamentoCartaoHelper {
   // Select
-  Future<TbPagamentoCartao> getPagamento() async {
+  Future<List<TbPagamentoCartao>> getCartoesPagamento() async {
     Database db = await BancoDados().db;
     var response = await db.rawQuery(
       "SELECT * FROM ${TbPagamentoCartao.nomeTabela} ",
     );
     print(response);
     if (response.isNotEmpty) {
-      return TbPagamentoCartao.fromMap(response.first);
+      return response.map((c) => TbPagamentoCartao.fromMap(c)).toList();
     } else {
-      return TbPagamentoCartao();
+      return [];
     }
   }
 
@@ -47,10 +47,11 @@ class TbPagamentoCartaoHelper {
   }
 
   // Delete
-  void deletePagamentoCartao() async {
+  void deletePagamentoCartao(String numeroCartao) async {
     Database db = await BancoDados().db;
     await db.rawDelete(
-      "DELETE FROM ${TbPagamentoCartao.nomeTabela}",
+      "DELETE FROM ${TbPagamentoCartao.nomeTabela} WHERE ${TbPagamentoCartao.numeroColumn} = ?",
+      [numeroCartao],
     );
   }
 }

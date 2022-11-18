@@ -4,16 +4,16 @@ import 'package:tech_shop/datasource/local/tb_pagamento_pix.dart';
 
 class TbPagamentoPixHelper {
   // SELECT
-  Future<TbPagamentoPix> getPagamento() async {
+  Future<List<TbPagamentoPix>> getPagamentoPix() async {
     Database db = await BancoDados().db;
     var response = await db.rawQuery(
       "SELECT * FROM ${TbPagamentoPix.nomeTabela} ",
     );
     print(response);
     if (response.isNotEmpty) {
-      return TbPagamentoPix.fromMap(response.first);
+      return response.map((c) => TbPagamentoPix.fromMap(c)).toList();
     } else {
-      return TbPagamentoPix();
+      return [];
     }
   }
 

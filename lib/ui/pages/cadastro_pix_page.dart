@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/classes/classes.dart';
+import 'package:tech_shop/datasource/local/querys/tb_pagamentoPix_helper.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 
 import '../../datasource/http/http.dart';
@@ -20,13 +22,6 @@ class CadatroPixPage extends StatefulWidget {
 
 class _CadatroPixPageState extends State<CadatroPixPage> {
   final TextEditingController _nomeController = TextEditingController();
-  final TextEditingController _cpfController = TextEditingController();
-  final TextEditingController _numeroTelefone = TextEditingController();
-  final TextEditingController _dataNascimentoController =
-      TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _senhaController = TextEditingController();
-  final TextEditingController _confirmaController = TextEditingController();
 
   final maskCpf = MaskTextInputFormatter(
       mask: "###.###.###-##", filter: {"#": RegExp(r'[0-9]')});
@@ -41,6 +36,8 @@ class _CadatroPixPageState extends State<CadatroPixPage> {
   Widget build(BuildContext context) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      backgroundColor:
+          currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
@@ -82,7 +79,7 @@ class _CadatroPixPageState extends State<CadatroPixPage> {
                         height: 20,
                       ),
                       Text(
-                        'Dados do Usuário',
+                        'Chave Pix',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -94,88 +91,138 @@ class _CadatroPixPageState extends State<CadatroPixPage> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.cinzaEscuro
+                                    : Cores.branco,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: currentTheme.isDarkTheme()
+                                        ? Cores.branco
+                                        : Cores.azul,
+                                    blurRadius: 1,
+                                    spreadRadius: 2,
+                                    blurStyle: BlurStyle.normal,
+                                    // offset: const Offset(1.5, 1.5),
+                                  ),
+                                ],
+                              ),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 5),
+                                child: DropdownButton(
+                                    elevation: 0,
+                                    value: 'CPF',
+                                    borderRadius: BorderRadius.circular(10),
+                                    hint: Text(
+                                      'Tipo de chave',
+                                      style: TextStyle(
+                                        color: currentTheme.isDarkTheme()
+                                            ? Cores.branco
+                                            : Cores.cinzaEscuro,
+                                      ),
+                                    ),
+                                    dropdownColor: currentTheme.isDarkTheme()
+                                        ? Cores.cinzaEscuro
+                                        : Cores.branco,
+                                    style: TextStyle(
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.branco
+                                          : Cores.cinzaEscuro,
+                                    ),
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.branco
+                                          : Cores.azul,
+                                    ),
+                                    items: const [
+                                      DropdownMenuItem(
+                                        child: Text('CPF'),
+                                        value: 'CPF',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('Telefone'),
+                                        value: 'Telefone',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('Email'),
+                                        value: 'Email',
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      // setState(() {
+                                      //   if (value == 'CPF') {
+                                      //     _nomeController.text = '';
+                                      //     _nomeController.addListener(
+                                      //       () => _nomeController.value =
+                                      //           _nomeController.value.copyWith(
+                                      //         text: maskCpf.getMaskedText(),
+                                      //       ),
+                                      //     );
+                                      //   } else if (value == 'Telefone') {
+                                      //     _nomeController.text = '';
+                                      //     _nomeController.addListener(
+                                      //       () => _nomeController.value =
+                                      //           _nomeController.value.copyWith(
+                                      //         text: maskNumero.getMaskedText(),
+                                      //       ),
+                                      //     );
+                                      //   } else if (value == 'Email') {
+                                      //     _nomeController.text = '';
+                                      //     _nomeController.addListener(
+                                      //       () => _nomeController.value =
+                                      //           _nomeController.value.copyWith(
+                                      //         text: maskDefault.getMaskedText(),
+                                      //       ),
+                                      //     );
+                                      //   }
+                                      // });
+                                    }),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       campoTexto(
                         controller: _nomeController,
-                        hint: 'Digite seu nome:',
-                        inputFormatter: maskDefault,
-                        keyboardType: TextInputType.name,
-                        label: 'Nome',
-                        obscureText: false,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: campoTexto(
-                              controller: _cpfController,
-                              hint: 'Digite seu CPF:',
-                              inputFormatter: maskCpf,
-                              keyboardType: TextInputType.number,
-                              label: 'CPF',
-                              obscureText: false,
-                            ),
-                          ),
-                          Expanded(
-                            child: campoTexto(
-                              controller: _numeroTelefone,
-                              hint: 'Digite seu Numero de Telefone:',
-                              inputFormatter: maskNumero,
-                              keyboardType: TextInputType.number,
-                              label: 'Numero de Telefone',
-                              obscureText: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                      campoTexto(
-                        controller: _dataNascimentoController,
-                        hint: 'Digite sua Data de Nascimento:',
-                        inputFormatter: maskData,
-                        keyboardType: TextInputType.datetime,
-                        label: 'Data de Nascimento',
-                        obscureText: false,
-                      ),
-                      campoTexto(
-                        controller: _emailController,
-                        hint: 'Digite seu Email:',
-                        inputFormatter: maskDefault,
+                        hint: 'Digite sua chave:',
+                        inputFormatter: Globais.maskCpf,
                         keyboardType: TextInputType.emailAddress,
-                        label: 'Email',
+                        label: 'Chave Pix',
                         obscureText: false,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              child: campoTexto(
-                                controller: _senhaController,
-                                hint: 'Digite sua Senha:',
-                                inputFormatter: maskDefault,
-                                keyboardType: TextInputType.visiblePassword,
-                                label: 'Senha',
-                                obscureText: true,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              child: campoTexto(
-                                controller: _confirmaController,
-                                hint: 'Confirme sua Senha:',
-                                inputFormatter: maskDefault,
-                                keyboardType: TextInputType.visiblePassword,
-                                label: 'Confirmar Senha',
-                                obscureText: true,
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          cadastraUsuario();
+                          if (_nomeController.text.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: const Text(
+                                    'Preencha o campo da chave Pix !'),
+                                backgroundColor: Cores.vermelho,
+                              ),
+                            );
+                          } else {
+                            TbPagamentoPixHelper()
+                                .insertPagamentoPix(_nomeController.text);
+                            _showDialog(context,
+                                message: 'Cadastro realizado com sucesso!',
+                                title: 'Sucesso');
+                            Navigator.pop(context);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
@@ -190,12 +237,12 @@ class _CadatroPixPageState extends State<CadatroPixPage> {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          primary: currentTheme.isDarkTheme()
-                              ? Cores.vermelho
-                              : Cores.azul,
-                          onPrimary: currentTheme.isDarkTheme()
+                          foregroundColor: currentTheme.isDarkTheme()
                               ? Cores.cinzaEscuro
                               : Cores.branco,
+                          backgroundColor: currentTheme.isDarkTheme()
+                              ? Cores.vermelho
+                              : Cores.azul,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -309,64 +356,5 @@ class _CadatroPixPageState extends State<CadatroPixPage> {
         );
       },
     );
-  }
-
-  void cadastraUsuario() {
-    _nomeController.text != "" &&
-        _emailController.text != "" &&
-        _senhaController.text != "" &&
-        _confirmaController.text != "";
-    if (_nomeController.text != "" &&
-        _emailController.text != "" &&
-        _cpfController.text != "" &&
-        _senhaController.text != "" &&
-        _confirmaController.text != "") {
-      var response = _getLogin();
-      print(response);
-    } else if (_senhaController.text == _confirmaController.text) {
-      _showDialog(context, message: 'Senhas não conferem!', title: 'Erro');
-      _nomeController.clear();
-      _emailController.clear();
-      _cpfController.clear();
-      _senhaController.clear();
-      _dataNascimentoController.clear();
-      _dataNascimentoController.clear();
-    } else {
-      _showDialog(context, message: 'Preencha todos os campos!', title: 'Erro');
-      _dataNascimentoController.clear();
-      _nomeController.clear();
-      _emailController.clear();
-      _cpfController.clear();
-      _senhaController.clear();
-      _dataNascimentoController.clear();
-    }
-  }
-
-  Future<List<LoginModel>> _getLogin() async {
-    var response = await HttpRequest().postLogin(
-      nome: _nomeController.text,
-      email: _emailController.text,
-      senha: _senhaController.text,
-      cpf: _cpfController.text,
-      dataNascimento: _dataNascimentoController.text,
-      telefone: _numeroTelefone.text,
-    );
-    print(response.body);
-    if (response.statusCode == 200) {
-      var json = jsonDecode(response.body);
-      _showDialog(context,
-          message: 'Cadastro realizado com sucesso!', title: 'Sucesso');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const LoginPage(),
-        ),
-      );
-      return (json as List).map((e) => LoginModel.fromJson(e)).toList();
-    } else {
-      _showDialog(context, message: 'Erro ao Cadastrar!', title: 'Erro');
-
-      throw Exception('Falha ao Cadastrar Usuário');
-    }
   }
 }

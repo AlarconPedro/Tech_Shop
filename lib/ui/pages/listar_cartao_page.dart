@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_shop/datasource/local/querys/tb_pagamentoCartao_helper.dart';
+import 'package:tech_shop/datasource/local/tb_pagamento_cartao.dart';
 import 'package:tech_shop/ui/pages/cadastro_cartao_page.dart';
 
 import '../../classes/classes.dart';
@@ -25,7 +27,7 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
       appBar: AppBar(
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
-        title: const Text('Chaves Pix Cadastradas'),
+        title: const Text('Cartões Cadastrados'),
         centerTitle: true,
       ),
       body: Stack(
@@ -65,7 +67,7 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                         ),
                       ),
                       child: FutureBuilder(
-                        future: API().getEnderecos(),
+                        future: getCartoesCadastrados(),
                         builder: (context, snapshot) {
                           switch (snapshot.connectionState) {
                             case ConnectionState.waiting:
@@ -75,8 +77,8 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                               if (snapshot.hasError) {
                                 return Text('Error: ${snapshot.error}');
                               } else {
-                                return listEndereco(
-                                  snapshot.data as List<EnderecoModel>,
+                                return listaCartao(
+                                  snapshot.data as List<TbPagamentoCartao>,
                                 );
                               }
                           }
@@ -100,13 +102,15 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                       backgroundColor: currentTheme.isDarkTheme()
                           ? Cores.vermelho
                           : Cores.azul,
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        await Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const CadastroCartaoPage(),
                           ),
+                          (route) => true,
                         );
+                        setState(() {});
                       },
                       child: Icon(
                         Icons.add,
@@ -125,10 +129,15 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
     );
   }
 
-  Widget listEndereco(List<EnderecoModel> endereco) {
+  Future<List<TbPagamentoCartao>> getCartoesCadastrados() async {
+    var response = await TbPagamentoCartaoHelper().getCartoesPagamento();
+    return response;
+  }
+
+  Widget listaCartao(List<TbPagamentoCartao> cartao) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return ListView.builder(
-      itemCount: endereco.length,
+      itemCount: cartao.length,
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
@@ -179,7 +188,8 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                   },
                 ),
                 title: Text(
-                  "${endereco[index].endereco} - ${endereco[index].numero}",
+                  cartao[index].nomeTitular,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: currentTheme.isDarkTheme()
                         ? Cores.branco
@@ -187,7 +197,7 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                   ),
                 ),
                 subtitle: Text(
-                  endereco[index].bairro,
+                  "${cartao[index].numero.substring(0, 4)} **** **** ${cartao[index].numero.substring(16, 16)}",
                   style: TextStyle(
                     color: currentTheme.isDarkTheme()
                         ? Cores.branco
@@ -200,9 +210,9 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: const Text('Excluir Endereço'),
+                          title: const Text('Excluir Cartão'),
                           content: const Text(
-                              'Deseja realmente excluir este endereço?'),
+                              'Deseja realmente excluir este cartão?'),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -212,8 +222,9 @@ class _ListarCartaoPageState extends State<ListarCartaoPage> {
                             ),
                             TextButton(
                               onPressed: () {
-                                API().deleteEndereco(
-                                    Globais.idCliente.toString());
+                                TbPagamentoCartaoHelper().deletePagamentoCartao(
+                                  cartao[index].numero,
+                                );
                                 Navigator.pop(context);
                                 setState(() {});
                               },

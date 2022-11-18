@@ -40,7 +40,7 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
           children: <Widget>[
             CreditCardWidget(
               cardName: (String value) {
-                print(value);
+                // print(value);
               },
               cardNumber: numeroCartao,
               expiryDate: vencimento,
@@ -101,7 +101,7 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
                       child: Container(
                         margin: const EdgeInsets.all(8),
                         child: const Text(
-                          'Validate',
+                          'Salvar Cartão',
                           style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'halter',
@@ -119,6 +119,7 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
                             cvvCode,
                             vencimento,
                           );
+                          Navigator.pop(context);
                         } else {
                           print('invalid!');
                         }
