@@ -17,9 +17,8 @@ class TbUsuario {
       $nomeColumn TEXT
     )
   ''';
-
-  int id = 0;
   int idVenda = 0;
+  int id = 0;
   String usuario = '';
   String senha = '';
   String nome = '';
@@ -27,8 +26,8 @@ class TbUsuario {
   TbUsuario();
 
   TbUsuario.fromMap(Map map) {
-    id = map[idColumn];
     idVenda = map[idVendaColumn];
+    id = map[idColumn];
     usuario = map[usuarioColumn];
     senha = map[senhaColumn];
     nome = map[nomeColumn] ?? Globais.nomeCliente;
@@ -36,8 +35,8 @@ class TbUsuario {
 
   Map toMap() {
     Map<String, dynamic> map = {
-      idColumn: id,
       idVendaColumn: idVenda,
+      idColumn: id,
       usuarioColumn: usuario,
       senhaColumn: senha,
       nomeColumn: nome,

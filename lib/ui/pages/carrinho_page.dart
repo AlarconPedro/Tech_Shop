@@ -4,6 +4,7 @@ import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/models/carrinho_model.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
+import 'package:tech_shop/ui/pages/finalizar_compra_page.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/temas.dart';
 import 'package:tech_shop/ui/widgets/carrinho_card.dart';
@@ -218,7 +219,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                     return Expanded(
                                       child: Center(
                                         child: Text(
-                                          'Carrinho Vazio',
+                                          "R\$ 0,00",
                                           style: TextStyle(
                                             color: currentTheme.isDarkTheme()
                                                 ? Cores.branco
@@ -602,20 +603,31 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Finalizar Compra',
-                        style: TextStyle(
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.branco
-                              : Cores.pretoOpaco,
-                          fontSize: 20,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FinalizarCompraPage(),
+                      ),
+                      (route) => true,
+                    );
+                  },
+                  child: Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                        right: 10,
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Finalizar Compra',
+                          style: TextStyle(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.pretoOpaco,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),

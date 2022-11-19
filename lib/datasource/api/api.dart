@@ -68,7 +68,9 @@ class API {
   Future<List<ProdutoModel>> getItensCarrinho() async {
     String url = Globais.urlItensCarrinho + Globais.idCliente.toString();
     var response = await request.getCarrinho(url: url);
-    Globais.vendaId = response['venda_id'].toInt();
+    Globais.vendaId = response['venda_id'] == "error"
+        ? Globais.vendaId = 0
+        : response['venda_id'].toInt();
     TbUsuarioHelper().insertCodigoVenda(Globais.vendaId);
     return _populateItensCarrinho(
       CarrinhoModel(
@@ -85,7 +87,7 @@ class API {
   Future<String> getValorTotalCarrinho() async {
     String url = Globais.urlItensCarrinho + Globais.idCliente.toString();
     var response = await request.getCarrinho(url: url);
-    return response['valor_total'];
+    return response['valor_total'] ?? "0";
   }
 
   List<ProdutoModel> _populateProdutosCarrinho(List<dynamic> carrinho) {

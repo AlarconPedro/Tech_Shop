@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
 import 'package:tech_shop/datasource/api/api.dart';
+import 'package:tech_shop/datasource/local/querys/tb_usuario_helper.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
 import 'package:tech_shop/ui/temas/theme_provider.dart';
@@ -247,7 +248,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                       ),
                     ),
                     onPressed: () {
-                      Globais.qtdCarrinho < 1
+                      Globais.vendaId < 1
                           ? API().criarCarrinho(
                               Globais.idCliente,
                               widget.produto,

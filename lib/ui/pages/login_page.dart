@@ -37,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   // TODO - Implementar o método de login
   _carregaDadosUsuario() async {
     tbUsuario = await TbUsuarioHelper().getUsuario();
+    Globais.vendaId = tbUsuario.idVenda;
     if (tbUsuario.usuario != "" && tbUsuario.senha != "") {
       _emailController.text = tbUsuario.usuario;
       _senhaController.text = tbUsuario.senha;

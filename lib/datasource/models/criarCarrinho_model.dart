@@ -16,6 +16,6 @@ class CriarCarrinhoModel {
         idVenda: json["id"],
         statusVenda: json["status"],
         dataVenda: json["data_venda"],
-        usuarioId: json["usuario_id"],
+        usuarioId: json["usuario_id"].toString(),
       );
 }

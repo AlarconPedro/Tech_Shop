@@ -231,59 +231,59 @@ class _FormaPagamentoState extends State<FormaPagamento> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 4,
-                                    horizontal: 8,
-                                  ),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                      color: currentTheme.isDarkTheme()
-                                          ? Cores.cinzaMedio
-                                          : Cores.cinzaClaro,
-                                    ),
-                                    child: ListTile(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                      style: ListTileStyle.list,
-                                      trailing: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.branco
-                                            : Cores.pretoOpaco,
-                                      ),
-                                      title: Text(
-                                        'Boleto',
-                                        style: TextStyle(
-                                          color: currentTheme.isDarkTheme()
-                                              ? Cores.branco
-                                              : Cores.preto,
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                      leading: Icon(
-                                        Icons.monetization_on_rounded,
-                                        size: 28,
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.branco
-                                            : Cores.preto,
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const ListarBoletoPage(),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
+                                // Padding(
+                                //   padding: const EdgeInsets.symmetric(
+                                //     vertical: 4,
+                                //     horizontal: 8,
+                                //   ),
+                                //   child: Container(
+                                //     decoration: BoxDecoration(
+                                //       borderRadius: const BorderRadius.all(
+                                //         Radius.circular(15),
+                                //       ),
+                                //       color: currentTheme.isDarkTheme()
+                                //           ? Cores.cinzaMedio
+                                //           : Cores.cinzaClaro,
+                                //     ),
+                                //     child: ListTile(
+                                //       shape: RoundedRectangleBorder(
+                                //         borderRadius: BorderRadius.circular(15),
+                                //       ),
+                                //       style: ListTileStyle.list,
+                                //       trailing: Icon(
+                                //         Icons.arrow_forward_ios,
+                                //         color: currentTheme.isDarkTheme()
+                                //             ? Cores.branco
+                                //             : Cores.pretoOpaco,
+                                //       ),
+                                //       title: Text(
+                                //         'Boleto',
+                                //         style: TextStyle(
+                                //           color: currentTheme.isDarkTheme()
+                                //               ? Cores.branco
+                                //               : Cores.preto,
+                                //           fontSize: 20,
+                                //         ),
+                                //       ),
+                                //       leading: Icon(
+                                //         Icons.monetization_on_rounded,
+                                //         size: 28,
+                                //         color: currentTheme.isDarkTheme()
+                                //             ? Cores.branco
+                                //             : Cores.preto,
+                                //       ),
+                                //       onTap: () {
+                                //         Navigator.push(
+                                //           context,
+                                //           MaterialPageRoute(
+                                //             builder: (context) =>
+                                //                 const ListarBoletoPage(),
+                                //           ),
+                                //         );
+                                //       },
+                                //     ),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
