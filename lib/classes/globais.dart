@@ -21,6 +21,7 @@ class Globais {
   static String urlAddItemCarrinho = "$urlPadrao/api/venda/novo_produto";
   static String urlRetiraItemCarrinho = "$urlPadrao/api/venda/diminuir_produto";
   static String urlDeleteItemCarrinho = "$urlPadrao/api/venda/remover_produto";
+  static String urlFinalizarCarrinho = "$urlPadrao/api/venda/finalizar";
 
   //Valores Cliente
   static String nomeCliente = "";

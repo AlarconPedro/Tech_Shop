@@ -6,6 +6,7 @@ import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/local/querys/tb_usuario_helper.dart';
 import 'package:tech_shop/datasource/models/models.dart';
 import 'package:tech_shop/ui/estilos/estilos.dart';
+import 'package:tech_shop/ui/pages/pages.dart';
 import 'package:tech_shop/ui/temas/theme_provider.dart';
 
 class ProdutoDescricao extends StatefulWidget {
@@ -264,6 +265,12 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                         Globais.qtdCarrinho++;
                         // Globais.valorTotalCarrinho += widget.produto.preco;
                       });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const CarrinhoPage(),
+                        ),
+                      );
                     },
                     child: const Text(
                       'Comprar',

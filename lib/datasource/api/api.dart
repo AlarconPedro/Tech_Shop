@@ -154,6 +154,21 @@ class API {
     );
   }
 
+  void finalizarCarrinho() async {
+    var body = json.encode({
+      "venda_id": Globais.vendaId.toString(),
+      "status": "P",
+    });
+    var response = await request.postJson(
+      url: Globais.urlFinalizarCarrinho,
+      body: body,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    print(response);
+  }
+
   // PUT FUNCTIONS
   void adicionarAoCarrinho({
     double? valor,

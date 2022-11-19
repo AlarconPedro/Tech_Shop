@@ -313,6 +313,8 @@ class _LoginPageState extends State<LoginPage> {
         populateUser(decodedJson);
       });
     } else {
+      _showDialog(context,
+          title: 'Erro', message: 'Usuário ou Senha inválidos');
       setState(() {
         logado = false;
       });
@@ -345,5 +347,25 @@ class _LoginPageState extends State<LoginPage> {
     Globais.nomeCliente = json['data']['nome'];
     Globais.emailCliente = json['data']['email'];
     return login;
+  }
+
+  void _showDialog(BuildContext context, {String? message, String? title}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title!),
+          content: Text(message ?? 'Erro ao cadastrar'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

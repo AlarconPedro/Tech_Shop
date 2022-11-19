@@ -311,7 +311,10 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            API().finalizarCarrinho();
+                            Navigator.pop(context);
+                          },
                           child: const Text('Finalizar'),
                           style: ElevatedButton.styleFrom(
                             foregroundColor: currentTheme.isDarkTheme()
@@ -395,75 +398,120 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
   Widget carrinhoCard(
       ProdutoModel produtoModel, int? quantidade, int produtoId, int vendaId) {
     final currentTheme = Provider.of<ThemeProvider>(context);
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) {
-              return ProdutoPage(
-                produto: produtoModel,
-              );
-            },
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+      child: Container(
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          color: Cores.branco,
+          borderRadius: const BorderRadius.all(
+            Radius.circular(8),
           ),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-        child: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.rectangle,
-            color: Cores.branco,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(8),
-            ),
-            border: Border.all(
-              color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-              width: 2,
-            ),
+          border: Border.all(
+            color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+            width: 2,
           ),
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: SizedBox(
-                        width: 80,
-                        height: 80,
-                        child: Image.network(
-                          Globais.urlImage + produtoModel.imagem1,
-                        ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: SizedBox(
+                      width: 80,
+                      height: 80,
+                      child: Image.network(
+                        Globais.urlImage + produtoModel.imagem1,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          width: 110,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.rectangle,
-                            color: Cores.branco,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(8),
-                            ),
-                            border: Border.all(
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text(
+                        "Qtda: ${quantidade.toString()}",
+                        style: TextStyle(
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.pretoClaro
+                              : Cores.pretoOpaco,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        width: 110,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.rectangle,
+                          color: Cores.branco,
+                          borderRadius: const BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                          border: Border.all(
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.verde
+                                : Cores.azul,
+                            width: 2,
+                          ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            'R\$ ${produtoModel.preco}0',
+                            style: TextStyle(
                               color: currentTheme.isDarkTheme()
-                                  ? Cores.verde
-                                  : Cores.azul,
-                              width: 2,
+                                  ? Cores.pretoClaro
+                                  : Cores.pretoOpaco,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          child: Center(
-                            child: Text(
-                              'R\$ ${produtoModel.preco}0',
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5),
+              child: Divider(
+                color: Cores.pretoOpaco,
+                thickness: 1,
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: Cores.branco,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                    ),
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: ListView(
+                          children: [
+                            Text(
+                              produtoModel.descricao,
                               style: TextStyle(
+                                overflow: TextOverflow.ellipsis,
                                 color: currentTheme.isDarkTheme()
                                     ? Cores.pretoClaro
                                     : Cores.pretoOpaco,
@@ -471,61 +519,15 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: Divider(
-                  color: Cores.pretoOpaco,
-                  thickness: 1,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.7,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        color: Cores.branco,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: ListView(
-                            children: [
-                              Text(
-                                produtoModel.descricao,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.pretoClaro
-                                      : Cores.pretoOpaco,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
                       ),
                     ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -602,37 +604,8 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                   ),
                 ),
                 trailing: IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Excluir Cartão'),
-                          content: const Text(
-                              'Deseja realmente excluir este cartão?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Não'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                TbPagamentoCartaoHelper().deletePagamentoCartao(
-                                  cartao[index].numero,
-                                );
-                                Navigator.pop(context);
-                                setState(() {});
-                              },
-                              child: const Text('Sim'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  icon: Icon(Icons.delete, color: Cores.vermelho),
+                  onPressed: () {},
+                  icon: Icon(Icons.credit_card_rounded, color: Cores.branco),
                 ),
               ),
             ),
@@ -712,36 +685,8 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                   ),
                 ),
                 trailing: IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Excluir Endereço'),
-                          content: const Text(
-                              'Deseja realmente excluir este endereço?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: const Text('Não'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                API().deleteEndereco(
-                                    Globais.idCliente.toString());
-                                Navigator.pop(context);
-                                setState(() {});
-                              },
-                              child: const Text('Sim'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  icon: Icon(Icons.delete, color: Cores.vermelho),
+                  onPressed: () {},
+                  icon: Icon(Icons.location_on, color: Cores.branco),
                 ),
               ),
             ),
