@@ -30,8 +30,10 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
       backgroundColor:
           currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
+        foregroundColor:
+            currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
         title: Text(
           'Carrinho',
           style: TextStyle(
@@ -422,14 +424,10 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                     );
 
                                     setState(() {
-                                      Globais.valorTotalCarrinho;
+                                      // Globais.valorTotalCarrinho;
                                       quantidade != 0
                                           ? quantidade = quantidade! + 1
                                           : quantidade = 1;
-                                      Future.delayed(Duration.zero, () {
-                                        // Globais.valorTotalCarrinho +=
-                                        //     produtoModel.preco.toString();
-                                      });
                                     });
                                   },
                                   icon: Icon(
@@ -459,7 +457,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                           ),
                           child: Center(
                             child: Text(
-                              'R\$ ${produtoModel.preco}0',
+                              'R\$ ${produtoModel.preco}',
                               style: TextStyle(
                                 color: currentTheme.isDarkTheme()
                                     ? Cores.pretoClaro
@@ -604,14 +602,15 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
+                  onTap: () async {
+                    await Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FinalizarCompraPage(),
+                        builder: (context) => const FinalizarCompraPage(),
                       ),
                       (route) => true,
                     );
+                    setState(() {});
                   },
                   child: Expanded(
                     child: Padding(

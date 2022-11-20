@@ -45,6 +45,14 @@ class TbUsuarioHelper {
     );
   }
 
+  void updateIdVenda(int idVenda) async {
+    Database db = await BancoDados().db;
+    await db.rawUpdate(
+      "UPDATE ${TbUsuario.nomeTabela} SET ${TbUsuario.idVendaColumn} = ?",
+      [idVenda],
+    );
+  }
+
   // DELETE
   void deleteUsuario() async {
     Database db = await BancoDados().db;

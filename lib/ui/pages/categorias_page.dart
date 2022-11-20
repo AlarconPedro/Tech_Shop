@@ -26,8 +26,10 @@ class _CategoriaPageState extends State<CategoriaPage> {
       backgroundColor:
           currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
+        foregroundColor:
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.preto,
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
         title: Text(
           'Categorias',
           style: TextStyle(

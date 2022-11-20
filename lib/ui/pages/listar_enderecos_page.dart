@@ -101,13 +101,15 @@ class _ListarEnderecosPageState extends State<ListarEnderecosPage> {
                       backgroundColor: currentTheme.isDarkTheme()
                           ? Cores.vermelho
                           : Cores.azul,
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        await Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const CadastroEnderecoPage(),
                           ),
+                          (route) => true,
                         );
+                        setState(() {});
                       },
                       child: Icon(
                         Icons.add,

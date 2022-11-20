@@ -112,6 +112,7 @@ class _ListarPixPageState extends State<ListarPixPage> {
                           ),
                           (route) => true,
                         );
+                        setState(() {});
                       },
                       child: Icon(
                         Icons.add,

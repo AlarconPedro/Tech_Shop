@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/local/querys/tb_pagamentoCartao_helper.dart';
+import 'package:tech_shop/datasource/local/querys/tb_usuario_helper.dart';
 import 'package:tech_shop/ui/pages/pages.dart';
 
 import '../../classes/classes.dart';
@@ -22,12 +23,20 @@ class FinalizarCompraPage extends StatefulWidget {
 class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
   @override
   Widget build(BuildContext context) {
+    Globais.finalizaVenda = true;
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        foregroundColor:
+            currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
-        title: const Text('Finalizar Compra'),
+        title: Text(
+          'Finalizar Compra',
+          style: TextStyle(
+            color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+          ),
+        ),
         centerTitle: true,
       ),
       body: Stack(
@@ -103,9 +112,11 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                               cor: Cores.branco);
                                         default:
                                           if (snapshot.hasError) {
+                                            Globais.finalizaVenda = false;
                                             return Text(
                                                 'Error: ${snapshot.error}');
                                           } else {
+                                            Globais.finalizaVenda = true;
                                             return listEndereco(
                                               snapshot.data
                                                   as List<EnderecoModel>,
@@ -152,9 +163,11 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                               cor: Cores.branco);
                                         default:
                                           if (snapshot.hasError) {
+                                            Globais.finalizaVenda = false;
                                             return Text(
                                                 'Error: ${snapshot.error}');
                                           } else {
+                                            Globais.finalizaVenda = true;
                                             return listaCartao(
                                               snapshot.data
                                                   as List<TbPagamentoCartao>,
@@ -199,6 +212,7 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                           );
                                         default:
                                           if (snapshot.hasError) {
+                                            Globais.finalizaVenda = false;
                                             return Expanded(
                                               child: Center(
                                                 child: Text(
@@ -214,6 +228,7 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                               ),
                                             );
                                           } else {
+                                            Globais.finalizaVenda = true;
                                             return Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -310,29 +325,36 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                       fit: FlexFit.tight,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            API().finalizarCarrinho();
-                            Navigator.pop(context);
-                          },
-                          child: const Text('Finalizar'),
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.cinzaEscuro,
-                            backgroundColor: currentTheme.isDarkTheme()
-                                ? Cores.vermelho
-                                : Cores.branco,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            // side: BorderSide(
-                            //   color:
-                            //       currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-                            //   width: 1,
-                            // ),
-                          ),
-                        ),
+                        child: Globais.finalizaVenda
+                            ? ElevatedButton(
+                                onPressed: () async {
+                                  API().finalizarCarrinho();
+                                  TbUsuarioHelper().updateIdVenda(0);
+                                  Globais.vendaId = 0;
+                                  Future.delayed(const Duration(seconds: 1),
+                                      () {
+                                    Navigator.pop(context);
+                                  });
+                                },
+                                child: const Text('Finalizar'),
+                                style: ElevatedButton.styleFrom(
+                                  foregroundColor: currentTheme.isDarkTheme()
+                                      ? Cores.branco
+                                      : Cores.cinzaEscuro,
+                                  backgroundColor: currentTheme.isDarkTheme()
+                                      ? Cores.vermelho
+                                      : Cores.azul,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  // side: BorderSide(
+                                  //   color:
+                                  //       currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                                  //   width: 1,
+                                  // ),
+                                ),
+                              )
+                            : Container(),
                       ),
                     ),
                   ],

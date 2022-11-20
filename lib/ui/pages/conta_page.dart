@@ -23,8 +23,10 @@ class _ContaPageState extends State<ContaPage> {
       backgroundColor:
           currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
+        foregroundColor:
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.preto,
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
         title: Text(
           'Conta',
           style: TextStyle(

@@ -136,25 +136,38 @@ class _ProductCardState extends State<ProductCard> {
                             horizontal: 15, vertical: 15),
                         child: Column(
                           children: [
-                            Text(
-                              "R\$ ${widget.produto.preco},00",
-                              style: TextStyle(
-                                fontSize: 18,
-                                color: Cores.vermelho,
-                                fontWeight: FontWeight.bold,
-                                decorationStyle: TextDecorationStyle.solid,
-                                decoration: TextDecoration.lineThrough,
-                                decorationThickness: 2.5,
-                              ),
-                            ),
-                            Text(
-                              "R\$ ${widget.produto.precoPromocional},00",
-                              style: TextStyle(
-                                fontSize: 25,
-                                color: Cores.verde,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            widget.produto.precoPromocional != 0
+                                ? Text(
+                                    "R\$ ${widget.produto.preco.toStringAsFixed(2)}",
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Cores.vermelho,
+                                      fontWeight: FontWeight.bold,
+                                      decorationStyle:
+                                          TextDecorationStyle.solid,
+                                      decoration: TextDecoration.lineThrough,
+                                      decorationThickness: 2.5,
+                                    ),
+                                  )
+                                : Container(),
+                            widget.produto.precoPromocional != 0 &&
+                                    widget.produto.precoPromocional != null
+                                ? Text(
+                                    "R\$ ${widget.produto.precoPromocional!.toStringAsFixed(2)}",
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: Cores.verde,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                : Text(
+                                    "R\$ ${widget.produto.preco.toStringAsFixed(2)}",
+                                    style: TextStyle(
+                                      fontSize: 25,
+                                      color: Cores.verde,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
                           ],
                         ),
                       ),

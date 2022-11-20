@@ -24,10 +24,15 @@ class _ProdutoPageState extends State<ProdutoPage> {
       backgroundColor:
           currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
-        title: const Text('Produto'),
+        foregroundColor:
+            currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+        title: Text('Produto',
+            style: TextStyle(
+              color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+            )),
         centerTitle: true,
         backgroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.cinzaClaro,
+            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
       ),
       body: Column(
         children: [

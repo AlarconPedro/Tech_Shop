@@ -45,6 +45,8 @@ class Globais {
     filter: {"#": RegExp(r'[0-9]')},
   );
 
+  static bool finalizaVenda = false;
+
   // Carrinho
   static int qtdCarrinho = 0;
   static String valorTotalCarrinho = "";
