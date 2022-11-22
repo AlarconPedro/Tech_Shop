@@ -221,7 +221,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                     return Expanded(
                                       child: Center(
                                         child: Text(
-                                          "R\$ 0,00",
+                                          "R\$ 0",
                                           style: TextStyle(
                                             color: currentTheme.isDarkTheme()
                                                 ? Cores.branco
@@ -238,40 +238,9 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                             ? Cores.branco
                                             : Cores.pretoOpaco);
                                   }
-                                //     if (snapshot.hasData) {
-                                //   return Text(
-                                //     'R\$ ${Globais.valorTotalCarrinho}0',
-                                //     style: TextStyle(
-                                //       color: currentTheme.isDarkTheme()
-                                //           ? Cores.branco
-                                //           : Cores.pretoOpaco,
-                                //       fontSize: 20,
-                                //     ),
-                                //   );
-                                // } else {
-                                //   return Text(
-                                //     'R\$ 0,00',
-                                //     style: TextStyle(
-                                //       color: currentTheme.isDarkTheme()
-                                //           ? Cores.branco
-                                //           : Cores.pretoOpaco,
-                                //       fontSize: 20,
-                                //     ),
-                                //   );
-                                // }
                               }
                             },
                           ),
-                          // Text(
-                          //   "R\$ ${Globais.valorTotalCarrinho}",
-                          //   style: TextStyle(
-                          //     fontSize: 20,
-                          //     fontWeight: FontWeight.bold,
-                          //     color: currentTheme.isDarkTheme()
-                          //         ? Cores.branco
-                          //         : Cores.pretoOpaco,
-                          //   ),
-                          // ),
                         ],
                       ),
                     ),
@@ -292,8 +261,6 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     return ListView.builder(
       itemCount: produtoModel.length,
       itemBuilder: ((context, index) {
-        // Globais.valorTotalCarrinho =
-        //     produtoModel[index].preco * produtoModel[index].quantidade!;
         return Column(
           children: [
             carrinhoCard(
@@ -383,21 +350,19 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                             child: Row(
                               children: [
                                 IconButton(
-                                  onPressed: () {
-                                    quantidade! >= 1
-                                        ? API().retirarDoCarrinho(
-                                            produtoId,
-                                            Globais.vendaId,
-                                          )
-                                        : null;
+                                  onPressed: () async {
                                     setState(() {
-                                      Globais.valorTotalCarrinho;
-                                      quantidade != 0
-                                          ? quantidade = quantidade! - 1
-                                          : quantidade = 1;
-                                      // Globais.valorTotalCarrinho -=
-                                      //     produtoModel.preco.toString;
+                                      API().retirarDoCarrinho(
+                                        produtoId,
+                                        Globais.vendaId,
+                                      );
                                     });
+                                    Future.delayed(
+                                      const Duration(milliseconds: 800),
+                                      () {
+                                        setState(() {});
+                                      },
+                                    );
                                   },
                                   icon: Icon(
                                     Icons.remove,
@@ -418,17 +383,18 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    API().addCarrinho(
-                                      produtoId: produtoId,
-                                      vendaId: Globais.vendaId,
-                                    );
-
                                     setState(() {
-                                      // Globais.valorTotalCarrinho;
-                                      quantidade != 0
-                                          ? quantidade = quantidade! + 1
-                                          : quantidade = 1;
+                                      API().addCarrinho(
+                                        produtoId: produtoId,
+                                        vendaId: Globais.vendaId,
+                                      );
                                     });
+                                    Future.delayed(
+                                      const Duration(milliseconds: 800),
+                                      () {
+                                        setState(() {});
+                                      },
+                                    );
                                   },
                                   icon: Icon(
                                     Icons.add,
@@ -612,21 +578,19 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                     );
                     setState(() {});
                   },
-                  child: Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        left: 10,
-                        right: 10,
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Finalizar Compra',
-                          style: TextStyle(
-                            color: currentTheme.isDarkTheme()
-                                ? Cores.branco
-                                : Cores.pretoOpaco,
-                            fontSize: 20,
-                          ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Finalizar Compra',
+                        style: TextStyle(
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.branco
+                              : Cores.pretoOpaco,
+                          fontSize: 20,
                         ),
                       ),
                     ),

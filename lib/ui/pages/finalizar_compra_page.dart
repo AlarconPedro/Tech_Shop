@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/datasource/api/api.dart';
 import 'package:tech_shop/datasource/local/querys/tb_pagamentoCartao_helper.dart';
+import 'package:tech_shop/datasource/local/querys/tb_pagamentoPix_helper.dart';
 import 'package:tech_shop/datasource/local/querys/tb_usuario_helper.dart';
-import 'package:tech_shop/ui/pages/pages.dart';
-
+import 'package:tech_shop/datasource/local/tb_pagamento_pix.dart';
 import '../../classes/classes.dart';
 import '../../datasource/local/tb_pagamento_cartao.dart';
 import '../../datasource/models/endereco_model.dart';
@@ -23,7 +23,6 @@ class FinalizarCompraPage extends StatefulWidget {
 class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
   @override
   Widget build(BuildContext context) {
-    Globais.finalizaVenda = true;
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -112,11 +111,14 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                               cor: Cores.branco);
                                         default:
                                           if (snapshot.hasError) {
-                                            Globais.finalizaVenda = false;
+                                            setState(() {
+                                              Globais.finalizaVenda = false;
+                                            });
                                             return Text(
                                                 'Error: ${snapshot.error}');
                                           } else {
                                             Globais.finalizaVenda = true;
+
                                             return listEndereco(
                                               snapshot.data
                                                   as List<EnderecoModel>,
@@ -149,33 +151,67 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 80,
-                                  width: double.infinity,
-                                  child: FutureBuilder(
-                                    future: TbPagamentoCartaoHelper()
-                                        .getCartoesPagamento(),
-                                    builder: (context, snapshot) {
-                                      switch (snapshot.connectionState) {
-                                        case ConnectionState.waiting:
-                                        case ConnectionState.none:
-                                          return CirculoEspera.criar(
-                                              cor: Cores.branco);
-                                        default:
-                                          if (snapshot.hasError) {
-                                            Globais.finalizaVenda = false;
-                                            return Text(
-                                                'Error: ${snapshot.error}');
-                                          } else {
-                                            Globais.finalizaVenda = true;
-                                            return listaCartao(
-                                              snapshot.data
-                                                  as List<TbPagamentoCartao>,
-                                            );
+                                Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 80,
+                                      width: double.infinity,
+                                      child: FutureBuilder(
+                                        future: TbPagamentoCartaoHelper()
+                                            .getCartoesPagamento(),
+                                        builder: (context, snapshot) {
+                                          switch (snapshot.connectionState) {
+                                            case ConnectionState.waiting:
+                                            case ConnectionState.none:
+                                              return CirculoEspera.criar(
+                                                  cor: Cores.branco);
+                                            default:
+                                              if (snapshot.hasError) {
+                                                setState(() {
+                                                  Globais.finalizaVenda = false;
+                                                });
+                                                return Text(
+                                                    'Error: ${snapshot.error}');
+                                              } else {
+                                                Globais.finalizaVenda = true;
+                                                return listaCartaoPagamento(
+                                                  snapshot.data as List<
+                                                      TbPagamentoCartao>,
+                                                );
+                                              }
                                           }
-                                      }
-                                    },
-                                  ),
+                                        },
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 80,
+                                      width: double.infinity,
+                                      child: FutureBuilder(
+                                        future: TbPagamentoPixHelper()
+                                            .getPagamentoPix(),
+                                        builder: (context, snapshot) {
+                                          switch (snapshot.connectionState) {
+                                            case ConnectionState.waiting:
+                                            case ConnectionState.none:
+                                              return CirculoEspera.criar(
+                                                  cor: Cores.branco);
+                                            default:
+                                              if (snapshot.hasError) {
+                                                Globais.finalizaVenda = false;
+                                                return Text(
+                                                    'Error: ${snapshot.error}');
+                                              } else {
+                                                Globais.finalizaVenda = true;
+                                                return listaPixPagamento(
+                                                  snapshot.data
+                                                      as List<TbPagamentoPix>,
+                                                );
+                                              }
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(
@@ -212,7 +248,9 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                           );
                                         default:
                                           if (snapshot.hasError) {
-                                            Globais.finalizaVenda = false;
+                                            setState(() {
+                                              Globais.finalizaVenda = false;
+                                            });
                                             return Expanded(
                                               child: Center(
                                                 child: Text(
@@ -328,13 +366,14 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                         child: Globais.finalizaVenda
                             ? ElevatedButton(
                                 onPressed: () async {
-                                  API().finalizarCarrinho();
-                                  TbUsuarioHelper().updateIdVenda(0);
-                                  Globais.vendaId = 0;
-                                  Future.delayed(const Duration(seconds: 1),
-                                      () {
-                                    Navigator.pop(context);
-                                  });
+                                  var response =
+                                      await API().finalizarCarrinho();
+                                  response == "Produto fora de estoque"
+                                      ? _showDialog(context,
+                                          title: 'Erro',
+                                          message:
+                                              'Alguns produtos estão fora de estoque')
+                                      : terminaVenda();
                                 },
                                 child: const Text('Finalizar'),
                                 style: ElevatedButton.styleFrom(
@@ -347,11 +386,6 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15),
                                   ),
-                                  // side: BorderSide(
-                                  //   color:
-                                  //       currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-                                  //   width: 1,
-                                  // ),
                                 ),
                               )
                             : Container(),
@@ -376,6 +410,34 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
     );
   }
 
+  void terminaVenda() {
+    TbUsuarioHelper().updateIdVenda(0);
+    Globais.vendaId = 0;
+    Future.delayed(const Duration(seconds: 1), () {
+      Navigator.pop(context);
+    });
+  }
+
+  void _showDialog(BuildContext context, {String? message, String? title}) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title!),
+          content: Text(message ?? 'Erro ao cadastrar'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget itemCarrinho(List<ProdutoModel> produtoModel) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return ListView.builder(
@@ -391,26 +453,6 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
               produtoModel[index].id,
               Globais.vendaId,
             ),
-            // index == produtoModel.length - 1
-            //     ? Padding(
-            //         padding: const EdgeInsets.symmetric(vertical: 10),
-            //         child: Row(
-            //           mainAxisAlignment: MainAxisAlignment.end,
-            //           children: [
-            //             Text(
-            //               'Total: R\$ ${Globais.valorTotalCarrinho.trimRight().replaceAll('0.', ',')}',
-            //               style: TextStyle(
-            //                 color: currentTheme.isDarkTheme()
-            //                     ? Cores.branco
-            //                     : Cores.preto,
-            //                 fontSize: 20,
-            //                 fontWeight: FontWeight.bold,
-            //               ),
-            //             ),
-            //           ],
-            //         ),
-            //       )
-            //     : Container(),
           ],
         );
       }),
@@ -555,21 +597,22 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
     );
   }
 
-  Widget listaCartao(List<TbPagamentoCartao> cartao) {
+  Widget listaPixPagamento(List<TbPagamentoPix> pix) {
     final currentTheme = Provider.of<ThemeProvider>(context);
     return ListView.builder(
-      itemCount: cartao.length,
+      itemCount: pix.length,
       itemBuilder: (context, index) {
         return GestureDetector(
           onTap: () {
             setState(() {
-              Globais.enderecoSelected = index;
+              Globais.pixSelected = 1;
+              Globais.cartaoSelected = 0;
             });
           },
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
             child: Container(
-              decoration: Globais.enderecoSelected == index
+              decoration: Globais.pixSelected == 1
                   ? BoxDecoration(
                       shape: BoxShape.rectangle,
                       color: currentTheme.isDarkTheme()
@@ -601,10 +644,89 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                 leading: Checkbox(
                   checkColor: Cores.preto,
                   activeColor: Cores.branco,
-                  value: Globais.enderecoSelected == index,
+                  value: Globais.pixSelected == 1,
                   onChanged: (value) {
                     setState(() {
-                      Globais.enderecoSelected = index;
+                      Globais.pixSelected = 1;
+                      Globais.cartaoSelected = 0;
+                    });
+                  },
+                ),
+                title: Text(
+                  "${pix[index].chave.substring(0, 4)} **** **** ${pix[index].chave.substring(12, 14)}",
+                  style: TextStyle(
+                    color: currentTheme.isDarkTheme()
+                        ? Cores.branco
+                        : Cores.pretoOpaco,
+                  ),
+                ),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.pix_rounded,
+                    color: Cores.branco,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget listaCartaoPagamento(List<TbPagamentoCartao> cartao) {
+    final currentTheme = Provider.of<ThemeProvider>(context);
+    return ListView.builder(
+      itemCount: cartao.length,
+      itemBuilder: (context, index) {
+        return GestureDetector(
+          onTap: () {
+            setState(() {
+              Globais.cartaoSelected = 1;
+              Globais.pixSelected = 0;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            child: Container(
+              decoration: Globais.cartaoSelected == 1
+                  ? BoxDecoration(
+                      shape: BoxShape.rectangle,
+                      color: currentTheme.isDarkTheme()
+                          ? Cores.cinzaEscuro
+                          : Cores.branco,
+                      boxShadow: [
+                        BoxShadow(
+                          color: currentTheme.isDarkTheme()
+                              ? Cores.verde
+                              : Cores.azul,
+                          blurRadius: 3,
+                          spreadRadius: 1,
+                          blurStyle: BlurStyle.normal,
+                          // offset: const Offset(1.5, 1.5),
+                        ),
+                      ],
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                      border: Border.all(
+                        color: currentTheme.isDarkTheme()
+                            ? Cores.verde
+                            : Cores.azul,
+                        width: 1,
+                      ),
+                    )
+                  : const BoxDecoration(),
+              child: ListTile(
+                leading: Checkbox(
+                  checkColor: Cores.preto,
+                  activeColor: Cores.branco,
+                  value: Globais.cartaoSelected == 1,
+                  onChanged: (value) {
+                    setState(() {
+                      Globais.cartaoSelected = 1;
+                      Globais.pixSelected = 0;
                     });
                   },
                 ),
@@ -635,6 +757,17 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
         );
       },
     );
+  }
+
+  Future<List<Widget>> listaPagamento() async {
+    List<Widget> lista = [];
+    lista.add(listaCartaoPagamento(
+      await TbPagamentoCartaoHelper().getCartoesPagamento(),
+    ));
+    lista.add(listaPixPagamento(
+      await TbPagamentoPixHelper().getPagamentoPix(),
+    ));
+    return lista;
   }
 
   Widget listEndereco(List<EnderecoModel> endereco) {

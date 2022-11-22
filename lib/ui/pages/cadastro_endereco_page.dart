@@ -55,170 +55,168 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
         color: currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: currentTheme.isDarkTheme()
-                    ? Cores.cinzaEscuro
-                    : Cores.branco,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color:
-                        currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-                    blurRadius: 3,
-                    spreadRadius: 1,
-                    blurStyle: BlurStyle.normal,
-                    // offset: const Offset(1.5, 1.5),
-                  ),
-                ],
-              ),
+          child: Container(
+            decoration: BoxDecoration(
+              color:
+                  currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                  blurRadius: 3,
+                  spreadRadius: 1,
+                  blurStyle: BlurStyle.normal,
+                  // offset: const Offset(1.5, 1.5),
+                ),
+              ],
+            ),
+            child: SingleChildScrollView(
               child: SingleChildScrollView(
-                child: SingleChildScrollView(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Dados do Endereço',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: currentTheme.isDarkTheme()
+                            ? Cores.branco
+                            : Cores.cinzaEscuro,
                       ),
-                      Text(
-                        'Dados do Endereço',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.branco
-                              : Cores.cinzaEscuro,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      campoTexto(
-                        controller: _enderecoController,
-                        hint: 'Digite o Endereço:',
-                        inputFormatter: maskDefault,
-                        keyboardType: TextInputType.name,
-                        label: 'Endereço',
-                        obscureText: false,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: campoTexto(
-                              controller: _cepController,
-                              hint: 'Digite o CEP:',
-                              inputFormatter: maskCEP,
-                              keyboardType: TextInputType.number,
-                              label: 'CEP',
-                              obscureText: false,
-                            ),
-                          ),
-                          Expanded(
-                            child: campoTexto(
-                              controller: _numeroController,
-                              hint: 'Digite o Numero:',
-                              inputFormatter: maskNumero,
-                              keyboardType: TextInputType.number,
-                              label: 'Numero',
-                              obscureText: false,
-                            ),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.22,
-                            child: campoTexto(
-                              tamanhoMaximo: 2,
-                              onChanged: (value) {
-                                TextEditingValue(
-                                  text: value.toUpperCase(),
-                                  selection: _ufController.selection,
-                                );
-                                setState(() {
-                                  if (value.length == 2) {
-                                    _ufController.text = value.toUpperCase();
-                                  }
-                                });
-                              },
-                              controller: _ufController,
-                              hint: 'UF:',
-                              inputFormatter: maskDefault,
-                              keyboardType: TextInputType.name,
-                              label: 'UF',
-                              obscureText: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: campoTexto(
-                              controller: _cidadeController,
-                              hint: 'Digite a Cidade:',
-                              inputFormatter: maskDefault,
-                              keyboardType: TextInputType.emailAddress,
-                              label: 'Cidade',
-                              obscureText: false,
-                            ),
-                          ),
-                          Expanded(
-                            child: campoTexto(
-                              controller: _bairroController,
-                              hint: 'Digite o Bairro:',
-                              inputFormatter: maskDefault,
-                              keyboardType: TextInputType.none,
-                              label: 'Bairro',
-                              obscureText: false,
-                            ),
-                          ),
-                        ],
-                      ),
-                      campoTexto(
-                        controller: _complementoController,
-                        hint: 'Digite Complemento:',
-                        inputFormatter: maskDefault,
-                        keyboardType: TextInputType.none,
-                        label: 'Complemento',
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          cadastrarEndereco();
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Text(
-                            'Cadastrar',
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.pretoOpaco,
-                            ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    campoTexto(
+                      controller: _enderecoController,
+                      hint: 'Digite o Endereço:',
+                      inputFormatter: maskDefault,
+                      keyboardType: TextInputType.name,
+                      label: 'Endereço',
+                      obscureText: false,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.3,
+                          child: campoTexto(
+                            controller: _cepController,
+                            hint: 'Digite o CEP:',
+                            inputFormatter: maskCEP,
+                            keyboardType: TextInputType.number,
+                            label: 'CEP',
+                            obscureText: false,
                           ),
                         ),
-                        style: ElevatedButton.styleFrom(
-                          primary: currentTheme.isDarkTheme()
-                              ? Cores.vermelho
-                              : Cores.azul,
-                          onPrimary: currentTheme.isDarkTheme()
-                              ? Cores.cinzaEscuro
-                              : Cores.branco,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.43,
+                          child: campoTexto(
+                            controller: _numeroController,
+                            hint: 'Digite o Numero:',
+                            inputFormatter: maskNumero,
+                            keyboardType: TextInputType.number,
+                            label: 'Numero',
+                            obscureText: false,
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.22,
+                          child: campoTexto(
+                            tamanhoMaximo: 2,
+                            onChanged: (value) {
+                              TextEditingValue(
+                                text: value.toUpperCase(),
+                                selection: _ufController.selection,
+                              );
+                              setState(() {
+                                if (value.length == 2) {
+                                  _ufController.text = value.toUpperCase();
+                                }
+                              });
+                            },
+                            controller: _ufController,
+                            hint: 'UF:',
+                            inputFormatter: maskDefault,
+                            keyboardType: TextInputType.name,
+                            label: 'UF',
+                            obscureText: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: campoTexto(
+                            controller: _cidadeController,
+                            hint: 'Digite a Cidade:',
+                            inputFormatter: maskDefault,
+                            keyboardType: TextInputType.emailAddress,
+                            label: 'Cidade',
+                            obscureText: false,
+                          ),
+                        ),
+                        Expanded(
+                          child: campoTexto(
+                            controller: _bairroController,
+                            hint: 'Digite o Bairro:',
+                            inputFormatter: maskDefault,
+                            keyboardType: TextInputType.none,
+                            label: 'Bairro',
+                            obscureText: false,
+                          ),
+                        ),
+                      ],
+                    ),
+                    campoTexto(
+                      controller: _complementoController,
+                      hint: 'Digite Complemento:',
+                      inputFormatter: maskDefault,
+                      keyboardType: TextInputType.none,
+                      label: 'Complemento',
+                      obscureText: false,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        cadastrarEndereco();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Text(
+                          'Cadastrar',
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.pretoOpaco,
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
+                      style: ElevatedButton.styleFrom(
+                        primary: currentTheme.isDarkTheme()
+                            ? Cores.vermelho
+                            : Cores.azul,
+                        onPrimary: currentTheme.isDarkTheme()
+                            ? Cores.cinzaEscuro
+                            : Cores.branco,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ),
               ),
             ),

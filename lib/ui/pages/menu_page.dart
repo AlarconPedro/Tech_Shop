@@ -64,19 +64,17 @@ class _MenuPageState extends State<MenuPage>
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const CarrinhoPage();
+                }));
+              },
               child: Icon(
                 CupertinoIcons.cart,
                 color: currentTheme.isDarkTheme() ? Cores.branco : Cores.branco,
               ),
             ),
           ),
-          // ),
-          // IconButton(
-          //   icon: const Icon(Icons.search),
-          //   color: Cores.branco,
-          //   onPressed: () {},
-          // ),
         ],
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(

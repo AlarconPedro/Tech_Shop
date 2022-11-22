@@ -24,7 +24,7 @@ class _ContaPageState extends State<ContaPage> {
           currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
       appBar: AppBar(
         foregroundColor:
-            currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.preto,
+            currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
         backgroundColor:
             currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
         title: Text(
@@ -66,69 +66,67 @@ class _ContaPageState extends State<ContaPage> {
                 ),
                 child: Column(
                   children: [
-                    Container(
-                      child: Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: currentTheme.isDarkTheme()
-                                      ? Cores.verde
-                                      : Cores.azul,
-                                  blurRadius: 3,
-                                  spreadRadius: 1,
-                                  blurStyle: BlurStyle.normal,
-                                  // offset: const Offset(1.5, 1.5),
-                                ),
-                              ],
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.cinzaClaro,
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.all(18.0),
-                              child: Icon(Icons.person),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      Globais.nomeCliente,
-                                      style: TextStyle(
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.branco
-                                            : Cores.preto,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 8),
-                                    child: Text(
-                                      Globais.emailCliente,
-                                      style: TextStyle(
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.branco
-                                            : Cores.preto,
-                                        fontSize: 13,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            boxShadow: [
+                              BoxShadow(
+                                color: currentTheme.isDarkTheme()
+                                    ? Cores.verde
+                                    : Cores.azul,
+                                blurRadius: 3,
+                                spreadRadius: 1,
+                                blurStyle: BlurStyle.normal,
+                                // offset: const Offset(1.5, 1.5),
                               ),
                             ],
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.cinzaClaro,
                           ),
-                        ],
-                      ),
+                          child: const Padding(
+                            padding: EdgeInsets.all(18.0),
+                            child: Icon(Icons.person),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    Globais.nomeCliente,
+                                    style: TextStyle(
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.branco
+                                          : Cores.preto,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 8),
+                                  child: Text(
+                                    Globais.emailCliente,
+                                    style: TextStyle(
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.branco
+                                          : Cores.preto,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     Expanded(
                       child: Column(
@@ -194,60 +192,6 @@ class _ContaPageState extends State<ContaPage> {
                                       },
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.symmetric(
-                                  //     vertical: 4,
-                                  //     horizontal: 8,
-                                  //   ),
-                                  //   child: Container(
-                                  //     decoration: BoxDecoration(
-                                  //       borderRadius: const BorderRadius.all(
-                                  //         Radius.circular(15),
-                                  //       ),
-                                  //       color: currentTheme.isDarkTheme()
-                                  //           ? Cores.cinzaMedio
-                                  //           : Cores.cinzaClaro,
-                                  //     ),
-                                  //     child: ListTile(
-                                  //       shape: RoundedRectangleBorder(
-                                  //         borderRadius:
-                                  //             BorderRadius.circular(15),
-                                  //       ),
-                                  //       style: ListTileStyle.list,
-                                  //       trailing: Icon(
-                                  //         Icons.arrow_forward_ios,
-                                  //         color: currentTheme.isDarkTheme()
-                                  //             ? Cores.branco
-                                  //             : Cores.pretoOpaco,
-                                  //       ),
-                                  //       title: Text(
-                                  //         'Favoritos',
-                                  //         style: TextStyle(
-                                  //           color: currentTheme.isDarkTheme()
-                                  //               ? Cores.branco
-                                  //               : Cores.preto,
-                                  //           fontSize: 20,
-                                  //         ),
-                                  //       ),
-                                  //       leading: Icon(
-                                  //         Icons.favorite,
-                                  //         size: 28,
-                                  //         color: currentTheme.isDarkTheme()
-                                  //             ? Cores.branco
-                                  //             : Cores.preto,
-                                  //       ),
-                                  //       onTap: () {
-                                  //         Navigator.push(
-                                  //           context,
-                                  //           MaterialPageRoute(
-                                  //             builder: (context) =>
-                                  //                 const LoginPage(),
-                                  //           ),
-                                  //         );
-                                  //       },
-                                  //     ),
-                                  //   ),
-                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
                                       vertical: 4,
@@ -368,60 +312,60 @@ class _ContaPageState extends State<ContaPage> {
                                       thickness: 2,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 4,
-                                      horizontal: 8,
-                                    ),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(15),
-                                        ),
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.cinzaMedio
-                                            : Cores.cinzaClaro,
-                                      ),
-                                      child: ListTile(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        ),
-                                        style: ListTileStyle.list,
-                                        trailing: Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: currentTheme.isDarkTheme()
-                                              ? Cores.branco
-                                              : Cores.pretoOpaco,
-                                        ),
-                                        title: Text(
-                                          'Contato',
-                                          style: TextStyle(
-                                            color: currentTheme.isDarkTheme()
-                                                ? Cores.branco
-                                                : Cores.preto,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                        leading: Icon(
-                                          Icons.headphones,
-                                          size: 28,
-                                          color: currentTheme.isDarkTheme()
-                                              ? Cores.branco
-                                              : Cores.preto,
-                                        ),
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginPage(),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ),
+                                  // Padding(
+                                  //   padding: const EdgeInsets.symmetric(
+                                  //     vertical: 4,
+                                  //     horizontal: 8,
+                                  //   ),
+                                  //   child: Container(
+                                  //     decoration: BoxDecoration(
+                                  //       borderRadius: const BorderRadius.all(
+                                  //         Radius.circular(15),
+                                  //       ),
+                                  //       color: currentTheme.isDarkTheme()
+                                  //           ? Cores.cinzaMedio
+                                  //           : Cores.cinzaClaro,
+                                  //     ),
+                                  //     child: ListTile(
+                                  //       shape: RoundedRectangleBorder(
+                                  //         borderRadius:
+                                  //             BorderRadius.circular(15),
+                                  //       ),
+                                  //       style: ListTileStyle.list,
+                                  //       trailing: Icon(
+                                  //         Icons.arrow_forward_ios,
+                                  //         color: currentTheme.isDarkTheme()
+                                  //             ? Cores.branco
+                                  //             : Cores.pretoOpaco,
+                                  //       ),
+                                  //       title: Text(
+                                  //         'Contato',
+                                  //         style: TextStyle(
+                                  //           color: currentTheme.isDarkTheme()
+                                  //               ? Cores.branco
+                                  //               : Cores.preto,
+                                  //           fontSize: 20,
+                                  //         ),
+                                  //       ),
+                                  //       leading: Icon(
+                                  //         Icons.headphones,
+                                  //         size: 28,
+                                  //         color: currentTheme.isDarkTheme()
+                                  //             ? Cores.branco
+                                  //             : Cores.preto,
+                                  //       ),
+                                  //       onTap: () {
+                                  //         Navigator.push(
+                                  //           context,
+                                  //           MaterialPageRoute(
+                                  //             builder: (context) =>
+                                  //                 const LoginPage(),
+                                  //           ),
+                                  //         );
+                                  //       },
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),

@@ -104,18 +104,16 @@ class _ProductRandomCardState extends State<ProductRandomCard> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(left: 5.0),
-                              child: Flexible(
-                                child: SizedBox(
-                                  width: 160,
-                                  child: Text(
-                                    widget.produtos[index].nome,
-                                    style: TextStyle(
-                                        overflow: TextOverflow.ellipsis,
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.branco
-                                            : Cores.preto,
-                                        fontSize: 15),
-                                  ),
+                              child: SizedBox(
+                                width: 160,
+                                child: Text(
+                                  widget.produtos[index].nome,
+                                  style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      color: currentTheme.isDarkTheme()
+                                          ? Cores.branco
+                                          : Cores.preto,
+                                      fontSize: 15),
                                 ),
                               ),
                             ),

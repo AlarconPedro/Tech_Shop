@@ -26,6 +26,18 @@ class HttpRequest {
     return json.decode(response.body);
   }
 
+  Future<String> postFinalizarVenda(
+      {required String url,
+      required String body,
+      required Map<String, String> headers}) async {
+    http.Response response =
+        await http.post(Uri.parse(url), body: body, headers: headers);
+    // print(response.body);
+    return response.body != ""
+        ? "Produto fora de estoque"
+        : json.decode(response.body);
+  }
+
   Future<Map<String, dynamic>> postVenda(
       {required String url, required Map body}) async {
     http.Response response = await http.post(Uri.parse(url), body: body);

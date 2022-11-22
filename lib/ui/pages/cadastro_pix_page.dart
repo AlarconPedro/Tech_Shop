@@ -50,209 +50,177 @@ class _CadatroPixPageState extends State<CadatroPixPage> {
         color: currentTheme.isDarkTheme() ? Cores.cinzaMedio : Cores.branco,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: currentTheme.isDarkTheme()
-                    ? Cores.cinzaEscuro
-                    : Cores.branco,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color:
-                        currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
-                    blurRadius: 3,
-                    spreadRadius: 1,
-                    blurStyle: BlurStyle.normal,
-                    // offset: const Offset(1.5, 1.5),
-                  ),
-                ],
-              ),
+          child: Container(
+            decoration: BoxDecoration(
+              color:
+                  currentTheme.isDarkTheme() ? Cores.cinzaEscuro : Cores.branco,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: currentTheme.isDarkTheme() ? Cores.verde : Cores.azul,
+                  blurRadius: 3,
+                  spreadRadius: 1,
+                  blurStyle: BlurStyle.normal,
+                  // offset: const Offset(1.5, 1.5),
+                ),
+              ],
+            ),
+            child: SingleChildScrollView(
               child: SingleChildScrollView(
-                child: SingleChildScrollView(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
-                  scrollDirection: Axis.vertical,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
+                keyboardDismissBehavior:
+                    ScrollViewKeyboardDismissBehavior.onDrag,
+                scrollDirection: Axis.vertical,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Text(
+                      'Chave Pix',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: currentTheme.isDarkTheme()
+                            ? Cores.branco
+                            : Cores.cinzaEscuro,
                       ),
-                      Text(
-                        'Chave Pix',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: currentTheme.isDarkTheme()
-                              ? Cores.branco
-                              : Cores.cinzaEscuro,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: currentTheme.isDarkTheme()
-                                    ? Cores.cinzaEscuro
-                                    : Cores.branco,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: currentTheme.isDarkTheme()
-                                        ? Cores.branco
-                                        : Cores.azul,
-                                    blurRadius: 1,
-                                    spreadRadius: 2,
-                                    blurStyle: BlurStyle.normal,
-                                    // offset: const Offset(1.5, 1.5),
-                                  ),
-                                ],
-                              ),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5),
-                                child: DropdownButton(
-                                    elevation: 0,
-                                    value: 'CPF',
-                                    borderRadius: BorderRadius.circular(10),
-                                    hint: Text(
-                                      'Tipo de chave',
-                                      style: TextStyle(
-                                        color: currentTheme.isDarkTheme()
-                                            ? Cores.branco
-                                            : Cores.cinzaEscuro,
-                                      ),
-                                    ),
-                                    dropdownColor: currentTheme.isDarkTheme()
-                                        ? Cores.cinzaEscuro
-                                        : Cores.branco,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: currentTheme.isDarkTheme()
+                                  ? Cores.cinzaEscuro
+                                  : Cores.branco,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: currentTheme.isDarkTheme()
+                                      ? Cores.branco
+                                      : Cores.azul,
+                                  blurRadius: 1,
+                                  spreadRadius: 2,
+                                  blurStyle: BlurStyle.normal,
+                                  // offset: const Offset(1.5, 1.5),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: DropdownButton(
+                                  elevation: 0,
+                                  value: 'CPF',
+                                  borderRadius: BorderRadius.circular(10),
+                                  hint: Text(
+                                    'Tipo de chave',
                                     style: TextStyle(
                                       color: currentTheme.isDarkTheme()
                                           ? Cores.branco
                                           : Cores.cinzaEscuro,
                                     ),
-                                    icon: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: currentTheme.isDarkTheme()
-                                          ? Cores.branco
-                                          : Cores.azul,
+                                  ),
+                                  dropdownColor: currentTheme.isDarkTheme()
+                                      ? Cores.cinzaEscuro
+                                      : Cores.branco,
+                                  style: TextStyle(
+                                    color: currentTheme.isDarkTheme()
+                                        ? Cores.branco
+                                        : Cores.cinzaEscuro,
+                                  ),
+                                  icon: Icon(
+                                    Icons.arrow_drop_down,
+                                    color: currentTheme.isDarkTheme()
+                                        ? Cores.branco
+                                        : Cores.azul,
+                                  ),
+                                  items: const [
+                                    DropdownMenuItem(
+                                      child: Text('CPF'),
+                                      value: 'CPF',
                                     ),
-                                    items: const [
-                                      DropdownMenuItem(
-                                        child: Text('CPF'),
-                                        value: 'CPF',
-                                      ),
-                                      DropdownMenuItem(
-                                        child: Text('Telefone'),
-                                        value: 'Telefone',
-                                      ),
-                                      DropdownMenuItem(
-                                        child: Text('Email'),
-                                        value: 'Email',
-                                      ),
-                                    ],
-                                    onChanged: (value) {
-                                      // setState(() {
-                                      //   if (value == 'CPF') {
-                                      //     _nomeController.text = '';
-                                      //     _nomeController.addListener(
-                                      //       () => _nomeController.value =
-                                      //           _nomeController.value.copyWith(
-                                      //         text: maskCpf.getMaskedText(),
-                                      //       ),
-                                      //     );
-                                      //   } else if (value == 'Telefone') {
-                                      //     _nomeController.text = '';
-                                      //     _nomeController.addListener(
-                                      //       () => _nomeController.value =
-                                      //           _nomeController.value.copyWith(
-                                      //         text: maskNumero.getMaskedText(),
-                                      //       ),
-                                      //     );
-                                      //   } else if (value == 'Email') {
-                                      //     _nomeController.text = '';
-                                      //     _nomeController.addListener(
-                                      //       () => _nomeController.value =
-                                      //           _nomeController.value.copyWith(
-                                      //         text: maskDefault.getMaskedText(),
-                                      //       ),
-                                      //     );
-                                      //   }
-                                      // });
-                                    }),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      campoTexto(
-                        controller: _nomeController,
-                        hint: 'Digite sua chave:',
-                        inputFormatter: Globais.maskCpf,
-                        keyboardType: TextInputType.emailAddress,
-                        label: 'Chave Pix',
-                        obscureText: false,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (_nomeController.text.isEmpty) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: const Text(
-                                    'Preencha o campo da chave Pix !'),
-                                backgroundColor: Cores.vermelho,
-                              ),
-                            );
-                          } else {
-                            TbPagamentoPixHelper()
-                                .insertPagamentoPix(_nomeController.text);
-                            _showDialog(context,
-                                message: 'Cadastro realizado com sucesso!',
-                                title: 'Sucesso');
-                            Navigator.pop(context);
-                          }
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Text(
-                            'Cadastrar',
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: currentTheme.isDarkTheme()
-                                  ? Cores.branco
-                                  : Cores.pretoOpaco,
+                                    DropdownMenuItem(
+                                      child: Text('Telefone'),
+                                      value: 'Telefone',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('Email'),
+                                      value: 'Email',
+                                    ),
+                                  ],
+                                  onChanged: (value) {}),
                             ),
                           ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: currentTheme.isDarkTheme()
-                              ? Cores.cinzaEscuro
-                              : Cores.branco,
-                          backgroundColor: currentTheme.isDarkTheme()
-                              ? Cores.vermelho
-                              : Cores.azul,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    campoTexto(
+                      controller: _nomeController,
+                      hint: 'Digite sua chave:',
+                      inputFormatter: Globais.maskCpf,
+                      keyboardType: TextInputType.emailAddress,
+                      label: 'Chave Pix',
+                      obscureText: false,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_nomeController.text.isEmpty) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content:
+                                  const Text('Preencha o campo da chave Pix !'),
+                              backgroundColor: Cores.vermelho,
+                            ),
+                          );
+                        } else {
+                          TbPagamentoPixHelper()
+                              .insertPagamentoPix(_nomeController.text);
+                          _showDialog(context,
+                              message: 'Cadastro realizado com sucesso!',
+                              title: 'Sucesso');
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Text(
+                          'Cadastrar',
+                          style: TextStyle(
+                            fontSize: 17,
+                            color: currentTheme.isDarkTheme()
+                                ? Cores.branco
+                                : Cores.pretoOpaco,
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: currentTheme.isDarkTheme()
+                            ? Cores.cinzaEscuro
+                            : Cores.branco,
+                        backgroundColor: currentTheme.isDarkTheme()
+                            ? Cores.vermelho
+                            : Cores.azul,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
                 ),
               ),
             ),

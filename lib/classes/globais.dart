@@ -38,6 +38,7 @@ class Globais {
   static String estadoCliente = "";
   static int idCliente = 0;
   static int enderecoSelected = 0;
+  static int formaPagamentoSelected = 0;
   static int cartaoSelected = 0;
   static int pixSelected = 0;
   static MaskTextInputFormatter maskCpf = MaskTextInputFormatter(

@@ -154,12 +154,12 @@ class API {
     );
   }
 
-  void finalizarCarrinho() async {
+  Future<String> finalizarCarrinho() async {
     var body = json.encode({
       "venda_id": Globais.vendaId.toString(),
       "status": "P",
     });
-    var response = await request.postJson(
+    var response = await request.postFinalizarVenda(
       url: Globais.urlFinalizarCarrinho,
       body: body,
       headers: {
@@ -167,6 +167,7 @@ class API {
       },
     );
     print(response);
+    return response;
   }
 
   // PUT FUNCTIONS
