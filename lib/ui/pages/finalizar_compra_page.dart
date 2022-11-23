@@ -449,7 +449,7 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
           children: [
             carrinhoCard(
               produtoModel[index],
-              produtoModel[index].quantidade,
+              produtoModel[index].estoque,
               produtoModel[index].id,
               Globais.vendaId,
             ),

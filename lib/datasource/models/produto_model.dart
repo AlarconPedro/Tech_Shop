@@ -10,6 +10,7 @@ class ProdutoModel {
   String imagem5;
   double preco;
   int? precoPromocional;
+  int? estoque;
   int? quantidade;
 
   ProdutoModel({
@@ -24,6 +25,7 @@ class ProdutoModel {
     required this.imagem5,
     required this.preco,
     required this.precoPromocional,
+    required this.estoque,
     required this.quantidade,
   });
 
@@ -40,6 +42,7 @@ class ProdutoModel {
       imagem5: json['imagem5'] == "" ? json['imagem1'] : json['imagem5'] ?? '',
       preco: json['preco'].toDouble(),
       precoPromocional: json['preco_promocional'],
+      estoque: json['estoque'],
       quantidade: json['quantidade'],
     );
   }

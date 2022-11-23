@@ -1,3 +1,4 @@
+import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/classes/classes.dart';
@@ -659,17 +660,29 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
     );
   }
 
-  Widget valorTotalCarrinho(String valor, Color cor) {
-    // valor = valor.toInt();
-    valor = valor.replaceAll("0", "");
-    valor = valor.replaceAll(".", "");
+  Widget valorTotalCarrinho(String valorString, Color cor) {
+    CurrencyFormatterSettings settings = CurrencyFormatterSettings(
+      symbol: 'R\$ ',
+      thousandSeparator: '.',
+      decimalSeparator: ',',
+      symbolSeparator: ' ',
+    );
+    valorString = valorString.replaceAll(".", "");
+    valorString = valorString.replaceAll("000", "");
+    var valorDouble = double.parse(valorString);
+    String formatted = CurrencyFormatter.format(
+      valorDouble.toStringAsFixed(2),
+      settings,
+      decimal: 2,
+      enforceDecimals: true,
+    ); // 1.910,93 €
     return Padding(
       padding: const EdgeInsets.only(
         left: 10,
         right: 10,
       ),
       child: Text(
-        'R\$ $valor,00',
+        formatted,
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.bold,

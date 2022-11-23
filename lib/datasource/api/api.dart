@@ -142,7 +142,7 @@ class API {
     var response =
         await request.postVenda(url: Globais.urlCriarCarrinho, body: {
       "cliente_id": Globais.idCliente.toString(),
-      "usuario_id": idCliente.toString(),
+      "usuario_id": "1",
       "status": "A",
     });
     Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;

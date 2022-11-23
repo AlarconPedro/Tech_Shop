@@ -335,6 +335,19 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                 //     size: 30,
                 //   ),
                 // ),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(
+                    "Qtd. Estoque: ${widget.produto.estoque}",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: currentTheme.isDarkTheme()
+                          ? Cores.branco
+                          : Cores.preto,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -368,17 +381,17 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: Text(
-              "Qtd. Estoque: 10",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.all(10),
+          //   child: Text(
+          //     "Qtd. Estoque: ${widget.produto.estoque}",
+          //     style: TextStyle(
+          //       fontSize: 18,
+          //       fontWeight: FontWeight.bold,
+          //       color: currentTheme.isDarkTheme() ? Cores.branco : Cores.preto,
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
