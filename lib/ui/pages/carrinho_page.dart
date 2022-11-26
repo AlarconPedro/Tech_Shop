@@ -159,6 +159,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                               );
                             default:
                               if (snapshot.hasError) {
+                                Globais.vendaId = 0;
                                 return Expanded(
                                   child: Center(
                                     child: Text(

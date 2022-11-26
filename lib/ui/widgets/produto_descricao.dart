@@ -22,10 +22,13 @@ class ProdutoDescricao extends StatefulWidget {
 }
 
 class _ProdutoDescricaoState extends State<ProdutoDescricao> {
+  var descricao = "";
   int selected = 0;
 
   @override
   Widget build(BuildContext context) {
+    descricao = widget.produto.descricao;
+    descricao = descricao.replaceAll("#PressStart", "");
     final currentTheme = Provider.of<ThemeProvider>(context);
     final carroselController = CarouselController();
     return Container(
@@ -373,7 +376,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
           Padding(
             padding: const EdgeInsets.all(10),
             child: Text(
-              widget.produto.descricao,
+              descricao,
               style: TextStyle(
                 fontWeight: FontWeight.normal,
                 fontSize: 18,
