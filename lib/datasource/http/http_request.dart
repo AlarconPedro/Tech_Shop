@@ -33,9 +33,7 @@ class HttpRequest {
     http.Response response =
         await http.post(Uri.parse(url), body: body, headers: headers);
     // print(response.body);
-    return response.body != ""
-        ? "Produto fora de estoque"
-        : json.decode(response.body);
+    return response.statusCode != 200 ? "Produto fora de estoque" : "Ok";
   }
 
   Future<Map<String, dynamic>> postVenda(

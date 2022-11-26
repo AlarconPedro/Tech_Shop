@@ -118,7 +118,6 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                                 'Error: ${snapshot.error}');
                                           } else {
                                             Globais.finalizaVenda = true;
-
                                             return listEndereco(
                                               snapshot.data
                                                   as List<EnderecoModel>,
@@ -449,7 +448,7 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
           children: [
             carrinhoCard(
               produtoModel[index],
-              produtoModel[index].estoque,
+              produtoModel[index].quantidade,
               produtoModel[index].id,
               Globais.vendaId,
             ),
