@@ -163,21 +163,23 @@ class API {
       "status": "A",
     });
     Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;
-    var valorFormatado = produtoModel.preco.toString().replaceAll(".0", "");
-    CurrencyFormatterSettings settings = CurrencyFormatterSettings(
-      symbol: '',
-      thousandSeparator: '.',
-      decimalSeparator: ',',
-      symbolSeparator: ' ',
-    );
-    String formatted = CurrencyFormatter.format(
-      valorFormatado,
-      settings,
-      decimal: 2,
-      enforceDecimals: true,
-    ); // 1.910,
+    // var valorFormatado = produtoModel.preco.toString().replaceAll(".0", "");
+    // CurrencyFormatterSettings settings = CurrencyFormatterSettings(
+    //   symbol: '',
+    //   thousandSeparator: '.',
+    //   decimalSeparator: ',',
+    //   symbolSeparator: ' ',
+    // );
+    // String formatted = CurrencyFormatter.format(
+    //   valorFormatado,
+    //   settings,
+    //   decimal: 2,
+    //   enforceDecimals: true,
+    // ); // 1.910,
     API().adicionarAoCarrinho(
-      valor: formatted,
+      valor: produtoModel.precoPromocional == null
+          ? produtoModel.preco.toString()
+          : produtoModel.precoPromocional.toString(),
       produtoId: produtoModel.id,
       quantidade: 1,
       vendaId: Globais.vendaId,
@@ -208,6 +210,7 @@ class API {
     required int vendaId,
   }) async {
     var valorFormatado = valor?.replaceAll(".0", "");
+
     CurrencyFormatterSettings settings = CurrencyFormatterSettings(
       symbol: '',
       thousandSeparator: '.',
@@ -220,6 +223,7 @@ class API {
       decimal: 2,
       enforceDecimals: true,
     ); // 1.910,
+    valorFormatado = valorFormatado?.replaceAll(" ", "");
     var response = await request.postVenda(
       url: Globais.urlAddItemCarrinho,
       body: {
