@@ -39,6 +39,10 @@ class ProductCard extends StatefulWidget {
 class _ProductCardState extends State<ProductCard> {
   @override
   Widget build(BuildContext context) {
+    var valorNormal = widget.preco.toString();
+    valorNormal = valorNormal.replaceAll('.0', ',00');
+    var valorDesconto = widget.precoDesconto.toString();
+    valorDesconto = valorDesconto.replaceAll('.0', ',00');
     final currentTheme = Provider.of<ThemeProvider>(context);
     return Column(
       children: [
@@ -138,7 +142,7 @@ class _ProductCardState extends State<ProductCard> {
                           children: [
                             widget.produto.precoPromocional != 0
                                 ? Text(
-                                    "R\$ ${widget.produto.preco.toStringAsFixed(2)}",
+                                    "R\$ $valorNormal",
                                     style: TextStyle(
                                       fontSize: 18,
                                       color: Cores.vermelho,
@@ -153,7 +157,7 @@ class _ProductCardState extends State<ProductCard> {
                             widget.produto.precoPromocional != 0 &&
                                     widget.produto.precoPromocional != null
                                 ? Text(
-                                    "R\$ ${widget.produto.precoPromocional!.toStringAsFixed(2)}",
+                                    "R\$ $valorDesconto,00",
                                     style: TextStyle(
                                       fontSize: 25,
                                       color: Cores.verde,
@@ -161,7 +165,7 @@ class _ProductCardState extends State<ProductCard> {
                                     ),
                                   )
                                 : Text(
-                                    "R\$ ${widget.produto.preco.toStringAsFixed(2)}",
+                                    "R\$ $valorNormal",
                                     style: TextStyle(
                                       fontSize: 25,
                                       color: Cores.verde,

@@ -29,6 +29,10 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
   Widget build(BuildContext context) {
     descricao = widget.produto.descricao;
     descricao = descricao.replaceAll("#PressStart", "");
+    var valorNormal = widget.produto.preco.toString();
+    valorNormal = valorNormal.replaceAll('.0', ',00');
+    var valorDesconto = widget.produto.precoPromocional.toString();
+    valorDesconto = valorDesconto.replaceAll('.0', ',00');
     final currentTheme = Provider.of<ThemeProvider>(context);
     final carroselController = CarouselController();
     return Container(
@@ -260,7 +264,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                           : API().adicionarAoCarrinho(
                               produtoId: widget.produto.id,
                               quantidade: Globais.qtdCarrinho,
-                              valor: widget.produto.preco,
+                              valor: widget.produto.preco.toString(),
                               vendaId: Globais.vendaId,
                             );
 
@@ -268,7 +272,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                         Globais.qtdCarrinho++;
                         // Globais.valorTotalCarrinho += widget.produto.preco;
                       });
-                      Future.delayed(Duration(seconds: 2), () {
+                      Future.delayed(const Duration(seconds: 2), () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -297,7 +301,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                     children: [
                       widget.produto.precoPromocional != 0
                           ? Text(
-                              "R\$ ${widget.produto.preco.toStringAsFixed(2)}",
+                              "R\$ $valorNormal",
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Cores.vermelho,
@@ -310,7 +314,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                       widget.produto.precoPromocional != 0 &&
                               widget.produto.precoPromocional != null
                           ? Text(
-                              "R\$ ${widget.produto.precoPromocional!.toStringAsFixed(2)}",
+                              "R\$ $valorDesconto,00",
                               style: TextStyle(
                                 fontSize: 25,
                                 color: Cores.verde,
@@ -318,7 +322,7 @@ class _ProdutoDescricaoState extends State<ProdutoDescricao> {
                               ),
                             )
                           : Text(
-                              "R\$ ${widget.produto.preco.toStringAsFixed(2)}",
+                              "R\$ $valorNormal",
                               style: TextStyle(
                                 fontSize: 25,
                                 color: Cores.verde,

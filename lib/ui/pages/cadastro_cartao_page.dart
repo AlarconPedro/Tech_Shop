@@ -112,7 +112,7 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
                       ),
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          print('valid!');
+                          // print('valid!');
                           TbPagamentoCartaoHelper().insertPagamentoCartao(
                             nomeTitular,
                             numeroCartao,
@@ -121,7 +121,7 @@ class _CadastroCartaoPageState extends State<CadastroCartaoPage> {
                           );
                           Navigator.pop(context);
                         } else {
-                          print('invalid!');
+                          // print('invalid!');
                         }
                       },
                     )

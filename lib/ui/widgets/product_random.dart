@@ -29,6 +29,11 @@ class _ProductRandomCardState extends State<ProductRandomCard> {
         scrollDirection: Axis.horizontal,
         itemCount: widget.produtos.length,
         itemBuilder: (context, index) {
+          var valorNormal = widget.produtos[index].preco.toString();
+          valorNormal = valorNormal.replaceAll('.0', ',00');
+          var valorDesconto =
+              widget.produtos[index].precoPromocional.toString();
+          valorDesconto = valorDesconto.replaceAll('.0', ',00');
           return GestureDetector(
             onTap: () {
               Navigator.push(
@@ -127,24 +132,60 @@ class _ProductRandomCardState extends State<ProductRandomCard> {
                                   const EdgeInsets.symmetric(horizontal: 10),
                               child: Column(
                                 children: [
-                                  Text(
-                                    "R\$ ${widget.produtos[index].preco},00",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Cores.vermelho,
-                                      fontWeight: FontWeight.bold,
-                                      decoration: TextDecoration.lineThrough,
-                                      decorationThickness: 1.5,
-                                    ),
-                                  ),
-                                  Text(
-                                    "R\$ ${widget.produtos[index].precoPromocional},00",
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: Cores.verde,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                  widget.produtos[index].precoPromocional != 0
+                                      ? Text(
+                                          "R\$ ${valorNormal}",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Cores.vermelho,
+                                            fontWeight: FontWeight.bold,
+                                            decorationStyle:
+                                                TextDecorationStyle.solid,
+                                            decoration:
+                                                TextDecoration.lineThrough,
+                                            decorationThickness: 2.5,
+                                          ),
+                                        )
+                                      : Container(),
+                                  widget.produtos[index].precoPromocional !=
+                                              0 &&
+                                          widget.produtos[index]
+                                                  .precoPromocional !=
+                                              null
+                                      ? Text(
+                                          "R\$ ${valorDesconto},00",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Cores.verde,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                      : Text(
+                                          "R\$ ${valorNormal}",
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: Cores.verde,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
+                                  // Text(
+                                  //   "R\$ ${valorNormal}",
+                                  //   style: TextStyle(
+                                  //     fontSize: 18,
+                                  //     color: Cores.vermelho,
+                                  //     fontWeight: FontWeight.bold,
+                                  //     decoration: TextDecoration.lineThrough,
+                                  //     decorationThickness: 1.5,
+                                  //   ),
+                                  // ),
+                                  // Text(
+                                  //   "R\$ ${widget.produtos[index].precoPromocional},00",
+                                  //   style: TextStyle(
+                                  //     fontSize: 18,
+                                  //     color: Cores.verde,
+                                  //     fontWeight: FontWeight.bold,
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),

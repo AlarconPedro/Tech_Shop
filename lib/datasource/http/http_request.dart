@@ -5,13 +5,13 @@ import 'package:tech_shop/classes/classes.dart';
 class HttpRequest {
   Future<List<dynamic>> getJson({required String url}) async {
     http.Response response = await http.get(Uri.parse(url));
-    print(response.body);
+    // print(response.body);
     return json.decode(response.body);
   }
 
   Future<dynamic> getCarrinho({required String url}) async {
     http.Response response = await http.get(Uri.parse(url));
-    print(response.body);
+    // print(response.body);
     var result = json.decode(response.body);
     return result;
   }
@@ -22,7 +22,7 @@ class HttpRequest {
       required Map<String, String> headers}) async {
     http.Response response =
         await http.post(Uri.parse(url), body: body, headers: headers);
-    print(response.body);
+    // print(response.body);
     return json.decode(response.body);
   }
 

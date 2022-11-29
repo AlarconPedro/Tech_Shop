@@ -282,6 +282,8 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
 
   Widget carrinhoCard(
       ProdutoModel produtoModel, int? quantidade, int produtoId, int vendaId) {
+    var valorProduto = produtoModel.preco.toString();
+    valorProduto = valorProduto.replaceAll('.0', ',00');
     final currentTheme = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: () {
@@ -425,7 +427,7 @@ class _CarrinhoPageState extends State<CarrinhoPage> {
                           ),
                           child: Center(
                             child: Text(
-                              'R\$ ${produtoModel.preco}',
+                              'R\$ $valorProduto',
                               style: TextStyle(
                                 color: currentTheme.isDarkTheme()
                                     ? Cores.pretoClaro

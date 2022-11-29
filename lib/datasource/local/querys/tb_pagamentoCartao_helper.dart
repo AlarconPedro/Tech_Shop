@@ -9,7 +9,7 @@ class TbPagamentoCartaoHelper {
     var response = await db.rawQuery(
       "SELECT * FROM ${TbPagamentoCartao.nomeTabela} ",
     );
-    print(response);
+    // print(response);
     if (response.isNotEmpty) {
       return response.map((c) => TbPagamentoCartao.fromMap(c)).toList();
     } else {
@@ -29,7 +29,7 @@ class TbPagamentoCartaoHelper {
       'INSERT INTO ${TbPagamentoCartao.nomeTabela} (${TbPagamentoCartao.nomeTitularColumn}, ${TbPagamentoCartao.numeroColumn}, ${TbPagamentoCartao.cvvColumn}, ${TbPagamentoCartao.validadeColumn}) VALUES ( ?, ?, ?, ?)',
       [nomeTitular, numeroCartao, cvv, validadeCartao],
     );
-    print(response);
+    // print(response);
   }
 
   // Update

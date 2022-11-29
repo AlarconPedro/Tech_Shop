@@ -10,7 +10,7 @@ class TbUsuarioHelper {
     var response = await db.rawQuery(
       "SELECT * FROM ${TbUsuario.nomeTabela} ",
     );
-    print(response);
+    // print(response);
     if (response.isNotEmpty) {
       return TbUsuario.fromMap(response.first);
     } else {
@@ -33,7 +33,7 @@ class TbUsuarioHelper {
       'INSERT INTO ${TbUsuario.nomeTabela} (${TbUsuario.usuarioColumn}, ${TbUsuario.senhaColumn}, ${TbUsuario.idVendaColumn}, ${TbUsuario.nomeColumn}) VALUES (?, ?, ?, ?)',
       [usuario, senha, 0, Globais.nomeCliente ?? ""],
     );
-    print(id2);
+    // print(id2);
   }
 
   // UPDATE

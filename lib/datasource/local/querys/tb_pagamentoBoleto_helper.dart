@@ -9,7 +9,7 @@ class TbPagamentoBoletoHelper {
     var response = await db.rawQuery(
       "SELECT * FROM ${TbPagamentoBoleto.nomeTabela} ",
     );
-    print(response);
+    // print(response);
     if (response.isNotEmpty) {
       return TbPagamentoBoleto.fromMap(response.first);
     } else {
@@ -30,7 +30,7 @@ class TbPagamentoBoletoHelper {
       'INSERT INTO ${TbPagamentoBoleto.nomeTabela} (${TbPagamentoBoleto.codigoBarrasColumn}, ${TbPagamentoBoleto.linhaDigitavelColumn}, ${TbPagamentoBoleto.dataVencimentoColumn}, ${TbPagamentoBoleto.idColumn}, ${TbPagamentoBoleto.valorColumn}) VALUES ( ?, ?, ?, ?, ?)',
       [codigoBarras, linhaDigitavel, dataVencimento, id, valor],
     );
-    print(response);
+    // print(response);
   }
 
   // UPDATE

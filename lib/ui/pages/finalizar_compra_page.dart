@@ -1,3 +1,4 @@
+import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_shop/datasource/api/api.dart';
@@ -250,6 +251,7 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                             setState(() {
                                               Globais.finalizaVenda = false;
                                             });
+
                                             return Expanded(
                                               child: Center(
                                                 child: Text(
@@ -336,7 +338,9 @@ class _FinalizarCompraPageState extends State<FinalizarCompraPage> {
                                         ),
                                       ),
                                       Text(
-                                        'R\$ ${Globais.valorTotalCarrinho.trimRight().replaceAll('0.', ',')}',
+                                        Globais.valorTotalCarrinho
+                                            .trimRight()
+                                            .replaceAll('0.', ','),
                                         style: TextStyle(
                                           color: currentTheme.isDarkTheme()
                                               ? Cores.branco

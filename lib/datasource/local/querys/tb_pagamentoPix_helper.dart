@@ -9,7 +9,7 @@ class TbPagamentoPixHelper {
     var response = await db.rawQuery(
       "SELECT * FROM ${TbPagamentoPix.nomeTabela} ",
     );
-    print(response);
+    // print(response);
     if (response.isNotEmpty) {
       return response.map((c) => TbPagamentoPix.fromMap(c)).toList();
     } else {
@@ -26,7 +26,7 @@ class TbPagamentoPixHelper {
       'INSERT INTO ${TbPagamentoPix.nomeTabela} (${TbPagamentoPix.chaveColumn}) VALUES ( ?)',
       [chave],
     );
-    print(response);
+    // print(response);
   }
 
   // UPDATE

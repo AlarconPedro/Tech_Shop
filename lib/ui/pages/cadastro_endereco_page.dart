@@ -346,7 +346,7 @@ class _CadastroEnderecoPageState extends State<CadastroEnderecoPage> {
         },
       ),
     );
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 201) {
       _showDialog(context,
           title: 'Sucesso', message: 'Endereço cadastrado com Sucesso');

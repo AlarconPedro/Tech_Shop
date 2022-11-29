@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:currency_formatter/currency_formatter.dart';
 import 'package:http/http.dart' as http;
 import 'package:tech_shop/classes/globais.dart';
 import 'package:tech_shop/datasource/http/http.dart';
@@ -57,7 +58,7 @@ class API {
   Future<List<EnderecoModel>> getEnderecos() async {
     String url = Globais.urlEnderecoId + Globais.idCliente.toString();
     var response = await request.getJson(url: url);
-    print(response);
+    // print(response);
     return _populateEnderecos(response);
   }
 
@@ -98,7 +99,23 @@ class API {
   List<ProdutoModel> _populateItensCarrinho(
       CarrinhoModel json, List<ProdutoModel> produtosCarrinho) {
     List<ProdutoModel> produtos = [];
-    Globais.valorTotalCarrinho = json.valorTotal;
+    CurrencyFormatterSettings settings = CurrencyFormatterSettings(
+      symbol: 'R\$ ',
+      thousandSeparator: '.',
+      decimalSeparator: ',',
+      symbolSeparator: ' ',
+    );
+    var valorTotal = json.valorTotal;
+    valorTotal = valorTotal.replaceAll(".", "");
+    valorTotal = valorTotal.replaceAll("000", "");
+    // var valorDouble = double.parse(valorTotal);
+    String formatted = CurrencyFormatter.format(
+      valorTotal,
+      settings,
+      decimal: 2,
+      enforceDecimals: true,
+    ); // 1.910,93 €
+    Globais.valorTotalCarrinho = formatted;
     produtosCarrinho.forEach((element) {
       produtos.add(element);
       // for (var item in json.produtos) {
@@ -146,8 +163,21 @@ class API {
       "status": "A",
     });
     Globais.vendaId = CriarCarrinhoModel.fromJson(response).idVenda;
+    var valorFormatado = produtoModel.preco.toString().replaceAll(".0", "");
+    CurrencyFormatterSettings settings = CurrencyFormatterSettings(
+      symbol: '',
+      thousandSeparator: '.',
+      decimalSeparator: ',',
+      symbolSeparator: ' ',
+    );
+    String formatted = CurrencyFormatter.format(
+      valorFormatado,
+      settings,
+      decimal: 2,
+      enforceDecimals: true,
+    ); // 1.910,
     API().adicionarAoCarrinho(
-      valor: produtoModel.preco,
+      valor: formatted,
       produtoId: produtoModel.id,
       quantidade: 1,
       vendaId: Globais.vendaId,
@@ -166,21 +196,34 @@ class API {
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    print(response);
+    // print(response);
     return response;
   }
 
   // PUT FUNCTIONS
   void adicionarAoCarrinho({
-    double? valor,
+    String? valor,
     required int produtoId,
     int? quantidade,
     required int vendaId,
   }) async {
+    var valorFormatado = valor?.replaceAll(".0", "");
+    CurrencyFormatterSettings settings = CurrencyFormatterSettings(
+      symbol: '',
+      thousandSeparator: '.',
+      decimalSeparator: ',',
+      symbolSeparator: ' ',
+    );
+    String formatted = CurrencyFormatter.format(
+      valorFormatado,
+      settings,
+      decimal: 2,
+      enforceDecimals: true,
+    ); // 1.910,
     var response = await request.postVenda(
       url: Globais.urlAddItemCarrinho,
       body: {
-        "valor": valor.toString(),
+        "valor": formatted,
         "venda_id": Globais.vendaId.toString(),
         "produto_id": produtoId.toString(),
         "quantidade": quantidade.toString(),
@@ -216,7 +259,7 @@ class API {
   void deleteEndereco(String id) async {
     String url = Globais.urlDeleteEndereco + id;
     var response = await request.deleteJson(url: url);
-    print(response);
+    // print(response);
   }
 
   void removerDoCarrinho(int produtoId, int vendaId) async {

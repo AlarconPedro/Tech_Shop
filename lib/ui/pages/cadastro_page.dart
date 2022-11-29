@@ -320,7 +320,7 @@ class _CadastroPageState extends State<CadastroPage> {
         _senhaController.text != "" &&
         _confirmaController.text != "") {
       var response = _getLogin();
-      print(response);
+      // print(response);
     } else if (_senhaController.text == _confirmaController.text) {
       _showDialog(context, message: 'Senhas não conferem!', title: 'Erro');
       _nomeController.clear();
@@ -349,7 +349,7 @@ class _CadastroPageState extends State<CadastroPage> {
       dataNascimento: _dataNascimentoController.text,
       telefone: _numeroTelefone.text,
     );
-    print(response.body);
+    // print(response.body);
     if (response.statusCode == 200) {
       var json = jsonDecode(response.body);
       _showDialog(context,
